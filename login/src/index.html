@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="white" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@pwabuilder/pwaauth/dist/pwa-auth.js"></script>
+  </head>
+  <body class="fullscreen">
+    <div class="container">
+      <h1 class="title">Login</h1>
+    </div>
+    <div style="float: left">
+        <pwa-auth 
+            appearance="list" 
+            microsoftkey="a17ec572-51cc-4c79-83e7-9eb331649249" 
+            googlekey="535371030919-i0fns6kc49ovit7cob0k7cbpste49ksk.apps.googleusercontent.com" 
+            facebookkey="498544657719315">
+        </pwa-auth>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>

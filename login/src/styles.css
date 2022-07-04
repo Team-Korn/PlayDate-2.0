@@ -1,0 +1,31 @@
+/* The Sign In button itself */
+pwa-auth::part(signButton) {
+    color: white;
+    background-color: green;
+    transform: rotate3d(0, 0, 1, 10deg);
+}
+
+/* The Google button */
+pwa-auth::part(googleButton) {
+    box-shadow: inset 8px 0 1px orange;
+    letter-spacing: 4px;
+    font-size: 1.2em;
+}
+
+/* The Facebook button */
+pwa-auth::part(facebookButton) {
+    font-family: "Segoe Script", "script";
+    font-size: 1.2em;
+}
+
+/* The Facebook icon */
+pwa-auth::part(facebookIcon) {
+    transform: rotateZ(50deg);
+}
+
+/* The dropdown menu */
+pwa-auth::part(dropdownmenu) {
+    border-radius: 10px 0;
+    border: 3px dotted blue;
+    margin-top: 20px;
+}
