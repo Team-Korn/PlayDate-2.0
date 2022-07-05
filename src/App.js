@@ -1,31 +1,4 @@
-import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-
-// ------------------ FIREBASE SDK --------------------------------
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/analytics';
-
-// --------------- HOOKS -----------------------------------------
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-
-// ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
-firebase.initializeApp({
-  // our config
-
-  apiKey: 'AIzaSyA7BGrGY74CDLLDfTBakn8s-5BpXVKRkpA',
-  authDomain: 'playdate-9bf9a.firebaseapp.com',
-  projectId: 'playdate-9bf9a',
-  storageBucket: 'playdate-9bf9a.appspot.com',
-  messagingSenderId: '211081650181',
-  appId: '1:211081650181:web:4ffb86866e49b88122bc6c',
-});
-
-// --------- TO USE AS GLOBAL VARIABLES -------------------------
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+import React from 'react';
 
 function App() {
   return <div className="App">Welcome to PlayDate!</div>;
