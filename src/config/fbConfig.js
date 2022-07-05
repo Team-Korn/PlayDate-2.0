@@ -14,7 +14,9 @@ firebase.initializeApp({
   messagingSenderId: '211081650181',
   appId: '1:211081650181:web:4ffb86866e49b88122bc6c',
 });
-firebase.firestore().settings({ timestampsInSnapshots: true });
+
+// -------------- BELOW MIGHT BE OUTDATED CODE -----------------
+// firebase.firestore().settings({ timestampsInSnapshots: true });
 
 export default firebase;
 
