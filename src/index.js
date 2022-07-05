@@ -1,20 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import '../public/styles.css';
+import './styles/styles.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 // import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import history from './history';
 // import store from './store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <Provider> */}
-    <BrowserRouter history={history}>
-      <App />
-    </BrowserRouter>
+    <App />
     {/* </Provider> */}
   </React.StrictMode>
 );
