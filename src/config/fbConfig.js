@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 // ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
-firebase.initializeApp({
+const firebaseApp = firebase.initializeApp({
   // our config
 
   apiKey: 'AIzaSyA7BGrGY74CDLLDfTBakn8s-5BpXVKRkpA',
@@ -14,6 +14,13 @@ firebase.initializeApp({
   messagingSenderId: '211081650181',
   appId: '1:211081650181:web:4ffb86866e49b88122bc6c',
 });
+
+// ----------- ACCESS DATABASE FROM FIRESTORE -----------
+const db = firebaseApp.firestore()
+
+const auth = firebase.auth()
+
+export { db, auth }
 
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });

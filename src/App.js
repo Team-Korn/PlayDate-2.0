@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
+import Chat from './components/Chat';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/chat" element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </div>
