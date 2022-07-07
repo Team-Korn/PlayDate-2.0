@@ -30,8 +30,10 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 // ------ Google Authentication Function ---------------------------------
+// https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
 const googleProvider = new GoogleAuthProvider();
+
 const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
@@ -41,7 +43,7 @@ const signInWithGoogle = async () => {
     if (docs.docs.length === 0) {
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
-        name: user.displayName,
+        firstName: user.displayName,
         authProvider: 'google',
         email: user.email,
       });
@@ -52,7 +54,20 @@ const signInWithGoogle = async () => {
   }
 };
 
-// ------ Login function --------------------------------
+// ------- Sign In with Email and Password ----------------
+// ------- This is when a user already registered with us and we don't need to check the database -----
+// ------- Pass the email and password directly to signInWithEmailAndPassword function from FB --------
+
+const logInWithEmailAndPassword = async (email, password) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+// ------ My Login Function --------------------------------
 
 const Login = () => {
   const [dogs, setDogs] = useState([]);
