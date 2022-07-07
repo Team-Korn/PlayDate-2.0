@@ -1,7 +1,11 @@
 // ------------------ FIREBASE SDK --------------------------------
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
+// import 'firebase/auth';
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 // ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
 const firebaseApp = firebase.initializeApp({
@@ -18,14 +22,13 @@ const firebaseApp = firebase.initializeApp({
 // ----------- ACCESS DATABASE FROM FIRESTORE -----------
 const db = firebaseApp.firestore()
 
-const auth = firebase.auth()
+// const auth = firebase.auth()
 
-export { db, auth }
 
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });
 
-export default firebase;
+export { db };
 
 /*
 

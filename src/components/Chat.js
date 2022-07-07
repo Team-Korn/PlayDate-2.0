@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { db, auth } from '../fbConfig'
+import { db } from '../config/fbConfig'
 import SendMessage from './SendMessage'
 
 function Chat() {
-    const scroll = useRef()
+    // const scroll = useRef()
     const [messages, setMessages] = useState([])
     useEffect(() => {
         db.collection('messages').orderBy('createdAt').limit(50).onSnapshot(snapshot => {
@@ -11,18 +11,26 @@ function Chat() {
         })
     }, [])
     return (
-        <div>
-            <div className="msgs">
-                {messages.map((id, text, photoURL) => (
-                    <div key={id} className={`msg ${uid === auth.currentUser.uid ? 'sent' : 'received'}`}>
-                        <img src={photoURL} alt="" />
-                        <p>{text}</p>
-                    </div>
-                ))}
+        <>
+            <h1>{messages.text}</h1>
+            <div>
+                <SendMessage />
             </div>
-            <SendMessage scroll={scroll} />
-            <div ref={scroll}></div>
-        </div>
+        </>
+
+
+        // <div>
+        //     <div className="msgs">
+        //         {messages.map((id, text) => (
+        //             <div key={id}>
+        //                 {/* <img src={photoURL} alt="" /> */}
+        //                 <p>{text}</p>
+        //             </div>
+        //         ))}
+        //     </div>
+        //     <SendMessage scroll={scroll} />
+        //     <div ref={scroll}></div>
+        // </div>
     )
 }
 
