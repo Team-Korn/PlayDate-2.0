@@ -14,12 +14,12 @@ const HomePage = () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'doggos'));
 
-        console.log('QS: ', querySnapshot.docs);
+        // console.log('QS: ', querySnapshot.docs);
         const dogData = [];
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
-        console.log('DD: ', dogData);
+        // console.log('DD: ', dogData);
         setDogs(dogData);
       } catch (error) {
         console.log(error);
