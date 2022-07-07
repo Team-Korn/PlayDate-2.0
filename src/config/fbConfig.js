@@ -1,10 +1,10 @@
 // ------------------ FIREBASE SDK --------------------------------
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { GoogleAuthProvider } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 // ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
-firebase.initializeApp({
+const firebaseConfig = {
   // our config
 
   apiKey: 'AIzaSyA7BGrGY74CDLLDfTBakn8s-5BpXVKRkpA',
@@ -13,12 +13,15 @@ firebase.initializeApp({
   storageBucket: 'playdate-9bf9a.appspot.com',
   messagingSenderId: '211081650181',
   appId: '1:211081650181:web:4ffb86866e49b88122bc6c',
-});
+};
 
+const app = initializeApp(firebaseConfig);
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
+// const store = getFirestore();
+export { provider, auth, app };
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });
-
-export default firebase;
 
 /*
 
