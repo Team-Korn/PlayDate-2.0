@@ -32,6 +32,7 @@ const auth = getAuth(app);
 // ------ Google Authentication Function ---------------------------------
 // https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
+/*
 const googleProvider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
@@ -53,11 +54,13 @@ const signInWithGoogle = async () => {
     alert(err.message);
   }
 };
+*/
 
 // ------- Sign In with Email and Password ----------------
 // ------- This is when a user already registered with us and we don't need to check the database -----
 // ------- Pass the email and password directly to signInWithEmailAndPassword function from FB --------
 
+/*
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -66,33 +69,34 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 };
+*/
 
 // ------ My Login Function --------------------------------
 
 const Login = () => {
-  const [dogs, setDogs] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    async function getDogs() {
+    async function getUsers() {
       try {
-        const querySnapshot = await getDocs(collection(db, 'doggos'));
+        const querySnapshot = await getDocs(collection(db, 'users'));
 
-        // console.log('QS: ', querySnapshot.docs);
-        const dogData = [];
+        const userData = [];
         querySnapshot.forEach((doc) => {
-          dogData.push(doc.data());
+          userData.push(doc.data());
         });
-        // console.log('DD: ', dogData);
-        setDogs(dogData);
+
+        setUsers(userData);
       } catch (error) {
         console.log(error);
       }
     }
-    getDogs();
+    getUsers();
   }, []);
-  console.log('dogs', dogs);
-  if (!dogs[0]) return null;
-  return <h1>{dogs[4].Name}</h1>;
+
+  console.log('users are here: ', users);
+  if (!users[0]) return null;
+  return <h1>{users[4].firstName}</h1>;
 };
 
 export default Login;
