@@ -32,7 +32,6 @@ const auth = getAuth(app);
 // ------ Google Authentication Function ---------------------------------
 // https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
-/*
 const googleProvider = new GoogleAuthProvider();
 
 const signInWithGoogle = async () => {
@@ -54,13 +53,11 @@ const signInWithGoogle = async () => {
     alert(err.message);
   }
 };
-*/
 
 // ------- Sign In with Email and Password ----------------
 // ------- This is when a user already registered with us and we don't need to check the database -----
 // ------- Pass the email and password directly to signInWithEmailAndPassword function from FB --------
 
-/*
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
@@ -69,7 +66,6 @@ const logInWithEmailAndPassword = async (email, password) => {
     alert(err.message);
   }
 };
-*/
 
 // ------ My Login Function --------------------------------
 
