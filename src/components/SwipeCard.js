@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { app } from '../config/fbConfig';
-import { getFirestore } from 'firebase/firestore';
+import { db } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
 
 function SwipeCard() {
-  const db = getFirestore(app);
-
   const [dogs, setDogs] = useState([]);
 
   useEffect(() => {
