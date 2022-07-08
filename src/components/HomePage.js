@@ -12,14 +12,14 @@ const HomePage = () => {
   useEffect(() => {
     async function getDogs() {
       try {
-        const querySnapshot = await getDocs(collection(db, 'doggos'));
+        const querySnapshot = await getDocs(collection(db, 'dogs'));
 
-        console.log('QS: ', querySnapshot.docs);
+        // console.log('QS: ', querySnapshot.docs);
         const dogData = [];
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
-        console.log('DD: ', dogData);
+        // console.log('DD: ', dogData);
         setDogs(dogData);
       } catch (error) {
         console.log(error);
@@ -29,7 +29,7 @@ const HomePage = () => {
   }, []);
   console.log('dogs', dogs);
   if (!dogs[0]) return null;
-  return <h1>{dogs[1].Name}</h1>;
+  return <h1>{dogs[1].name}</h1>;
 };
 
 export default HomePage;
