@@ -21,7 +21,7 @@ import {
   where,
   addDoc,
 } from 'firebase/firestore';
-import { provider, app, store } from '../config/fbConfig';
+import { provider, app, store } from './config/fbConfig';
 import { getStorage } from 'firebase/storage';
 
 // ------ global variables so we can use Firebase throughout our app ------
@@ -85,32 +85,62 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   }
 };
 
-// ------ My Login Function --------------------------------
+// -------- function that will send a pass reset link to an email address ------------------
 
-const Login = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    async function getUsers() {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'users'));
-
-        const userData = [];
-        querySnapshot.forEach((doc) => {
-          userData.push(doc.data());
-        });
-
-        setUsers(userData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getUsers();
-  }, []);
-
-  console.log('users are here: ', users);
-  if (!users[0]) return null;
-  return <h1>{users[4].firstName}</h1>;
+// This code is simple. We are just passing in the email in the sendPasswordResetEmail function provided by Firebase. The password reset email will be sent by Firebase.
+const sendPasswordReset = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert('Password reset link sent!');
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
 };
 
-export default Login;
+// ----- logout function -----------------------
+const logout = () => {
+  signOut(auth);
+};
+
+// ----- ALL OUR EXPORTS ------------------------
+export {
+  auth,
+  db,
+  signInWithGoogle,
+  logInWithEmailAndPassword,
+  registerWithEmailAndPassword,
+  sendPasswordReset,
+  logout,
+};
+
+// ------------- Below is the homepage copy rendering Users from db --
+// ------ My Login Function --------------------------------
+
+// const Login = () => {
+//   const [users, setUsers] = useState([]);
+
+//   useEffect(() => {
+//     async function getUsers() {
+//       try {
+//         const querySnapshot = await getDocs(collection(db, 'users'));
+
+//         const userData = [];
+//         querySnapshot.forEach((doc) => {
+//           userData.push(doc.data());
+//         });
+
+//         setUsers(userData);
+//       } catch (error) {
+//         console.log(error);
+//       }
+//     }
+//     getUsers();
+//   }, []);
+
+//   console.log('users are here: ', users);
+//   if (!users[0]) return null;
+//   return <h1>{users[4].firstName}</h1>;
+// };
+
+// export default Login;
