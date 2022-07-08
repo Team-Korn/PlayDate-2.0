@@ -29,7 +29,7 @@ import { getStorage } from 'firebase/storage';
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-// ------ Google Authentication Function ---------------------------------
+// ------ Google Authentication Function ---------------------------
 // https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
 const googleProvider = new GoogleAuthProvider();
@@ -43,7 +43,7 @@ const signInWithGoogle = async () => {
     if (docs.docs.length === 0) {
       await addDoc(collection(db, 'users'), {
         uid: user.uid,
-        firstName: user.displayName,
+        name: user.displayName,
         authProvider: 'google',
         email: user.email,
       });
@@ -61,6 +61,24 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+// ------ function for registering a user with email and pass -----
+
+const registerWithEmailAndPassword = async (name, email, password) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await addDoc(collection(db, 'users'), {
+      uid: user.uid,
+      name,
+      authProvider: 'local',
+      email,
+    });
   } catch (err) {
     console.error(err);
     alert(err.message);
