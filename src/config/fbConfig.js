@@ -1,6 +1,6 @@
 // ------------------ FIREBASE SDK --------------------------------
 import { initializeApp } from 'firebase/app';
-// import { getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 // ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
@@ -16,21 +16,18 @@ const firebaseConfig = {
 };
 
 // ----------- ACCESS DATABASE FROM FIRESTORE -----------
-const db = getFirestore();
 
 // const auth = firebase.auth()
-
 
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });
 
-export { db };
-
 const app = initializeApp(firebaseConfig);
+const db = getFirestore();
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 // const store = getFirestore();
-export { provider, auth, app };
+export { provider, auth, app, db };
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });
 
