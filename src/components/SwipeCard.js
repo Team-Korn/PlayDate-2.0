@@ -16,7 +16,9 @@ function SwipeCard() {
           dogData.push(doc.data());
         });
         setDogs(dogData);
-      } catch (error) {}
+      } catch (error) {
+        collection.log(error, 'Who let the dogs out?');
+      }
     }
     getDogs();
   }, []);
@@ -45,7 +47,7 @@ function SwipeCard() {
               style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
               className="card"
             >
-              <h3>{dog.name}</h3>
+              <h1>{dog.name}</h1>
             </div>
           </TinderCard>
         ))}
