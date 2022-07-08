@@ -1,8 +1,13 @@
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 // ------------------ FIREBASE SDK --------------------------------
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
+
 // ----------- RECOGNIZES OUR PROJECT FROM FIREBASE -----------
 const firebaseConfig = {
   // our config
@@ -24,10 +29,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db2 = firebaseApp.firestore();
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 // const store = getFirestore();
-export { provider, auth, app, db };
+export { provider, auth, app, db, db2 };
 // -------------- BELOW MIGHT BE OUTDATED CODE -----------------
 // firebase.firestore().settings({ timestampsInSnapshots: true });
 
