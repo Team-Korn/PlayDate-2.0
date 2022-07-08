@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-1: #242526;
+  --color-2: white;
+  --color-3: #0084ff;
+  --color-4: grey;
+  --color-5: #eb4034;
+  --color-6: #333;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0px 20px;
+  background-color: var(--color-1);
+  border-bottom: 1px solid var(--color-6);
+}
+nav a {
+  color: var(--color-2);
+  text-decoration: none;
+}
+nav div a {
+  margin-right: 20px;
+}
+
+.home_container {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  overflow: hidden;
+  height: calc(100vh - 70px);
+  width: 100vw;
+}
+
+.user_container {
+  margin-top: 10px;
+  border-right: 2px solid var(--color-6);
+  overflow-y: auto;
+}
+
+.message_container {
+  position: relative;
+  width: 100px;
+}
+
+.message_form {
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+.message_form input {
+  width: 40vw;
+  margin: 0px 10px 10px;
+  padding: 10px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+.message_form btn {
+  margin-top: -10px;
+}
