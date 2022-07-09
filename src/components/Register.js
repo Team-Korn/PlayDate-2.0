@@ -32,21 +32,21 @@ function Register() {
           type="text"
           className="register__textBox"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(event) => setName(event.target.value)}
           placeholder="Full Name"
         />
         <input
           type="text"
           className="register__textBox"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
           placeholder="E-mail Address"
         />
         <input
           type="password"
           className="register__textBox"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
         />
         <button className="register__btn" onClick={register}>
