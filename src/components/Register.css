@@ -4,12 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #7ed7f0;
 }
 .register__container {
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #dcdcdc;
+  background-color: #fcce78;
   padding: 30px;
 }
 .register__textBox {
@@ -23,7 +24,7 @@
   margin-bottom: 10px;
   border: none;
   color: white;
-  background-color: black;
+  background-color: rgb(253, 147, 0);
 }
 .register__google {
   background-color: #4285f4;
