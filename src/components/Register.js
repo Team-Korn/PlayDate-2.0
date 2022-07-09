@@ -7,31 +7,24 @@ import './Register.css';
 function Register() {
   const navigate = useNavigate();
 
-  function handleClick() {
-    navigate('/');
-  }
-
-  return (
-    <button type="button" onClick={handleClick}>
-      Go home
-    </button>
-  );
-}
-/*
-function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [user, loading, error] = useAuthState(auth);
-  const history = useHistory();
+
   const register = () => {
     if (!name) alert('Please enter name');
     registerWithEmailAndPassword(name, email, password);
   };
+  // function handleClick() {
+  //   navigate('/');
+  // }
+
   useEffect(() => {
     if (loading) return;
-    if (user) history.replace('/');
-  }, [user, loading]);
+    if (user) navigate.replace('/');
+  }, [user, loading, navigate]);
+
   return (
     <div className="register">
       <div className="register__container">
@@ -72,6 +65,5 @@ function Register() {
     </div>
   );
 }
-*/
 
 export default Register;
