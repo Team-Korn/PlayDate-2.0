@@ -69,4 +69,11 @@
   background-size: cover;
 }
 
+.settings-button {
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
 

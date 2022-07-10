@@ -5,17 +5,6 @@ import { getFirestore } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 import './Profile.css';
-import styled from 'styled-components';
-// import StyledButton from './style'
-
-const StyledButton = styled.button`
-  padding: 10px 20px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 16px;
-`
-
-
 
 const Profile = () => {
   const [dogs, setDogs] = useState([]);
@@ -67,7 +56,9 @@ const Profile = () => {
             <div className="title">Australian Cattle/ Beagle</div>
             <h2>Ernie</h2>
         <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-        <StyledButton>Settings</StyledButton>
+        <Link className='settings-button' to="/settings">
+          <button>Settings</button>
+        </Link>
         </div>
       </div>
     </div>

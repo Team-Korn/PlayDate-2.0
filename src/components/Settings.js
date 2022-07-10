@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { app } from '../config/fbConfig';
-import { getFirestore } from 'firebase/firestore';
+import React from 'react';
+// { useState, useEffect }
+// import { collection, getDocs, doc, query } from 'firebase/firestore';
+// import { provider, auth, app, store } from '../config/fbConfig';
+// import { getStorage } from 'firebase/storage';
+// import { getFirestore } from 'firebase/firestore';
 
 const Settings = () => {
-  return(
-    <h1>Welcome To Your Settings</h1>
+  return (
+    <div id="Settings-view">
+    <h1>Welcome To Your Settings!</h1>
+  </div>
   )
 }
 
