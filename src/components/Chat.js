@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { db2 } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import SendMessage from './SendMessage';
+import './Chat.css';
+
 
 function Chat() {
   const messagesRef = db2.collection('messages');
@@ -25,8 +27,11 @@ function Chat() {
   };
 
   return (
-    <>
-      <div>
+    <div className="home_container">
+      <div className="users_container">
+        <p>Sidebar Here</p>
+      </div>
+      <div className="messages_container">
         {messages &&
           messages.map((msg) => <SendMessage key={msg.id} message={msg} />)}
       </div>
@@ -59,7 +64,7 @@ function Chat() {
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
 
