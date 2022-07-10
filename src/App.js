@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
 
           <Route path="/chat" element={<Chat />} />
 
