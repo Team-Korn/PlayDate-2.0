@@ -5,8 +5,19 @@ import { getFirestore } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 
 import './Profile.css';
+import styled from 'styled-components';
+// import StyledButton from './style'
 
-const Profile = (props) => {
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 16px;
+`
+
+
+
+const Profile = () => {
   const [dogs, setDogs] = useState([]);
   const db = getFirestore(app);
 
@@ -14,12 +25,10 @@ const Profile = (props) => {
     async function getDogs() {
       try {
         const querySnapshot = await getDocs(collection(db, 'dogs'));
-        // console.log('QS: ', querySnapshot.docs);
         const dogData = [];
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
-        console.log('DD: ', dogData);
         setDogs(dogData);
       } catch (error) {
         console.log(error);
@@ -27,7 +36,6 @@ const Profile = (props) => {
     }
     getDogs();
   }, []);
-  console.log('dogs', dogs);
 
   const [users, setUsers] = useState([]);
 
@@ -39,7 +47,6 @@ const Profile = (props) => {
         querySnapshot.forEach((doc) => {
           userData.push(doc.data());
         });
-        console.log('UD: ', userData);
         setUsers(userData);
       } catch (error) {
         console.log(error);
@@ -47,31 +54,22 @@ const Profile = (props) => {
     }
     getUsers();
   }, []);
-  console.log('users', users);
-
-  const handleClick = () => {
-    props.history.push('/profile-settings');
-  };
 
   if (!dogs[0]) return null;
   return (
   <div className='profile-view'>
-    <div class="card">
-      <div class="img-avatar"></div>
-        <div class="card-text">
-          <div class="portada">
+    <div className="card">
+      <div className="img-avatar"></div>
+        <div className="card-text">
+          <div className="portada">
           </div>
-          <div class="title-total">
-            <div class="title">Australian Cattle/ Beagle</div>
+          <div className="title-total">
+            <div className="title">Australian Cattle/ Beagle</div>
             <h2>Ernie</h2>
-        <div class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+        <div className="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+        <StyledButton>Settings</StyledButton>
         </div>
       </div>
-    </div>
-    <div>
-      <Link to="/settings">
-      <button>Settings</button>
-      </Link>
     </div>
   </div>
   )
