@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, registerWithEmailAndPassword, signInWithGoogle } from '../Auth';
 import './Register.css';
 
-function Register() {
+function SignUpUserInfo() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ function Register() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate.replace('/signupuser');
+    if (user) navigate.replace('/');
   }, [user, loading, navigate]);
 
   return (
@@ -66,4 +66,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default SignUpUserInfo;
