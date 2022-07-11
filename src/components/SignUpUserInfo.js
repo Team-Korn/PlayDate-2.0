@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, registerWithEmailAndPassword, signInWithGoogle } from '../Auth';
-import './Register.css';
+// import './SignUpUserInfo.css';
 
-function Register() {
+function SignUpUserInfo() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -21,14 +21,8 @@ function Register() {
   // }
 
   useEffect(() => {
-    if (loading) {
-      console.log('LOADING');
-      return;
-    }
-    if (user) {
-      console.log('we have a USER');
-      navigate('/signupuser');
-    }
+    if (loading) return;
+    // if (user) navigate('/dogInfo');
   }, [user, loading, navigate]);
 
   return (
@@ -72,4 +66,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default SignUpUserInfo;

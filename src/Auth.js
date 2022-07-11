@@ -85,6 +85,10 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   }
 };
 
+// --------- Additional User Info -----------------------
+
+// ---------- Forms for dog and auto-populate ----------
+
 // -------- function that will send a pass reset link to an email address ------------------
 
 // This code is simple. We are just passing in the email in the sendPasswordResetEmail function provided by Firebase. The password reset email will be sent by Firebase.
