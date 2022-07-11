@@ -8,7 +8,7 @@ function SwipeCard() {
   const [dogs, setDogs] = useState([]);
 
   useEffect(() => {
-    async function getDogs() {
+    (async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'dogs'));
         const dogData = [];
@@ -16,16 +16,19 @@ function SwipeCard() {
           dogData.push(doc.data());
         });
         setDogs(dogData);
-      } catch (error) {
-        collection.log(error, 'Who let the dogs out?');
+      } catch (err) {
+        collection.log(err, 'who let the dogs out?');
       }
-    }
-    getDogs();
+    })();
   }, []);
   if (!dogs[0]) return null;
 
+  const dogsRef = collection(db, 'dogs');
+  console.log('DOG REF: ', dogsRef);
+  console.log(db.length);
   const swiped = (direction, nameToDelete) => {
     console.log('removing: ' + nameToDelete);
+    console.log('swiped ', direction);
     // setLastDirection(direction);
   };
   const outOfFrame = (name) => {

@@ -61,7 +61,7 @@ const Navbar = () => {
       <StyledNavbar>
         <StyledNavHeader>
           <StyledLeftHeader>
-            <StyledLogoLink to="/">Playdate 🐾</StyledLogoLink>
+            <StyledLogoLink to="/home">Playdate 🐾</StyledLogoLink>
           </StyledLeftHeader>
           <StyledRightHeader>
             <StyledLinksWrapper>
