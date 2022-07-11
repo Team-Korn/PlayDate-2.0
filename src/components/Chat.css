@@ -2,15 +2,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --color-1: #242526;
-    --color-2: white;
-    --color-3: #0084ff;
-    --color-4: grey;
-    --color-5: #eb4034;
-    --color-6: #333;
-  }
-
 img {
     border-radius: 50%;
     height: 45px;
@@ -26,26 +17,6 @@ img {
     margin-left: 10px;
     margin-right: 10px;
     overflow-wrap: break-word;
-  }
-
-  .home_container {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    overflow: hidden;
-    height: calc(100vh - 70px);
-    width: 100vw;
-  }
-
-  .users_container {
-    margin-top: 10px;
-    border-right: 2px solid var(--color-6);
-    overflow-y: auto;
-  }
-
-  .messages_container {
-    position: relative;
-    width: 100%;
   }
   
   .msg {
