@@ -22,7 +22,7 @@ function SignUpUserInfo() {
 
   useEffect(() => {
     if (loading) return;
-    // if (user) navigate('/dogInfo');
+    // if (user.state && user.city) navigate('/dogInfo');
   }, [user, loading, navigate]);
 
   return (

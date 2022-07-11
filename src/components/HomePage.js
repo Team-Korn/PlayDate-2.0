@@ -1,3 +1,4 @@
+// ------- FOR KATIE -------------------
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
@@ -11,7 +12,25 @@ import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 
+// ------ FOR ADDING LOGIN CHECK -----------------
+import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../Auth';
+
 const HomePage = () => {
+  // -------- FOR LOGIN CHECK -------------
+  const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      return;
+    }
+  }, [user, loading, navigate]);
+
+  // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
