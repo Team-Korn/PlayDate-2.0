@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, registerWithEmailAndPassword, signInWithGoogle } from '../Auth';
-import './Register.css';
+// import './SignUpUserInfo.css';
 
 function SignUpUserInfo() {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ function SignUpUserInfo() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) navigate.replace('/');
+    // if (user) navigate('/dogInfo');
   }, [user, loading, navigate]);
 
   return (

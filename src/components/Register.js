@@ -21,8 +21,14 @@ function Register() {
   // }
 
   useEffect(() => {
-    if (loading) return;
-    if (user) navigate.replace('/signupuser');
+    if (loading) {
+      console.log('LOADING');
+      return;
+    }
+    if (user) {
+      console.log('we have a USER');
+      navigate('/signupuser');
+    }
   }, [user, loading, navigate]);
 
   return (
