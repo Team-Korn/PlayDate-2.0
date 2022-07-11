@@ -25,7 +25,9 @@ function Login() {
       return;
     }
     if (user) navigate('/home');
+
   }, [user, loading, navigate]);
+
   return (
     <div className="login">
       <div className="login__container">
