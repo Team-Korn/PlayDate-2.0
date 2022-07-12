@@ -1,6 +1,6 @@
 // ------- FOR KATIE -------------------
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
@@ -13,13 +13,14 @@ import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 
 // ------ FOR ADDING LOGIN CHECK -----------------
-import { useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../Auth';
+import { getAuth } from 'firebase/auth';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth } from '../Auth';
 
 const HomePage = () => {
   // -------- FOR LOGIN CHECK -------------
-  const [user, loading] = useAuthState(auth);
+  /* const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,14 @@ const HomePage = () => {
       return;
     }
   }, [user, loading, navigate]);
+*/
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+  if (user !== null) {
+    const uid = user.uid;
+    console.log('USER UID! - ', user.uid);
+  }
 
   // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
