@@ -49,7 +49,9 @@ function SignUpUserInfo() {
           onChange={(event) => setZipcode(event.target.value)}
           placeholder="Zipcode"
         />
-        <button className="userInfo__btn">Continue</button>
+        <button className="userInfo__btn" type="submit">
+          Continue
+        </button>
 
         {/* <div>
             Already have an account? <Link to="/">Login</Link> now.

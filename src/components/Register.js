@@ -55,6 +55,7 @@ function Register() {
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
         />
+
         <button className="register__btn" onClick={register}>
           Register
         </button>
