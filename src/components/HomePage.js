@@ -13,13 +13,13 @@ import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 
 // ------ FOR ADDING LOGIN CHECK -----------------
-import { useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../Auth';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth } from '../Auth';
 
 const HomePage = () => {
   // -------- FOR LOGIN CHECK -------------
-  const [user, loading] = useAuthState(auth);
+  /* const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const HomePage = () => {
       return;
     }
   }, [user, loading, navigate]);
-
+*/
   // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
 
@@ -113,7 +113,7 @@ const HomePage = () => {
           >
             <div
               style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-              className="card"
+              className="swipeCard"
             >
               <h1>{dog.name}</h1>
             </div>
