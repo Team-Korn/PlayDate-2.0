@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { logout } from '../Auth';
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -68,8 +69,8 @@ const Navbar = () => {
               <StyledLink to="/chat">
                 <h3>Messages</h3>
               </StyledLink>
-              <StyledLink to="/login">
-                <h3>Login</h3>
+              <StyledLink to="/login" onClick={logout}>
+                <h3>Logout</h3>
               </StyledLink>
             </StyledLinksWrapper>
           </StyledRightHeader>

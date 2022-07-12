@@ -5,8 +5,8 @@ const StyledButton = styled.button`
   text-align: center;
   cursor: pointer;
   border-radius: 16px;
-`
+`;
 
 export default {
-  StyledButton
-}
+  StyledButton,
+};

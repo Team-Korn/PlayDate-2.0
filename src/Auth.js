@@ -87,6 +87,22 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 // --------- Additional User Info -----------------------
 
+// const additionalUserInfo = async (city, state, zipcode) => {
+//   try {
+//     const res = await createUserWithEmailAndPassword(auth, email, password);
+//     const user = res.user;
+//     await addDoc(collection(db, 'users'), {
+//       uid: user.uid,
+//       name,
+//       authProvider: 'local',
+//       email,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     alert(err.message);
+//   }
+// };
+
 // ---------- Forms for dog and auto-populate ----------
 
 // -------- function that will send a pass reset link to an email address ------------------

@@ -1,7 +1,14 @@
 // ------- FOR KATIE -------------------
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../config/fbConfig';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore';
+import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -11,26 +18,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
-
-// ------ FOR ADDING LOGIN CHECK -----------------
-import { useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../Auth';
+import { getAuth } from 'firebase/auth';
 
 const HomePage = () => {
-  // -------- FOR LOGIN CHECK -------------
-  const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      return;
-    }
-  }, [user, loading, navigate]);
-
-  // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
@@ -38,6 +28,7 @@ const HomePage = () => {
 
   const currentIndexRef = useRef(currentIndex);
 
+  // Tinder Card ref
   const childRefs = useMemo(
     () =>
       Array(dogs.length)
@@ -46,14 +37,30 @@ const HomePage = () => {
     [dogs.length]
   );
 
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
+
+  // card buttons
   const canGoBack = currentIndex <= dogs.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
+  const goBack = async () => {
+    if (!canGoBack) return;
+    else {
+      const newIndex = currentIndex + 1;
+      updateCurrentIndex(newIndex);
+      await childRefs[newIndex].current.restoreCard();
+    }
+  };
+
+  // swipe functionality
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
@@ -71,17 +78,7 @@ const HomePage = () => {
     }
   };
 
-  console.log('CURR IDX: ', currentIndex + 1);
-  // increase current index and show card
-  const goBack = async () => {
-    if (!canGoBack) return;
-    else {
-      const newIndex = currentIndex + 1;
-      updateCurrentIndex(newIndex);
-      await childRefs[newIndex].current.restoreCard();
-    }
-  };
-
+  // gets dog collection
   useEffect(() => {
     (async () => {
       try {
@@ -97,12 +94,20 @@ const HomePage = () => {
     })();
   }, []);
 
-  if (!dogs[0]) return null;
+  // return all dogs except current user's dog
+  const otherDogs = dogs.filter((dog) => {
+    return dog.ownerId !== user.uid;
+  });
+
+  // shows owner's dog
+  const currDog = dogs.filter((dog) => {
+    return dog.ownerId === user.uid;
+  });
 
   return (
     <div className="tindercards cardContent">
       <div className="tinderCards__cardContainer">
-        {dogs.map((dog, index) => (
+        {otherDogs.map((dog, index) => (
           <TinderCard
             ref={childRefs[index]}
             className="swipe"
@@ -113,7 +118,7 @@ const HomePage = () => {
           >
             <div
               style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-              className="card"
+              className="swipeCard"
             >
               <h1>{dog.name}</h1>
             </div>
