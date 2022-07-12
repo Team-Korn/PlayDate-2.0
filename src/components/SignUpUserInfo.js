@@ -12,18 +12,18 @@ function SignUpUserInfo() {
   const [city, setCity] = useState('');
   const [user, loading] = useAuthState(auth);
 
-  const register = () => {
+  // const addUserInfo = () => {
   //   if (!name) alert('Please enter name');
   //   registerWithEmailAndPassword(name, email, password);
   // };
-  // function handleClick() {
-  //   navigate('/');
-  // }
+  function handleClick() {
+    navigate('/');
+  }
 
-  useEffect(() => {
-    if (loading) return;
-    if (state && city && zipcode) navigate('/userPhoto');
-  }, [user, loading, navigate]);
+  // useEffect(() => {
+  //   if (loading) return;
+  //   if ((onclick = { Submit })) navigate('/userPhoto');
+  // }, [loading, navigate]);
 
   return (
     <div className="userInfo">
@@ -31,36 +31,36 @@ function SignUpUserInfo() {
         <input
           type="text"
           className="userInfo__container"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Full Name"
+          value={city}
+          onChange={(event) => setCity(event.target.value)}
+          placeholder="City"
         />
         <input
           type="text"
           className="userInfo__container"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="E-mail Address"
+          value={state}
+          onChange={(event) => setState(event.target.value)}
+          placeholder="State"
         />
         <input
-          type="password"
+          type="text"
           className="userInfo__container"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Password"
+          value={zipcode}
+          onChange={(event) => setZipcode(event.target.value)}
+          placeholder="Zipcode"
         />
-        <button className="register__btn" onClick={register}>
-          Register
-        </button>
-        <button
-          className="register__btn register__google"
-          onClick={signInWithGoogle}
-        >
-          Continue
-        </button>
-        <div>
-          Already have an account? <Link to="/">Login</Link> now.
-        </div>
+        {/* <button className="userInfo__btn" onClick={}>
+            Register
+          </button> */}{' '}
+        {/* <button */}
+        {/* className="register__btn register__google"
+            onClick={signInWithGoogle}
+          >
+            Continue
+          </button> */}
+        {/* <div>
+            Already have an account? <Link to="/">Login</Link> now.
+          </div> */}
       </div>
     </div>
   );
