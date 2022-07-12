@@ -3,9 +3,6 @@ import React, { useState, useRef } from 'react';
 import { db2 } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from '../Auth';
-// import SendMessage from './SendMessage';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -145,7 +142,6 @@ function Chat() {
 
 function SendMessage(props) {
   const { text } = props.message;
-
 
   return (
     <div>
