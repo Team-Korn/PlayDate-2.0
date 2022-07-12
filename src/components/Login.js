@@ -7,7 +7,6 @@ import {
   logInWithEmailAndPassword,
   registerWithEmailAndPassword,
   sendPasswordReset,
-  logout,
 } from '../Auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -25,7 +24,6 @@ function Login() {
       return;
     }
     if (user) navigate('/home');
-
   }, [user, loading, navigate]);
 
   return (

@@ -49,15 +49,8 @@ function SignUpUserInfo() {
           onChange={(event) => setZipcode(event.target.value)}
           placeholder="Zipcode"
         />
-        {/* <button className="userInfo__btn" onClick={}>
-            Register
-          </button> */}{' '}
-        {/* <button */}
-        {/* className="register__btn register__google"
-            onClick={signInWithGoogle}
-          >
-            Continue
-          </button> */}
+        <button className="userInfo__btn">Continue</button>
+
         {/* <div>
             Already have an account? <Link to="/">Login</Link> now.
           </div> */}
