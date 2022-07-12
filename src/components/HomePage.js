@@ -113,7 +113,7 @@ const HomePage = () => {
           >
             <div
               style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-              className="card"
+              className="swipeCard"
             >
               <h1>{dog.name}</h1>
             </div>
