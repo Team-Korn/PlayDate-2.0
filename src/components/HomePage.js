@@ -1,6 +1,13 @@
 // ------- FOR KATIE -------------------
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
@@ -14,6 +21,7 @@ import { Link } from 'react-router-dom';
 
 // ------ FOR ADDING LOGIN CHECK -----------------
 import { getAuth } from 'firebase/auth';
+import { getDialogActionsUtilityClass } from '@mui/material';
 // import { useNavigate } from 'react-router-dom';
 // import { useAuthState } from 'react-firebase-hooks/auth';
 // import { auth } from '../Auth';
@@ -31,13 +39,36 @@ const HomePage = () => {
     }
   }, [user, loading, navigate]);
 */
-
+  // get current user UID
   const auth = getAuth();
   const user = auth.currentUser;
+
   if (user !== null) {
     const uid = user.uid;
-    console.log('USER UID! - ', user.uid);
+    console.log('USER UID! - ', uid);
   }
+  // Get that user's dog ---> set that dog to a var dog1
+
+  // getUserDog() async {
+  //   try {
+  //     const dogRef = doc(db, 'users', user);
+  //     const dogSnap = await getDoc(dogRef);
+
+  //     console.log('DOGSNAP: ', dogSnap.data());
+  //   } catch (err) {
+  //     console.log(err, 'who let the dogs out?');
+  //   }
+  // };
+
+  // use  dog1 to pull up dog1 document
+
+  // exclude dog1 from card Array
+
+  // check dog1 likedby to see if swipped dog is in array
+  // if yes -> add add swipped dog to dog1 match
+  //  add dog1 to swipped dog's matches
+  // if no -> add dog1 to swipped dog's likedBy array
+  // if dog1 swipes right: add swipped dog to dog1 "likes"
 
   // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
