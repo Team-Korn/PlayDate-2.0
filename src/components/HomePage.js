@@ -1,7 +1,14 @@
 // ------- FOR KATIE -------------------
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../config/fbConfig';
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore';
+import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
 import ReplayIcon from '@material-ui/icons/Replay';
@@ -13,13 +20,15 @@ import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 
 // ------ FOR ADDING LOGIN CHECK -----------------
-import { useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../Auth';
+import { getAuth } from 'firebase/auth';
+import { ownerWindow } from '@material-ui/core';
+// import { useNavigate } from 'react-router-dom';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth } from '../Auth';
 
 const HomePage = () => {
   // -------- FOR LOGIN CHECK -------------
-  const [user, loading] = useAuthState(auth);
+  /* const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +38,30 @@ const HomePage = () => {
       return;
     }
   }, [user, loading, navigate]);
+*/
+  // get current user UID
+  // Get that user's dog ---> set that dog to a var dog1
+
+  // getUserDog() async {
+  //   try {
+  //     const dogRef = doc(db, 'users', user);
+  //     const dogSnap = await getDoc(dogRef);
+
+  //     console.log('DOGSNAP: ', dogSnap.data());
+  //   } catch (err) {
+  //     console.log(err, 'who let the dogs out?');
+  //   }
+  // };
+
+  // use  dog1 to pull up dog1 document
+
+  // exclude dog1 from card Array
+
+  // check dog1 likedby to see if swipped dog is in array
+  // if yes -> add add swipped dog to dog1 match
+  //  add dog1 to swipped dog's matches
+  // if no -> add dog1 to swipped dog's likedBy array
+  // if dog1 swipes right: add swipped dog to dog1 "likes"
 
   // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
@@ -38,6 +71,7 @@ const HomePage = () => {
 
   const currentIndexRef = useRef(currentIndex);
 
+  // Tinder Card ref
   const childRefs = useMemo(
     () =>
       Array(dogs.length)
@@ -45,6 +79,14 @@ const HomePage = () => {
         .map((i) => React.createRef()),
     [dogs.length]
   );
+
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  if (user !== null) {
+    const uid = user.uid;
+    console.log('USER UID! - ', uid);
+  }
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
@@ -81,7 +123,7 @@ const HomePage = () => {
       await childRefs[newIndex].current.restoreCard();
     }
   };
-
+  // gives dogs array
   useEffect(() => {
     (async () => {
       try {
@@ -97,12 +139,24 @@ const HomePage = () => {
     })();
   }, []);
 
-  if (!dogs[0]) return null;
+  // return arr w/ all dogs except currdog
+  const otherDogs = dogs.filter((dog) => {
+    console.log('dog owner id:', dog.ownerId);
+    return dog.ownerId !== user.uid;
+  });
+  // returns arr with current dog
+  const currDog = dogs.filter((dog) => {
+    console.log('dog owner id:', dog.ownerId);
+    return dog.ownerId === user.uid;
+  });
+
+  console.log('THIS DOG', currDog);
+  console.log('Other dogs', otherDogs);
 
   return (
     <div className="tindercards cardContent">
       <div className="tinderCards__cardContainer">
-        {dogs.map((dog, index) => (
+        {otherDogs.map((dog, index) => (
           <TinderCard
             ref={childRefs[index]}
             className="swipe"
