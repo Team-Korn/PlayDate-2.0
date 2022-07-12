@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+/* eslint-disable jsx-a11y/alt-text */
+import React, { useState, useRef } from 'react';
 import { db2 } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import SendMessage from './SendMessage';
-// import './Chat.css';
+// import { useAuthState } from 'react-firebase-hooks/auth';
+// import { auth } from '../Auth';
+// import SendMessage from './SendMessage';
+import './Chat.css';
 
 /*---MATERIAL-UI---*/
 import { makeStyles } from '@material-ui/core/styles';
@@ -44,6 +47,7 @@ const useStyles = makeStyles({
 
 function Chat() {
   const classes = useStyles();
+  const dummy = useRef();
 
   const messagesRef = db2.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(50);
@@ -55,13 +59,13 @@ function Chat() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    // const { uid, photoURL } = auth.currentUser // from SignIn
 
     await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setFormValue(''); // empties the message container
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -111,6 +115,7 @@ function Chat() {
                 <Grid item xs={12}>
                   <ListItemText align="right" >
                     {messages && messages.map((msg) => <SendMessage key={msg.id} message={msg} />)}
+                    <span ref={dummy}></span>
                   </ListItemText>
                 </Grid>
               </Grid>
@@ -119,11 +124,14 @@ function Chat() {
           <Divider />
           <Grid container style={{ padding: '20px' }}>
             <Grid item xs={11}>
-              <TextField
-                id="outlined-basic-email"
-                label="say something nice" fullWidth
-                value={formValue}
-                onChange={(e) => setFormValue(e.target.value)} />
+              <form onSubmit={sendMessage}>
+                <TextField
+                  id="outlined-basic-email"
+                  label="say something nice" fullWidth
+                  value={formValue}
+                  onChange={(e) => setFormValue(e.target.value)}
+                />
+              </form>
             </Grid>
             <Grid xs={1} align="right">
               <Fab onClick={sendMessage} color="primary" aria-label="add"><SendIcon /></Fab>
@@ -133,6 +141,17 @@ function Chat() {
       </Grid>
     </div>
   );
+}
+
+function SendMessage(props) {
+  const { text } = props.message;
+
+
+  return (
+    <div>
+      <p>{text}</p>
+    </div>
+  )
 }
 
 export default Chat;
