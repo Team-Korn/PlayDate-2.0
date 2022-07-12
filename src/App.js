@@ -5,8 +5,9 @@ import Navbar from './components/Navbar';
 import Chat from './components/Chat';
 import Login from './components/Login';
 import Register from './components/Register';
-import Profile from './components/Profile';
-import Settings from './components/Settings';
+import Profile from './components/user/Profile';
+import Settings from './components/user/Settings';
+import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 
 function App() {
@@ -25,9 +26,11 @@ function App() {
 
           <Route path="/register" element={<Register />} />
 
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/user" element={<Profile />} />
 
-          <Route path="/profile-settings" element={<Settings />} />
+          <Route path="/user-settings" element={<Settings />} />
+          
+          <Route path="/user-preferences" element={<Preferences />} />
 
           <Route path="/signupuser" element={<SignUpUserInfo />} />
         </Routes>
