@@ -7,60 +7,53 @@ import { auth, registerWithEmailAndPassword, signInWithGoogle } from '../Auth';
 function SignUpUserInfo() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [user, loading, error] = useAuthState(auth);
+  const [zipcode, setZipcode] = useState('');
+  const [state, setState] = useState('');
+  const [city, setCity] = useState('');
+  const [user, loading] = useAuthState(auth);
 
-  const register = () => {
-    if (!name) alert('Please enter name');
-    registerWithEmailAndPassword(name, email, password);
-  };
-  // function handleClick() {
-  //   navigate('/');
-  // }
+  // const addUserInfo = () => {
+  //   if (!name) alert('Please enter name');
+  //   registerWithEmailAndPassword(name, email, password);
+  // };
+  function handleClick() {
+    navigate('/');
+  }
 
-  useEffect(() => {
-    if (loading) return;
-    // if (user.state && user.city) navigate('/dogInfo');
-  }, [user, loading, navigate]);
+  // useEffect(() => {
+  //   if (loading) return;
+  //   if ((onclick = { Submit })) navigate('/userPhoto');
+  // }, [loading, navigate]);
 
   return (
-    <div className="register">
-      <div className="register__container">
+    <div className="userInfo">
+      <div className="userInfo_container">
         <input
           type="text"
-          className="register__textBox"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Full Name"
+          className="userInfo__container"
+          value={city}
+          onChange={(event) => setCity(event.target.value)}
+          placeholder="City"
         />
         <input
           type="text"
-          className="register__textBox"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="E-mail Address"
+          className="userInfo__container"
+          value={state}
+          onChange={(event) => setState(event.target.value)}
+          placeholder="State"
         />
         <input
-          type="password"
-          className="register__textBox"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Password"
+          type="text"
+          className="userInfo__container"
+          value={zipcode}
+          onChange={(event) => setZipcode(event.target.value)}
+          placeholder="Zipcode"
         />
-        <button className="register__btn" onClick={register}>
-          Register
-        </button>
-        <button
-          className="register__btn register__google"
-          onClick={signInWithGoogle}
-        >
-          Register with Google
-        </button>
-        <div>
-          Already have an account? <Link to="/">Login</Link> now.
-        </div>
+        <button className="userInfo__btn">Continue</button>
+
+        {/* <div>
+            Already have an account? <Link to="/">Login</Link> now.
+          </div> */}
       </div>
     </div>
   );
