@@ -18,52 +18,9 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
-
-// ------ FOR ADDING LOGIN CHECK -----------------
 import { getAuth } from 'firebase/auth';
-import { ownerWindow } from '@material-ui/core';
-// import { useNavigate } from 'react-router-dom';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from '../Auth';
 
 const HomePage = () => {
-  // -------- FOR LOGIN CHECK -------------
-  /* const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      return;
-    }
-  }, [user, loading, navigate]);
-*/
-  // get current user UID
-  // Get that user's dog ---> set that dog to a var dog1
-
-  // getUserDog() async {
-  //   try {
-  //     const dogRef = doc(db, 'users', user);
-  //     const dogSnap = await getDoc(dogRef);
-
-  //     console.log('DOGSNAP: ', dogSnap.data());
-  //   } catch (err) {
-  //     console.log(err, 'who let the dogs out?');
-  //   }
-  // };
-
-  // use  dog1 to pull up dog1 document
-
-  // exclude dog1 from card Array
-
-  // check dog1 likedby to see if swipped dog is in array
-  // if yes -> add add swipped dog to dog1 match
-  //  add dog1 to swipped dog's matches
-  // if no -> add dog1 to swipped dog's likedBy array
-  // if dog1 swipes right: add swipped dog to dog1 "likes"
-
-  // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
@@ -80,22 +37,30 @@ const HomePage = () => {
     [dogs.length]
   );
 
+  // get current user uid to check for current dog
   const auth = getAuth(app);
   const user = auth.currentUser;
-
-  if (user !== null) {
-    const uid = user.uid;
-    console.log('USER UID! - ', uid);
-  }
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
+
+  // card buttons
   const canGoBack = currentIndex <= dogs.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
+  const goBack = async () => {
+    if (!canGoBack) return;
+    else {
+      const newIndex = currentIndex + 1;
+      updateCurrentIndex(newIndex);
+      await childRefs[newIndex].current.restoreCard();
+    }
+  };
+
+  // swipe functionality
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
@@ -113,17 +78,7 @@ const HomePage = () => {
     }
   };
 
-  console.log('CURR IDX: ', currentIndex + 1);
-  // increase current index and show card
-  const goBack = async () => {
-    if (!canGoBack) return;
-    else {
-      const newIndex = currentIndex + 1;
-      updateCurrentIndex(newIndex);
-      await childRefs[newIndex].current.restoreCard();
-    }
-  };
-  // gives dogs array
+  // gets dog collection
   useEffect(() => {
     (async () => {
       try {
@@ -139,19 +94,15 @@ const HomePage = () => {
     })();
   }, []);
 
-  // return arr w/ all dogs except currdog
+  // return all dogs except current user's dog
   const otherDogs = dogs.filter((dog) => {
-    console.log('dog owner id:', dog.ownerId);
     return dog.ownerId !== user.uid;
   });
-  // returns arr with current dog
+
+  // shows owner's dog
   const currDog = dogs.filter((dog) => {
-    console.log('dog owner id:', dog.ownerId);
     return dog.ownerId === user.uid;
   });
-
-  console.log('THIS DOG', currDog);
-  console.log('Other dogs', otherDogs);
 
   return (
     <div className="tindercards cardContent">
