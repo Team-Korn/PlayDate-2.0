@@ -4,10 +4,6 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc,
-  query,
-  where,
-  FieldValue,
   updateDoc,
   arrayUnion,
 } from 'firebase/firestore';
