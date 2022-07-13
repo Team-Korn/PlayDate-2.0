@@ -46,9 +46,23 @@ function Chat() {
   const classes = useStyles();
   const dummy = useRef();
 
+  /*---CHAT-SIDEBAR---*/
+  db2.collection("dogs").doc("dog1")
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        console.log("Document data-matches:", doc.data()["matches"]);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }).catch(function (error) {
+      console.log("Error getting document:", error);
+    });
+
+  /*---CHAT-MESSAGES---*/
   const messagesRef = db2.collection('messages');
   const query = messagesRef.orderBy('createdAt').limit(50);
-
   /*---listen to data with a hook---*/
   const [messages] = useCollectionData(query, { idField: 'id' });
 
