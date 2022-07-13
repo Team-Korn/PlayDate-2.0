@@ -10,8 +10,6 @@ const Profile = () => {
   const auth = getAuth(app);
   const user = auth.currentUser;
 
-  // console.log('CURRENT USER: ',user.uid);
-
   // gets dog collection
   const [dogs, setDogs] = useState([]);
 
@@ -30,23 +28,11 @@ const Profile = () => {
     })();
   }, []);
 
-  console.log('DOGS: ', dogs)
-
   // shows owner's dog
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
-  console.log('MY DOG: ', currDog)
 
-// querying dog collection using where
-  // const getMyDog = async () => {
-  // const q = query(collection(db, "dogs"), where("ownerId", "==", "user.uid" ));
-  // const querySnapshot = await getDocs(q);
-  // querySnapshot.forEach((doc) => {
-  //   // doc.data() is never undefined for query doc snapshots
-  //   console.log(doc.id, " => ", doc.data());
-  // });
-// }
 if (!dogs[0]) {
   console.log('No Dogs!'); }
   else {
