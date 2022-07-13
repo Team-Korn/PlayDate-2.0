@@ -61,10 +61,16 @@ const HomePage = () => {
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    console.log(currDog[0].likes);
     if (direction === 'right') {
+      currDog[0].likes.push(nameToDelete);
+      // helper function to access likedBy on nameToDelete
       console.log('you really like ', nameToDelete);
+      console.log('CURR DOG LIKES:', currDog[0].likes);
     } else {
-      console.log('PASS: ');
+      currDog[0].passed.push(nameToDelete);
+      console.log('PASS:  ', nameToDelete);
+      console.log('CURR DOG PASS:', currDog[0].passed);
     }
   };
 
