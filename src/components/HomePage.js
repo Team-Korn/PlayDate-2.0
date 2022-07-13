@@ -64,12 +64,17 @@ const HomePage = () => {
     console.log(currDog[0].likes);
     if (direction === 'right') {
       currDog[0].likes.push(nameToDelete);
+      otherDogs[index].likedBy.push(currDog[0]);
       // helper function to access likedBy on nameToDelete
-      console.log('you really like ', nameToDelete);
+      console.log(
+        'OTHER DOG LIKEDBY ',
+        otherDogs[index].likedBy,
+        otherDogs[index].name
+      );
       console.log('CURR DOG LIKES:', currDog[0].likes);
     } else {
       currDog[0].passed.push(nameToDelete);
-      console.log('PASS:  ', nameToDelete);
+      console.log('OTHER DOG:  ', otherDogs[index].size);
       console.log('CURR DOG PASS:', currDog[0].passed);
     }
   };
