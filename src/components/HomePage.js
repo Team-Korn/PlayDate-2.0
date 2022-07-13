@@ -21,6 +21,8 @@ import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 
 const HomePage = () => {
+  // ------ BELOW is all of state for dogs --------
+  // const HomePage = () => {
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
@@ -38,8 +40,10 @@ const HomePage = () => {
   );
 
   // get current user uid to check for current dog
-  const auth = getAuth(app);
-  const user = auth.currentUser;
+  // const auth = getAuth(app);
+  // ^^^^ The above line is already being called in through
+  // "../Auth"
+  const currentUser = auth.currentUser;
 
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
@@ -96,12 +100,12 @@ const HomePage = () => {
 
   // return all dogs except current user's dog
   const otherDogs = dogs.filter((dog) => {
-    return dog.ownerId !== user.uid;
+    return dog.ownerId !== currentUser.uid;
   });
 
   // shows owner's dog
   const currDog = dogs.filter((dog) => {
-    return dog.ownerId === user.uid;
+    return dog.ownerId === currentUser.uid;
   });
 
   return (

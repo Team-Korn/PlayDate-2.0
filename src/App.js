@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
@@ -10,7 +10,26 @@ import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 
+// ---- FOR LOGIN CHECK -----------------------------
+import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../Auth';
+
+// -------------------------------------
+
 function App() {
+  // -------- FOR LOGIN CHECK -------------
+  const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    } else {
+      return;
+    }
+  }, [user, loading, navigate]);
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,7 +48,7 @@ function App() {
           <Route path="/user" element={<Profile />} />
 
           <Route path="/user-settings" element={<Settings />} />
-          
+
           <Route path="/user-preferences" element={<Preferences />} />
 
           <Route path="/signupuser" element={<SignUpUserInfo />} />

@@ -133,34 +133,3 @@ export {
   sendPasswordReset,
   logout,
 };
-
-// ------------- Below is the homepage copy rendering Users from db --
-// ------ My Login Function --------------------------------
-
-// const Login = () => {
-//   const [users, setUsers] = useState([]);
-
-//   useEffect(() => {
-//     async function getUsers() {
-//       try {
-//         const querySnapshot = await getDocs(collection(db, 'users'));
-
-//         const userData = [];
-//         querySnapshot.forEach((doc) => {
-//           userData.push(doc.data());
-//         });
-
-//         setUsers(userData);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//     getUsers();
-//   }, []);
-
-//   console.log('users are here: ', users);
-//   if (!users[0]) return null;
-//   return <h1>{users[4].firstName}</h1>;
-// };
-
-// export default Login;
