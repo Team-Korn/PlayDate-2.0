@@ -61,7 +61,11 @@ const HomePage = () => {
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
-    console.log('hello world');
+    if (direction === 'right') {
+      console.log('you really like ', nameToDelete);
+    } else {
+      console.log('PASS: ');
+    }
   };
 
   const outOfFrame = (name, idx) => {
@@ -72,7 +76,13 @@ const HomePage = () => {
 
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < dogs.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+      await childRefs[currentIndex].current.swipe(dir);
+      // Swipe the card!
+      // if (dir === 'right') {
+      //   console.log('you really like em');
+      // } else {
+      //   console.log('PASS: ');
+      // }
     } else {
       // TODO set some message that there are no more swipes available
       console.log('DONE!');
@@ -88,6 +98,7 @@ const HomePage = () => {
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
+
         setDogs(dogData);
       } catch (err) {
         collection.log(err, 'who let the dogs out?');
