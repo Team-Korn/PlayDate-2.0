@@ -7,6 +7,9 @@ import {
   getDoc,
   query,
   where,
+  FieldValue,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
@@ -57,12 +60,40 @@ const HomePage = () => {
     }
   };
 
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  // return all dogs except current user's dog
+  const otherDogs = dogs.filter((dog) => {
+    return dog.ownerId !== user.uid;
+  });
+
+  // shows owner's dog
+  const currDog = dogs.filter((dog) => {
+    return dog.ownerId === user.uid;
+  });
+
+  // adds swipe to db
+  async function currDogDBLikes(id) {
+    const currDogDB = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogDB, {
+      likes: arrayUnion(id),
+    });
+  }
+
+  // --------------------------------------
+
   // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    // start our code
+
     console.log(currDog[0].likes);
+    // if right swipe
     if (direction === 'right') {
+      // currDogDBLikes(db); <--- FUNC CALL FOR DB THAT DOESNT WORK YET
       currDog[0].likes.push(nameToDelete);
       otherDogs[index].likedBy.push(currDog[0]);
       // helper function to access likedBy on nameToDelete
@@ -71,6 +102,7 @@ const HomePage = () => {
         otherDogs[index].likedBy,
         otherDogs[index].name
       );
+      currDogDBLikes(otherDogs[index].name);
       console.log('CURR DOG LIKES:', currDog[0].likes);
     } else {
       currDog[0].passed.push(nameToDelete);
@@ -88,12 +120,6 @@ const HomePage = () => {
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < dogs.length) {
       await childRefs[currentIndex].current.swipe(dir);
-      // Swipe the card!
-      // if (dir === 'right') {
-      //   console.log('you really like em');
-      // } else {
-      //   console.log('PASS: ');
-      // }
     } else {
       // TODO set some message that there are no more swipes available
       console.log('DONE!');
@@ -112,24 +138,10 @@ const HomePage = () => {
 
         setDogs(dogData);
       } catch (err) {
-        collection.log(err, 'who let the dogs out?');
+        console.log(err, 'who let the dogs out?');
       }
     })();
   }, []);
-
-  // get current user uid to check for current dog
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  // return all dogs except current user's dog
-  const otherDogs = dogs.filter((dog) => {
-    return dog.ownerId !== user.uid;
-  });
-
-  // shows owner's dog
-  const currDog = dogs.filter((dog) => {
-    return dog.ownerId === user.uid;
-  });
 
   return (
     <div className="tindercards cardContent">
