@@ -3,50 +3,44 @@ import './Settings.css'
 
 const UserSettings = () => {
   return (
-  <div id="Settings-view">
-    <div class="card card-outline-secondary">
-      <div class="card-body">
-        <form class="form" role="form" autocomplete="off">
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label">Name</label>
-              <div class="col-lg-9">
-                <input class="form-control" type="text" />
-              </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label">Email</label>
-              <div class="col-lg-9">
-                <input class="form-control" type="email" />
-              </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label">City</label>
-              <div class="col-lg-9">
-                <input class="form-control" type="text" />
-              </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label">State</label>
-              <div class="col-lg-9">
-                <input class="form-control" type="text"/>
-              </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label">Zipcode</label>
-              <div class="col-lg-9">
-                <input class="form-control" type="text" />
-              </div>
-          </div>
-          <div class="form-group row">
-            <label class="col-lg-3 col-form-label form-control-label"></label>
-            <div class="col-lg-9">
-              <input type="reset" class="btn btn-secondary" value="Cancel"/>
-              <input type="button" class="btn btn-primary" value="Save Changes"/>
-            </div>
-          </div>
-        </form>
+    <div className="container">
+    <form action="action_page.php">
+      <div className="row">
+        <div className="col-25">
+          <label htmlFor="name">Name</label>
+        </div>
+        <div className="col-75">
+          <input type="text" id="name" name="name" placeholder="Your name.."/>
+        </div>
       </div>
-    </div>
+      <div className="row">
+        <div className="col-25">
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="col-75">
+          <input type="text" id="lname" name="lastname" placeholder="Your email.."/>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-25">
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="col-75">
+          <input type="text" id="lname" name="lastname" placeholder="Your email.."/>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-25">
+          <label htmlFor="subject">Subject</label>
+        </div>
+        <div className="col-75">
+          <textarea id="subject" name="subject" placeholder="Write something.." ></textarea>
+        </div>
+      </div>
+      <div className="row">
+        <input type="submit" value="Submit"/>
+      </div>
+    </form>
   </div>
   )
 }
