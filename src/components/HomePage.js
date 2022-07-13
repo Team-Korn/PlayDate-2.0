@@ -97,6 +97,24 @@ const HomePage = () => {
       likedBy: arrayUnion(currDog[0].name),
     });
   }
+
+  // find matches
+  async function matched(id) {
+    if (
+      currDog[0].likes.includes(id.name) &&
+      currDog[0].likedBy.includes(id.name)
+    ) {
+      currDog[0].matches.push(id);
+      const currDogAddMatch = doc(db, 'dogs', currDog[0].documentId);
+      await updateDoc(currDogAddMatch, {
+        matches: arrayUnion(id.name),
+      });
+      const swipeDogAddMatch = doc(db, 'dogs', id.documentId);
+      await updateDoc(swipeDogAddMatch, {
+        matches: arrayUnion(currDog[0].name),
+      });
+    }
+  }
   // --------------------------------------
 
   // set last direction and decrease current index
@@ -114,6 +132,9 @@ const HomePage = () => {
       currDogDBLikes(otherDogs[index].name);
       // adds currDog to swipedDog's likedBy field
       swipedRtBy(otherDogs[index].documentId);
+      matched(otherDogs[index]);
+      console.log('MATCHED: ', currDog[0].matches);
+      console.log('INDEX: ', otherDogs[index]);
     } else {
       // if left swipe
       currDog[0].passed.push(nameToDelete);
