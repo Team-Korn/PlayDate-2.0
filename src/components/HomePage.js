@@ -82,6 +82,21 @@ const HomePage = () => {
     });
   }
 
+  // stores current dog passed
+  async function currDogDBPassed(id) {
+    const currDogPassed = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogPassed, {
+      passed: arrayUnion(id),
+    });
+  }
+
+  // add likedby to db
+  async function swipedRtBy(id) {
+    const swipeRtDB = doc(db, 'dogs', id);
+    await updateDoc(swipeRtDB, {
+      likedBy: arrayUnion(currDog[0].name),
+    });
+  }
   // --------------------------------------
 
   // set last direction and decrease current index
@@ -103,9 +118,11 @@ const HomePage = () => {
         otherDogs[index].name
       );
       currDogDBLikes(otherDogs[index].name);
+      swipedRtBy(otherDogs[index].documentId);
       console.log('CURR DOG LIKES:', currDog[0].likes);
     } else {
       currDog[0].passed.push(nameToDelete);
+      currDogDBPassed(otherDogs[index].name);
       console.log('OTHER DOG:  ', otherDogs[index].size);
       console.log('CURR DOG PASS:', currDog[0].passed);
     }
