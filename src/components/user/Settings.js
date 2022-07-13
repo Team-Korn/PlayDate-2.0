@@ -5,7 +5,7 @@ import DogSettings from './DogSettings';
 
 const Settings = () => {
   return (
-  <div className='Settings-view'>
+  <div className='settings-view'>
     <UserSettings />
     <DogSettings />
   </div>
