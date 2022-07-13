@@ -108,20 +108,16 @@ const HomePage = () => {
     console.log(currDog[0].likes);
     // if right swipe
     if (direction === 'right') {
-      // currDogDBLikes(db); <--- FUNC CALL FOR DB THAT DOESNT WORK YET
       currDog[0].likes.push(nameToDelete);
       otherDogs[index].likedBy.push(currDog[0]);
-      // helper function to access likedBy on nameToDelete
-      console.log(
-        'OTHER DOG LIKEDBY ',
-        otherDogs[index].likedBy,
-        otherDogs[index].name
-      );
+      // adds swiped dog to curr dog's likes field
       currDogDBLikes(otherDogs[index].name);
+      // adds currDog to swipedDog's likedBy field
       swipedRtBy(otherDogs[index].documentId);
-      console.log('CURR DOG LIKES:', currDog[0].likes);
     } else {
+      // if left swipe
       currDog[0].passed.push(nameToDelete);
+      // adds swiped dog to currDog's passed field
       currDogDBPassed(otherDogs[index].name);
       console.log('OTHER DOG:  ', otherDogs[index].size);
       console.log('CURR DOG PASS:', currDog[0].passed);
