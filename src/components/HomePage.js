@@ -25,7 +25,7 @@ const HomePage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
   const [lastDirection, setLastDirection] = useState();
-
+  // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
   // Tinder Card ref
@@ -37,10 +37,6 @@ const HomePage = () => {
     [dogs.length]
   );
 
-  // get current user uid to check for current dog
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
@@ -51,6 +47,7 @@ const HomePage = () => {
 
   const canSwipe = currentIndex >= 0;
 
+  // increase current index and show card
   const goBack = async () => {
     if (!canGoBack) return;
     else {
@@ -60,10 +57,11 @@ const HomePage = () => {
     }
   };
 
-  // swipe functionality
+  // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    console.log('hello world');
   };
 
   const outOfFrame = (name, idx) => {
@@ -75,6 +73,9 @@ const HomePage = () => {
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < dogs.length) {
       await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+    } else {
+      // TODO set some message that there are no more swipes available
+      console.log('DONE!');
     }
   };
 
@@ -93,6 +94,10 @@ const HomePage = () => {
       }
     })();
   }, []);
+
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
 
   // return all dogs except current user's dog
   const otherDogs = dogs.filter((dog) => {
