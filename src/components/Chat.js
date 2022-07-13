@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { db2 } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -47,18 +47,28 @@ function Chat() {
   const dummy = useRef();
 
   /*---CHAT-SIDEBAR---*/
-  db2.collection("dogs").doc("dog1")
-    .get()
-    .then(function (doc) {
-      if (doc.exists) {
-        console.log("Document data-matches:", doc.data()["matches"]);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+  /*get matches from dogs collection*/
+  const [dogs, setDogs] = useState([]);
+
+  useEffect(() => {
+    db2.collection("dogs").doc("dog1")
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          const dogMatches = [];
+          dogMatches.push(doc.data()["matches"])
+          // console.log("Document data-matches:", doc.data()["matches"]);
+
+          setDogs(dogMatches);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch(function (error) {
+        console.log("Error getting document:", error);
+      });
+  })
+
 
   /*---CHAT-MESSAGES---*/
   const messagesRef = db2.collection('messages');
@@ -107,15 +117,18 @@ function Chat() {
               <ListItemIcon>
                 <Avatar alt="Remy Sharp" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
               </ListItemIcon>
-              <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-              <ListItemText secondary="online" align="right"></ListItemText>
+              {dogs.filter((dog) => (
+                <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
+              ))}
+              <span ref={dummy}></span>
+              {/* <ListItemText secondary="online" align="right"></ListItemText> */}
             </ListItem>
-            <ListItem button key="Alice">
+            {/* <ListItem button key="Alice">
               <ListItemIcon>
                 <Avatar alt="Alice" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
               </ListItemIcon>
               <ListItemText primary="Alice">Alice</ListItemText>
-            </ListItem>
+            </ListItem> */}
           </List>
         </Grid>
         {/*---MESSAGE CONTAINER---*/}
@@ -163,5 +176,14 @@ function SendMessage(props) {
     </div>
   )
 }
+
+// function SelectMatch(props) {
+
+//   return (
+//     <div>
+//       <p></p>
+//     </div>
+//   )
+// }
 
 export default Chat;
