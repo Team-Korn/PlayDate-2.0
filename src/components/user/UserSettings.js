@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { app, db } from '../../config/fbConfig';
 import { getAuth } from 'firebase/auth';
 import './Settings.css'
@@ -37,18 +37,44 @@ const UserSettings = () => {
 
   console.log("CURRENT USER DATA: ", currUser);
 
-  if(!currUser[0]) {
+  //save data to firestore
+
+  const handleSubmit = (e) => {
+    if(authUser){
+      let name = document.getElementById('name').value;
+      let email = document.getElementById('email').value;
+      let city = document.getElementById('city').value;
+      let state = document.getElementById('state').value;
+      let zipcode = document.getElementById('zipcode').value;
+      async function updateSettings() {
+        const currUserDB = doc(db, 'users', currUser[0].documentId)
+        await updateDoc(currUserDB, {
+          name: name,
+          email: email,
+          city: city,
+          state: state,
+          zipcode: zipcode
+        })
+      }
+      e.preventDefault();
+      updateSettings();
+      alert('Your changes have been saved!')
+    }
+  }
+
+if(!currUser[0]) {
     console.log('NO USER FOUND!');
   } else {
     return (
       <div className="container">
-      <form className='settings'>
+      <form className='settings' onSubmit={handleSubmit}>
+        <div id='form-title'>User Settings</div>
         <div className="row">
           <div className="col-25">
             <label htmlFor="name">Name</label>
           </div>
           <div className="col-75">
-            <input type="text" name="name" placeholder={currUser[0].name}/>
+            <input id="name" type="text" name="name" placeholder={currUser[0].name}/>
           </div>
         </div>
         <div className="row">
@@ -56,7 +82,7 @@ const UserSettings = () => {
             <label htmlFor="email">Email</label>
           </div>
           <div className="col-75">
-            <input type="text" name="email" placeholder={currUser[0].email}/>
+            <input id="email" type="text" name="email" placeholder={currUser[0].email}/>
           </div>
         </div>
         <div className="row">
@@ -64,7 +90,7 @@ const UserSettings = () => {
             <label htmlFor="city">City</label>
           </div>
           <div className="col-75">
-            <input type="text" name="city" placeholder={currUser[0].city}/>
+            <input id="city" type="text" name="city" placeholder={currUser[0].city}/>
           </div>
         </div>
         <div className="row">
@@ -72,7 +98,7 @@ const UserSettings = () => {
             <label htmlFor="state">State</label>
           </div>
           <div className="col-75">
-            <input type="text"  name="state" placeholder={currUser[0].state}/>
+            <input id="state" type="text"  name="state" placeholder={currUser[0].state}/>
           </div>
         </div>
         <div className="row">
@@ -80,11 +106,11 @@ const UserSettings = () => {
             <label htmlFor="zip">Zipcode</label>
           </div>
           <div className="col-75">
-          <input type="text"  name="zip" placeholder={currUser[0].zipcode}/>
+          <input id="zipcode" type="text"  name="zip" placeholder={currUser[0].zipcode}/>
           </div>
         </div>
         <div className="row">
-          <input type="submit" value="Submit Changes"/>
+          <input type="submit"  id="submit" value="Submit Changes"/>
         </div>
       </form>
     </div>

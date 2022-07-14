@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { app, db } from '../../config/fbConfig';
 import { getAuth } from 'firebase/auth';
 import './Settings.css'
 
 const DogSettings = () => {
+
+//handling form changes
+// useEffect(() => {
+//   const submitButton = document.getElementById("submit");
+//   submitButton.addEventListener("click", (e) => {
+//     e.preventDefault();
+//   })
+// })
+
+
   const auth = getAuth(app);
   const user = auth.currentUser;
   const [dogs, setDogs] = useState([]);
@@ -34,6 +44,7 @@ const DogSettings = () => {
     return (
       <div className="container">
         <form className='settings'>
+          <div id='form-title'>Dog Settings</div>
           <div className="row">
             <div className="col-25">
               <label htmlFor="name">Name</label>
@@ -71,7 +82,7 @@ const DogSettings = () => {
             </div>
           </div>
           <div className="row">
-            <input type="submit" value="Submit"/>
+            <input type="submit" id="submit" value="Submit"/>
           </div>
         </form>
       </div>

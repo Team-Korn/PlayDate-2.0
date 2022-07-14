@@ -69,3 +69,7 @@ input[type=submit] {
 #about-me {
   height: 200px;
 }
+
+.form-title {
+  text-align: center;
+}
