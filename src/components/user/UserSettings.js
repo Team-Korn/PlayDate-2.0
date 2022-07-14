@@ -35,7 +35,7 @@ const UserSettings = () => {
     return user.uid === authUser.uid
   })
 
-  console.log("CURRENT USER DATA: ", currUser);
+  // console.log("CURRENT USER DATA: ", currUser);
 
   //save data to firestore
 
