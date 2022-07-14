@@ -70,6 +70,8 @@ function App() {
             <Route path="/user-preferences" element={<Preferences />} />
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
+
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       </div>
