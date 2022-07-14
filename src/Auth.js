@@ -92,9 +92,9 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 //     const res = await createUserWithEmailAndPassword(auth, email, password);
 //     const user = res.user;
 //     await addDoc(collection(db, 'users'), {
-//       uid: user.uid,
-//       name,
-//       authProvider: 'local',
+//       city: user.uid,
+//       state,
+//       zipcode: 'local',
 //       email,
 //     });
 //   } catch (err) {
@@ -133,34 +133,3 @@ export {
   sendPasswordReset,
   logout,
 };
-
-// ------------- Below is the homepage copy rendering Users from db --
-// ------ My Login Function --------------------------------
-
-// const Login = () => {
-//   const [users, setUsers] = useState([]);
-
-//   useEffect(() => {
-//     async function getUsers() {
-//       try {
-//         const querySnapshot = await getDocs(collection(db, 'users'));
-
-//         const userData = [];
-//         querySnapshot.forEach((doc) => {
-//           userData.push(doc.data());
-//         });
-
-//         setUsers(userData);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//     getUsers();
-//   }, []);
-
-//   console.log('users are here: ', users);
-//   if (!users[0]) return null;
-//   return <h1>{users[4].firstName}</h1>;
-// };
-
-// export default Login;

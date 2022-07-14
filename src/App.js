@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
@@ -9,34 +9,72 @@ import Profile from './components/user/Profile';
 import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
+import ErrorPage from './components/ErrorPage';
+
+// ---- FOR LOGIN CHECK -----------------------------
+// import { useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './Auth';
+
+// -------------------------------------
 
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/home" element={<HomePage />} />
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate('/login');
+  //   } else {
+  //     return;
+  //   }
+  // }, [user, navigate]);
 
-          <Route path="/chat" element={<Chat />} />
+  // -------- FOR LOGIN CHECK -------------
+  const [user] = useAuthState(auth);
+  // const [users, setUsers] = useState([]);
+  // {isAdmin !== false ? <Route path="/admin" component={AdminView} /> : ''}
 
-          <Route path="/" element={<Login />} />
+  if (!user) {
+    return (
+      <div className="firstLogIn">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/home" element={<Login />} />
+            <Route path="/chat" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
+  } else {
+    return (
+      <div className="App">
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/home" element={<HomePage />} />
 
-          <Route path="/login" element={<Login />} />
+            <Route path="/chat" element={<Chat />} />
 
-          <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Login />} />
 
-          <Route path="/user" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/user-settings" element={<Settings />} />
-          
-          <Route path="/user-preferences" element={<Preferences />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route path="/signupuser" element={<SignUpUserInfo />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+            <Route path="/user" element={<Profile />} />
+
+            <Route path="/user-settings" element={<Settings />} />
+
+            <Route path="/user-preferences" element={<Preferences />} />
+
+            <Route path="/signupuser" element={<SignUpUserInfo />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;

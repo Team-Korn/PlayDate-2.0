@@ -20,6 +20,8 @@ import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 
 const HomePage = () => {
+  // ------ BELOW is all of state for dogs --------
+  // const HomePage = () => {
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
