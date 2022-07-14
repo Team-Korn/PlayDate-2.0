@@ -8,7 +8,6 @@ const UserSettings = () => {
   //get current users uid
   const auth = getAuth(app);
   const authUser = auth.currentUser;
-  // console.log("THIS IS THE USER: ", authUser)
 
   //grab all users from db
   const [users, setUsers] = useState([]);
@@ -27,8 +26,6 @@ const UserSettings = () => {
       }
     })();
   }, []);
-
-  // console.log('USERS: ', users)
 
   //find the current users object
   const currUser = users.filter(user => {
