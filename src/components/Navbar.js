@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { logout } from '../Auth';
-import './SwipeButtons.css';
-import IconButton from '@material-ui/core/IconButton';
-import ChatIcon from '@mui/icons-material/Chat';
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -35,8 +32,6 @@ const StyledLinksWrapper = styled.div`
 const StyledLink = styled(Link)`
   color: #8fd0ff;
   text-decoration: none;
-  align-items: center;
-
   &:hover {
     color: white;
   }
@@ -61,10 +56,6 @@ const StyledLogoLink = styled(Link)`
   }
 `;
 
-const StyledLogout = styled.h3`
-  margin-top: 55px;
-`;
-
 const Navbar = () => {
   return (
     <nav>
@@ -75,13 +66,11 @@ const Navbar = () => {
           </StyledLeftHeader>
           <StyledRightHeader>
             <StyledLinksWrapper>
-              <Link to="/chat">
-                <IconButton className="swipeButtons__message">
-                  <ChatIcon />
-                </IconButton>
-              </Link>
+              <StyledLink to="/chat">
+                <h3>Messages</h3>
+              </StyledLink>
               <StyledLink to="/login" onClick={logout}>
-                <StyledLogout>Logout</StyledLogout>
+                <h3>Logout</h3>
               </StyledLink>
             </StyledLinksWrapper>
           </StyledRightHeader>

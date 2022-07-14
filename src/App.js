@@ -9,6 +9,7 @@ import Profile from './components/user/Profile';
 import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
+import ErrorPage from './components/ErrorPage';
 
 // ---- FOR LOGIN CHECK -----------------------------
 // import { useNavigate } from 'react-router-dom';
@@ -35,12 +36,13 @@ function App() {
     return (
       <div className="firstLogIn">
         <BrowserRouter>
-          <Navbar />
           <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Login />} />
             <Route path="/chat" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
       </div>
