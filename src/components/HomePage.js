@@ -4,9 +4,8 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc,
-  query,
-  where,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
@@ -27,7 +26,7 @@ const HomePage = () => {
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
   const [lastDirection, setLastDirection] = useState();
-
+  // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
   // Tinder Card ref
@@ -39,12 +38,6 @@ const HomePage = () => {
     [dogs.length]
   );
 
-  // get current user uid to check for current dog
-  // const auth = getAuth(app);
-  // ^^^^ The above line is already being called in through
-  // "../Auth"
-  const currentUser = auth.currentUser;
-
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
@@ -55,6 +48,7 @@ const HomePage = () => {
 
   const canSwipe = currentIndex >= 0;
 
+  // increase current index and show card
   const goBack = async () => {
     if (!canGoBack) return;
     else {
@@ -64,10 +58,89 @@ const HomePage = () => {
     }
   };
 
-  // swipe functionality
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  // return all dogs except current user's dog
+  const otherDogs = dogs.filter((dog) => {
+    return dog.ownerId !== user.uid;
+  });
+
+  // shows owner's dog
+  const currDog = dogs.filter((dog) => {
+    return dog.ownerId === user.uid;
+  });
+
+  // adds swipe to db
+  async function currDogDBLikes(id) {
+    const currDogDB = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogDB, {
+      likes: arrayUnion(id),
+    });
+  }
+
+  // stores current dog passed
+  async function currDogDBPassed(id) {
+    const currDogPassed = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogPassed, {
+      passed: arrayUnion(id),
+    });
+  }
+
+  // add likedby to db
+  async function swipedRtBy(id) {
+    const swipeRtDB = doc(db, 'dogs', id);
+    await updateDoc(swipeRtDB, {
+      likedBy: arrayUnion(currDog[0].name),
+    });
+  }
+
+  // find matches
+  async function matched(id) {
+    if (
+      currDog[0].likes.includes(id.name) &&
+      currDog[0].likedBy.includes(id.name)
+    ) {
+      currDog[0].matches.push(id);
+      const currDogAddMatch = doc(db, 'dogs', currDog[0].documentId);
+      await updateDoc(currDogAddMatch, {
+        matches: arrayUnion(id.name),
+      });
+      const swipeDogAddMatch = doc(db, 'dogs', id.documentId);
+      await updateDoc(swipeDogAddMatch, {
+        matches: arrayUnion(currDog[0].name),
+      });
+    }
+  }
+  // --------------------------------------
+
+  // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    // start our code
+
+    console.log(currDog[0].likes);
+    // if right swipe
+    if (direction === 'right') {
+      currDog[0].likes.push(nameToDelete);
+      otherDogs[index].likedBy.push(currDog[0]);
+      // adds swiped dog to curr dog's likes field
+      currDogDBLikes(otherDogs[index].name);
+      // adds currDog to swipedDog's likedBy field
+      swipedRtBy(otherDogs[index].documentId);
+      matched(otherDogs[index]);
+      console.log('MATCHED: ', currDog[0].matches);
+      console.log('INDEX: ', otherDogs[index]);
+    } else {
+      // if left swipe
+      currDog[0].passed.push(nameToDelete);
+      // adds swiped dog to currDog's passed field
+      currDogDBPassed(otherDogs[index].name);
+      console.log('OTHER DOG:  ', otherDogs[index].size);
+      console.log('CURR DOG PASS:', currDog[0].passed);
+    }
   };
 
   const outOfFrame = (name, idx) => {
@@ -78,7 +151,10 @@ const HomePage = () => {
 
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < dogs.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+      await childRefs[currentIndex].current.swipe(dir);
+    } else {
+      // TODO set some message that there are no more swipes available
+      console.log('DONE!');
     }
   };
 
@@ -91,22 +167,13 @@ const HomePage = () => {
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
+
         setDogs(dogData);
       } catch (err) {
-        collection.log(err, 'who let the dogs out?');
+        console.log(err, 'who let the dogs out?');
       }
     })();
   }, []);
-
-  // return all dogs except current user's dog
-  const otherDogs = dogs.filter((dog) => {
-    return dog.ownerId !== currentUser.uid;
-  });
-
-  // shows owner's dog
-  const currDog = dogs.filter((dog) => {
-    return dog.ownerId === currentUser.uid;
-  });
 
   return (
     <div className="tindercards cardContent">
