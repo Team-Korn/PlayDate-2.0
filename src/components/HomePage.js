@@ -4,9 +4,8 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc,
-  query,
-  where,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
 import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
@@ -18,57 +17,14 @@ import IconButton from '@material-ui/core/IconButton';
 import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
-
-// ------ FOR ADDING LOGIN CHECK -----------------
 import { getAuth } from 'firebase/auth';
-import { ownerWindow } from '@material-ui/core';
-// import { useNavigate } from 'react-router-dom';
-// import { useAuthState } from 'react-firebase-hooks/auth';
-// import { auth } from '../Auth';
 
 const HomePage = () => {
-  // -------- FOR LOGIN CHECK -------------
-  /* const [user, loading] = useAuthState(auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    } else {
-      return;
-    }
-  }, [user, loading, navigate]);
-*/
-  // get current user UID
-  // Get that user's dog ---> set that dog to a var dog1
-
-  // getUserDog() async {
-  //   try {
-  //     const dogRef = doc(db, 'users', user);
-  //     const dogSnap = await getDoc(dogRef);
-
-  //     console.log('DOGSNAP: ', dogSnap.data());
-  //   } catch (err) {
-  //     console.log(err, 'who let the dogs out?');
-  //   }
-  // };
-
-  // use  dog1 to pull up dog1 document
-
-  // exclude dog1 from card Array
-
-  // check dog1 likedby to see if swipped dog is in array
-  // if yes -> add add swipped dog to dog1 match
-  //  add dog1 to swipped dog's matches
-  // if no -> add dog1 to swipped dog's likedBy array
-  // if dog1 swipes right: add swipped dog to dog1 "likes"
-
-  // -------- FOR KATIE -------------------
   const [dogs, setDogs] = useState([]);
 
   const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
   const [lastDirection, setLastDirection] = useState();
-
+  // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
 
   // Tinder Card ref
@@ -80,25 +36,109 @@ const HomePage = () => {
     [dogs.length]
   );
 
-  const auth = getAuth(app);
-  const user = auth.currentUser;
-
-  if (user !== null) {
-    const uid = user.uid;
-    console.log('USER UID! - ', uid);
-  }
-
   const updateCurrentIndex = (val) => {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
+
+  // card buttons
   const canGoBack = currentIndex <= dogs.length - 1;
 
   const canSwipe = currentIndex >= 0;
 
+  // increase current index and show card
+  const goBack = async () => {
+    if (!canGoBack) return;
+    else {
+      const newIndex = currentIndex + 1;
+      updateCurrentIndex(newIndex);
+      await childRefs[newIndex].current.restoreCard();
+    }
+  };
+
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+  // return all dogs except current user's dog
+  const otherDogs = dogs.filter((dog) => {
+    return dog.ownerId !== user.uid;
+  });
+
+  // shows owner's dog
+  const currDog = dogs.filter((dog) => {
+    return dog.ownerId === user.uid;
+  });
+
+  // adds swipe to db
+  async function currDogDBLikes(id) {
+    const currDogDB = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogDB, {
+      likes: arrayUnion(id),
+    });
+  }
+
+  // stores current dog passed
+  async function currDogDBPassed(id) {
+    const currDogPassed = doc(db, 'dogs', currDog[0].documentId);
+    await updateDoc(currDogPassed, {
+      passed: arrayUnion(id),
+    });
+  }
+
+  // add likedby to db
+  async function swipedRtBy(id) {
+    const swipeRtDB = doc(db, 'dogs', id);
+    await updateDoc(swipeRtDB, {
+      likedBy: arrayUnion(currDog[0].name),
+    });
+  }
+
+  // find matches
+  async function matched(id) {
+    if (
+      currDog[0].likes.includes(id.name) &&
+      currDog[0].likedBy.includes(id.name)
+    ) {
+      currDog[0].matches.push(id);
+      const currDogAddMatch = doc(db, 'dogs', currDog[0].documentId);
+      await updateDoc(currDogAddMatch, {
+        matches: arrayUnion(id.name),
+      });
+      const swipeDogAddMatch = doc(db, 'dogs', id.documentId);
+      await updateDoc(swipeDogAddMatch, {
+        matches: arrayUnion(currDog[0].name),
+      });
+    }
+  }
+  // --------------------------------------
+
+  // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
     updateCurrentIndex(index - 1);
+    // start our code
+
+    console.log(currDog[0].likes);
+    // if right swipe
+    if (direction === 'right') {
+      currDog[0].likes.push(nameToDelete);
+      otherDogs[index].likedBy.push(currDog[0]);
+      // adds swiped dog to curr dog's likes field
+      currDogDBLikes(otherDogs[index].name);
+      // adds currDog to swipedDog's likedBy field
+      swipedRtBy(otherDogs[index].documentId);
+      matched(otherDogs[index]);
+      console.log('MATCHED: ', currDog[0].matches);
+      console.log('INDEX: ', otherDogs[index]);
+    } else {
+      // if left swipe
+      currDog[0].passed.push(nameToDelete);
+      // adds swiped dog to currDog's passed field
+      currDogDBPassed(otherDogs[index].name);
+      console.log('OTHER DOG:  ', otherDogs[index].size);
+      console.log('CURR DOG PASS:', currDog[0].passed);
+    }
   };
 
   const outOfFrame = (name, idx) => {
@@ -109,21 +149,14 @@ const HomePage = () => {
 
   const swipe = async (dir) => {
     if (canSwipe && currentIndex < dogs.length) {
-      await childRefs[currentIndex].current.swipe(dir); // Swipe the card!
+      await childRefs[currentIndex].current.swipe(dir);
+    } else {
+      // TODO set some message that there are no more swipes available
+      console.log('DONE!');
     }
   };
 
-  console.log('CURR IDX: ', currentIndex + 1);
-  // increase current index and show card
-  const goBack = async () => {
-    if (!canGoBack) return;
-    else {
-      const newIndex = currentIndex + 1;
-      updateCurrentIndex(newIndex);
-      await childRefs[newIndex].current.restoreCard();
-    }
-  };
-  // gives dogs array
+  // gets dog collection
   useEffect(() => {
     (async () => {
       try {
@@ -132,26 +165,13 @@ const HomePage = () => {
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
+
         setDogs(dogData);
       } catch (err) {
-        collection.log(err, 'who let the dogs out?');
+        console.log(err, 'who let the dogs out?');
       }
     })();
   }, []);
-
-  // return arr w/ all dogs except currdog
-  const otherDogs = dogs.filter((dog) => {
-    console.log('dog owner id:', dog.ownerId);
-    return dog.ownerId !== user.uid;
-  });
-  // returns arr with current dog
-  const currDog = dogs.filter((dog) => {
-    console.log('dog owner id:', dog.ownerId);
-    return dog.ownerId === user.uid;
-  });
-
-  console.log('THIS DOG', currDog);
-  console.log('Other dogs', otherDogs);
 
   return (
     <div className="tindercards cardContent">
