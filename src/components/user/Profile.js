@@ -40,10 +40,9 @@ if (!dogs[0]) {
     return (
     <div className='profile-view'>
       <div className="card">
-        <div className="img-avatar"></div>
+        {/* <div className="img-avatar"></div> */}
           <div className="card-text">
-            <div className="portada">
-            </div>
+            <img className="portada" src={currDog[0].imageUrl[0]} alt="dog-profile-pic"/>
             <div className="title-total">
               <div className="title">{currDog[0].breed}</div>
                 <h2>{currDog[0].name}</h2>
