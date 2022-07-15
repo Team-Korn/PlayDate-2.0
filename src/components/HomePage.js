@@ -18,6 +18,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
+import EndOfDeck from './EndOfDeck';
 
 const HomePage = () => {
   const [dogs, setDogs] = useState([]);
@@ -194,7 +195,7 @@ const HomePage = () => {
       {console.log('NO CARDS: ', noCards)}
       {noCards ? (
         <div>
-          <h1> THIS IS THE END MY FRIENDS</h1>
+          <EndOfDeck />
         </div>
       ) : (
         <div className="tinderCards__cardContainer">
@@ -215,38 +216,41 @@ const HomePage = () => {
               </div>
             </TinderCard>
           ))}
+
+          <div className="swipeButtons">
+            <IconButton
+              className="swipeButtons__repeat"
+              onClick={() => goBack()}
+            >
+              <ReplayIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              className="swipeButtons__left"
+              onClick={() => swipe('left')}
+            >
+              <CloseIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              className="swipeButtons__right"
+              onClick={() => swipe('right')}
+            >
+              <FavoriteIcon fontSize="large" />
+            </IconButton>
+            <Link to="/chat">
+              <IconButton className="swipeButtons__message">
+                <ChatIcon />
+              </IconButton>
+            </Link>
+          </div>
+
+          {lastDirection ? (
+            <h2 key={lastDirection} className="infoText">
+              You swiped {lastDirection}
+            </h2>
+          ) : (
+            <h2 className="infoText">{}</h2>
+          )}
         </div>
-      )}
-
-      <div className="swipeButtons">
-        <IconButton className="swipeButtons__repeat" onClick={() => goBack()}>
-          <ReplayIcon fontSize="large" />
-        </IconButton>
-        <IconButton
-          className="swipeButtons__left"
-          onClick={() => swipe('left')}
-        >
-          <CloseIcon fontSize="large" />
-        </IconButton>
-        <IconButton
-          className="swipeButtons__right"
-          onClick={() => swipe('right')}
-        >
-          <FavoriteIcon fontSize="large" />
-        </IconButton>
-        <Link to="/chat">
-          <IconButton className="swipeButtons__message">
-            <ChatIcon />
-          </IconButton>
-        </Link>
-      </div>
-
-      {lastDirection ? (
-        <h2 key={lastDirection} className="infoText">
-          You swiped {lastDirection}
-        </h2>
-      ) : (
-        <h2 className="infoText">{}</h2>
       )}
     </div>
   );
