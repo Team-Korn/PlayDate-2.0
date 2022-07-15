@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useRef, useEffect } from 'react';
-import { db2 } from '../config/fbConfig';
+import { db2, app } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { getAuth } from 'firebase/auth';
+import { getDocs, collection, query, where } from 'firebase/firestore';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -46,28 +48,71 @@ function Chat() {
   const classes = useStyles();
   const dummy = useRef();
 
+  // get current user uid to check for current dog
+  const auth = getAuth(app);
+  const user = auth.currentUser;
+
+
+
   /*---CHAT-SIDEBAR---*/
   /*get matches from dogs collection*/
   const [dogs, setDogs] = useState([]);
 
   useEffect(() => {
-    db2.collection("dogs").doc("dog1")
-      .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          const dogMatches = [];
-          dogMatches.push(doc.data()["matches"])
-          // console.log("Document data-matches:", doc.data()["matches"]);
+    (async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db2, 'dogs'));
+        const dogData = [];
+        querySnapshot.forEach((doc) => {
+          dogData.push(doc.data());
+        });
 
-          setDogs(dogMatches);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
+        setDogs(dogData);
+      } catch (err) {
+        console.log(err, 'who let the dogs out?');
+      }
+    })();
+  }, []);
+  console.log("dogs:", dogs);
+
+  // shows owner's dog
+  const currDog = dogs.filter((dog) => {
+    return dog.ownerId === user.uid;
+    // returns array with single object of current dog
+  });
+  console.log("currDog:", currDog);
+
+  /*---PULL INFO FOR MATCHED DOGS DB---*/
+
+  // if (currDog[0]) {
+  //   const grabMatches = () => {
+  //     for (let i = 0; i <= currDog[0].matches.length; i++) {
+  //       const dogRef = db2.collection("dogs");
+  //       return query(dogRef.where("name", "==", currDog[0].matches[i]).get())
+  //       // console.log("query:", query)
+  //     }
+  //   }
+  //   console.log(grabMatches());
+  // }
+
+  /*---PULL INFO FOR MATCHED DOGS FROM STATE---*/
+
+
+  if (currDog[0] && dogs[0]) {
+    const arrayOfMatchedDogInfo = [];
+
+    for (let i = 0; i < currDog[0].matches.length; i++) {
+      for (let j = 0; j < dogs.length; j++) {
+        // console.log('inside for[j] loop:', dogs[j].name)
+        // console.log('currDog[0].matches:', currDog[0].matches[i])
+        if (currDog[0].matches[i] === dogs[j].name) {
+          let matchedDogObj = dogs[j];
+          arrayOfMatchedDogInfo.push(matchedDogObj)
         }
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
-      });
-  })
+      }
+    }
+    console.log('arrayOfMatchedDogInfo:', arrayOfMatchedDogInfo);
+  }
 
 
   /*---CHAT-MESSAGES---*/
@@ -117,10 +162,10 @@ function Chat() {
               <ListItemIcon>
                 <Avatar alt="Remy Sharp" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
               </ListItemIcon>
-              {dogs.filter((dog) => (
+              {/* {dogs.filter((dog) => (
                 <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
               ))}
-              <span ref={dummy}></span>
+              <span ref={dummy}></span> */}
               {/* <ListItemText secondary="online" align="right"></ListItemText> */}
             </ListItem>
             {/* <ListItem button key="Alice">
