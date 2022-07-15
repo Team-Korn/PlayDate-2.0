@@ -22,8 +22,9 @@ import EndOfDeck from './EndOfDeck';
 
 const HomePage = () => {
   // ------ BELOW is all of state for dogs --------
-  // const HomePage = () => {
   const [dogs, setDogs] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [lastDirection, setLastDirection] = useState();
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -39,24 +40,17 @@ const HomePage = () => {
     return dog.ownerId === user.uid;
   });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [lastDirection, setLastDirection] = useState();
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
   const [noCards, setNoCards] = useState(false);
 
   useEffect(() => {
-    console.log('OTHER DOGS: ', otherDogs);
-    console.log('DOGS : ', dogs);
-    console.log('CURR INDEX: ', currentIndex);
     if (currentIndex < 0) {
       setNoCards(true);
     }
   }, [currentIndex]);
 
   useEffect(() => {
-    console.log('DOGS2 :', dogs);
-    console.log('OTHER DOGS2: ', otherDogs);
     if (otherDogs.length > 0) setCurrentIndex(otherDogs.length - 1);
   }, [dogs]);
 
@@ -70,7 +64,6 @@ const HomePage = () => {
   );
 
   const updateCurrentIndex = (val) => {
-    console.log('VALUE: ', val);
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
@@ -131,12 +124,10 @@ const HomePage = () => {
       });
     }
   }
-  // --------------------------------------
 
   // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
-    console.log('INDEX: ', index);
     updateCurrentIndex(index - 1);
     // start our code
 
@@ -149,15 +140,11 @@ const HomePage = () => {
       // adds currDog to swipedDog's likedBy field
       swipedRtBy(otherDogs[index].documentId);
       matched(otherDogs[index]);
-      console.log('MATCHED: ', currDog[0].matches);
-      console.log('INDEX: ', otherDogs[index]);
     } else {
       // if left swipe
       currDog[0].passed.push(nameToDelete);
       // adds swiped dog to currDog's passed field
       currDogDBPassed(otherDogs[index].name);
-      console.log('OTHER DOG:  ', otherDogs[index].size);
-      console.log('CURR DOG PASS:', currDog[0].passed);
     }
   };
 
@@ -174,7 +161,6 @@ const HomePage = () => {
       // setNoCards(true);
     }
   };
-
   // gets dog collection
   useEffect(() => {
     (async () => {
@@ -184,17 +170,12 @@ const HomePage = () => {
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
-
         setDogs(dogData);
-      } catch (err) {
-        console.log(err, 'who let the dogs out?');
-      }
+      } catch (err) {}
     })();
   }, []);
-
   return (
     <div className="tindercards cardContent">
-      {console.log('NO CARDS: ', noCards)}
       {noCards ? (
         <div>
           <EndOfDeck />
@@ -244,7 +225,6 @@ const HomePage = () => {
               </IconButton>
             </Link>
           </div>
-
           {lastDirection ? (
             <h2 key={lastDirection} className="infoText">
               You swiped {lastDirection}
