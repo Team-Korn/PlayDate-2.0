@@ -132,103 +132,100 @@ function Chat() {
     dummy.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
-    <div>
-      {/*---SIDEBAR CONTAINER---*/}
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant="h5" className="header-message">
-            Chat
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container component={Paper} className={classes.chatSection}>
-        <Grid item xs={3} className={classes.borderRight500}>
-          <List>
-            <ListItem button key="avatar">
-              <ListItemIcon>
-                <Avatar
-                  alt="Cindy Baker"
-                  src="https://material-ui.com/static/images/avatar/3.jpg"
-                />
-              </ListItemIcon>
-              <ListItemText>
-                {currDog[0] ? currDog[0].name : console.log('no dog yet')}
-              </ListItemText>
-            </ListItem>
-          </List>
-          <Divider />
-          <Grid item xs={12} style={{ padding: '10px' }}>
-            <TextField
-              id="outlined-basic-email"
-              label="Search"
-              variant="outlined"
-              fullWidth
-            />
+  if (currDog[0]) {
+    return (
+      <div>
+        {/*---SIDEBAR CONTAINER---*/}
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography variant="h5" className="header-message">
+              Chat
+            </Typography>
           </Grid>
-          <Divider />
-          <List>
-            <ListItem button key="avatar">
-              <ListItemIcon>
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
-                />
-              </ListItemIcon>
-              {/* {dogs.filter((dog) => (
+        </Grid>
+        <Grid container component={Paper} className={classes.chatSection}>
+          <Grid item xs={3} className={classes.borderRight500}>
+            <List>
+              <ListItem button key="avatar">
+                <ListItemIcon>
+                  <Avatar src={currDog[0].imageUrl} />
+                </ListItemIcon>
+                <ListItemText>{currDog[0].name}</ListItemText>
+              </ListItem>
+            </List>
+            <Divider />
+            <Grid item xs={12} style={{ padding: '10px' }}>
+              <TextField
+                id="outlined-basic-email"
+                label="Search"
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Divider />
+            <List>
+              <ListItem button key="avatar">
+                <ListItemIcon>
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
+                  />
+                </ListItemIcon>
+                {/* {dogs.filter((dog) => (
                 <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
               ))}
               <span ref={dummy}></span> */}
-              {/* <ListItemText secondary="online" align="right"></ListItemText> */}
-            </ListItem>
-            {/* <ListItem button key="Alice">
+                {/* <ListItemText secondary="online" align="right"></ListItemText> */}
+              </ListItem>
+              {/* <ListItem button key="Alice">
               <ListItemIcon>
                 <Avatar alt="Alice" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
               </ListItemIcon>
               <ListItemText primary="Alice">Alice</ListItemText>
             </ListItem> */}
-          </List>
-        </Grid>
-        {/*---MESSAGE CONTAINER---*/}
-        <Grid item xs={9}>
-          <List className={classes.messageArea}>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText align="right">
-                    {messages &&
-                      messages.map((msg) => (
-                        <SendMessage key={msg.id} message={msg} />
-                      ))}
-                    <span ref={dummy}></span>
-                  </ListItemText>
+            </List>
+          </Grid>
+          {/*---MESSAGE CONTAINER---*/}
+          <Grid item xs={9}>
+            <List className={classes.messageArea}>
+              <ListItem key="1">
+                <Grid container>
+                  <Grid item xs={12}>
+                    <ListItemText align="right">
+                      {messages &&
+                        messages.map((msg) => (
+                          <SendMessage key={msg.id} message={msg} />
+                        ))}
+                      <span ref={dummy}></span>
+                    </ListItemText>
+                  </Grid>
                 </Grid>
+              </ListItem>
+            </List>
+            <Divider />
+            <Grid container style={{ padding: '20px' }}>
+              <Grid item xs={11}>
+                <form onSubmit={sendMessage}>
+                  <TextField
+                    id="outlined-basic-email"
+                    label="say something nice"
+                    fullWidth
+                    value={formValue}
+                    onChange={(e) => setFormValue(e.target.value)}
+                  />
+                </form>
               </Grid>
-            </ListItem>
-          </List>
-          <Divider />
-          <Grid container style={{ padding: '20px' }}>
-            <Grid item xs={11}>
-              <form onSubmit={sendMessage}>
-                <TextField
-                  id="outlined-basic-email"
-                  label="say something nice"
-                  fullWidth
-                  value={formValue}
-                  onChange={(e) => setFormValue(e.target.value)}
-                />
-              </form>
-            </Grid>
-            <Grid xs={1} align="right">
-              <Fab onClick={sendMessage} color="primary" aria-label="add">
-                <SendIcon />
-              </Fab>
+              <Grid xs={1} align="right">
+                <Fab onClick={sendMessage} color="primary" aria-label="add">
+                  <SendIcon />
+                </Fab>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 function SendMessage(props) {
