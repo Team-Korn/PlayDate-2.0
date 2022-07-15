@@ -97,9 +97,8 @@ function Chat() {
 
   /*---PULL INFO FOR MATCHED DOGS FROM STATE---*/
 
+  const arrayOfMatchedDogInfo = [];
   if (currDog[0] && dogs[0]) {
-    const arrayOfMatchedDogInfo = [];
-
     for (let i = 0; i < currDog[0].matches.length; i++) {
       for (let j = 0; j < dogs.length; j++) {
         // console.log('inside for[j] loop:', dogs[j].name)
@@ -132,7 +131,7 @@ function Chat() {
     dummy.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  if (currDog[0]) {
+  if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
       <div>
         {/*---SIDEBAR CONTAINER---*/}
@@ -166,10 +165,7 @@ function Chat() {
             <List>
               <ListItem button key="avatar">
                 <ListItemIcon>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
-                  />
+                  <Avatar src={arrayOfMatchedDogInfo[0].imageUrl[0]} />
                 </ListItemIcon>
                 {/* {dogs.filter((dog) => (
                 <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
