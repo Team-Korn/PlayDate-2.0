@@ -29,20 +29,19 @@ const useStyles = makeStyles({
   },
   chatSection: {
     width: '100%',
-    height: '80vh'
+    height: '80vh',
   },
   headBG: {
-    backgroundColor: '#e0e0e0'
+    backgroundColor: '#e0e0e0',
   },
   borderRight500: {
-    borderRight: '1px solid #e0e0e0'
+    borderRight: '1px solid #e0e0e0',
   },
   messageArea: {
     height: '70vh',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 });
-
 
 function Chat() {
   const classes = useStyles();
@@ -51,8 +50,6 @@ function Chat() {
   // get current user uid to check for current dog
   const auth = getAuth(app);
   const user = auth.currentUser;
-
-
 
   /*---CHAT-SIDEBAR---*/
   /*get matches from dogs collection*/
@@ -73,14 +70,14 @@ function Chat() {
       }
     })();
   }, []);
-  console.log("dogs:", dogs);
+  console.log('dogs:', dogs);
 
   // shows owner's dog
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
     // returns array with single object of current dog
   });
-  console.log("currDog:", currDog);
+  console.log('currDog:', currDog);
 
   /*---PULL INFO FOR MATCHED DOGS DB---*/
 
@@ -97,7 +94,6 @@ function Chat() {
 
   /*---PULL INFO FOR MATCHED DOGS FROM STATE---*/
 
-
   if (currDog[0] && dogs[0]) {
     const arrayOfMatchedDogInfo = [];
 
@@ -107,13 +103,12 @@ function Chat() {
         // console.log('currDog[0].matches:', currDog[0].matches[i])
         if (currDog[0].matches[i] === dogs[j].name) {
           let matchedDogObj = dogs[j];
-          arrayOfMatchedDogInfo.push(matchedDogObj)
+          arrayOfMatchedDogInfo.push(matchedDogObj);
         }
       }
     }
     console.log('arrayOfMatchedDogInfo:', arrayOfMatchedDogInfo);
   }
-
 
   /*---CHAT-MESSAGES---*/
   const messagesRef = db2.collection('messages');
@@ -138,8 +133,10 @@ function Chat() {
     <div>
       {/*---SIDEBAR CONTAINER---*/}
       <Grid container>
-        <Grid item xs={12} >
-          <Typography variant="h5" className="header-message">Chat</Typography>
+        <Grid item xs={12}>
+          <Typography variant="h5" className="header-message">
+            Chat
+          </Typography>
         </Grid>
       </Grid>
       <Grid container component={Paper} className={classes.chatSection}>
@@ -147,20 +144,31 @@ function Chat() {
           <List>
             <ListItem button key="avatar">
               <ListItemIcon>
-                <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/3.jpg" />
+                <Avatar
+                  alt="Cindy Baker"
+                  src="https://material-ui.com/static/images/avatar/3.jpg"
+                />
               </ListItemIcon>
-              <ListItemText primary="Cindy Baker"></ListItemText>
+              <ListItem primary={currDog[0].name}></ListItem>
             </ListItem>
           </List>
           <Divider />
           <Grid item xs={12} style={{ padding: '10px' }}>
-            <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
+            <TextField
+              id="outlined-basic-email"
+              label="Search"
+              variant="outlined"
+              fullWidth
+            />
           </Grid>
           <Divider />
           <List>
             <ListItem button key="avatar">
               <ListItemIcon>
-                <Avatar alt="Remy Sharp" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
+                <Avatar
+                  alt="Remy Sharp"
+                  src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png"
+                />
               </ListItemIcon>
               {/* {dogs.filter((dog) => (
                 <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
@@ -182,8 +190,11 @@ function Chat() {
             <ListItem key="1">
               <Grid container>
                 <Grid item xs={12}>
-                  <ListItemText align="right" >
-                    {messages && messages.map((msg) => <SendMessage key={msg.id} message={msg} />)}
+                  <ListItemText align="right">
+                    {messages &&
+                      messages.map((msg) => (
+                        <SendMessage key={msg.id} message={msg} />
+                      ))}
                     <span ref={dummy}></span>
                   </ListItemText>
                 </Grid>
@@ -196,14 +207,17 @@ function Chat() {
               <form onSubmit={sendMessage}>
                 <TextField
                   id="outlined-basic-email"
-                  label="say something nice" fullWidth
+                  label="say something nice"
+                  fullWidth
                   value={formValue}
                   onChange={(e) => setFormValue(e.target.value)}
                 />
               </form>
             </Grid>
             <Grid xs={1} align="right">
-              <Fab onClick={sendMessage} color="primary" aria-label="add"><SendIcon /></Fab>
+              <Fab onClick={sendMessage} color="primary" aria-label="add">
+                <SendIcon />
+              </Fab>
             </Grid>
           </Grid>
         </Grid>
@@ -219,7 +233,7 @@ function SendMessage(props) {
     <div>
       <p>{text}</p>
     </div>
-  )
+  );
 }
 
 // function SelectMatch(props) {
