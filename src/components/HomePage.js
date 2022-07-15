@@ -22,40 +22,6 @@ import { getAuth } from 'firebase/auth';
 const HomePage = () => {
   const [dogs, setDogs] = useState([]);
 
-  const [currentIndex, setCurrentIndex] = useState(dogs.length - 1);
-  const [lastDirection, setLastDirection] = useState();
-  // used for outOfFrame closure
-  const currentIndexRef = useRef(currentIndex);
-
-  // Tinder Card ref
-  const childRefs = useMemo(
-    () =>
-      Array(dogs.length)
-        .fill(0)
-        .map((i) => React.createRef()),
-    [dogs.length]
-  );
-
-  const updateCurrentIndex = (val) => {
-    setCurrentIndex(val);
-    currentIndexRef.current = val;
-  };
-
-  // card buttons
-  const canGoBack = currentIndex <= dogs.length - 1;
-
-  const canSwipe = currentIndex >= 0;
-
-  // increase current index and show card
-  const goBack = async () => {
-    if (!canGoBack) return;
-    else {
-      const newIndex = currentIndex + 1;
-      updateCurrentIndex(newIndex);
-      await childRefs[newIndex].current.restoreCard();
-    }
-  };
-
   // get current user uid to check for current dog
   const auth = getAuth(app);
   const user = auth.currentUser;
@@ -69,6 +35,57 @@ const HomePage = () => {
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [lastDirection, setLastDirection] = useState();
+  // used for outOfFrame closure
+  const currentIndexRef = useRef(currentIndex);
+  const [noCards, setNoCards] = useState(false);
+
+  useEffect(() => {
+    console.log('OTHER DOGS: ', otherDogs);
+    console.log('DOGS : ', dogs);
+    console.log('CURR INDEX: ', currentIndex);
+    if (currentIndex < 0) {
+      setNoCards(true);
+    }
+  }, [currentIndex]);
+
+  useEffect(() => {
+    console.log('DOGS2 :', dogs);
+    console.log('OTHER DOGS2: ', otherDogs);
+    if (otherDogs.length > 0) setCurrentIndex(otherDogs.length - 1);
+  }, [dogs]);
+
+  // Tinder Card ref
+  const childRefs = useMemo(
+    () =>
+      Array(otherDogs.length)
+        .fill(0)
+        .map((i) => React.createRef()),
+    [otherDogs.length]
+  );
+
+  const updateCurrentIndex = (val) => {
+    console.log('VALUE: ', val);
+    setCurrentIndex(val);
+    currentIndexRef.current = val;
+  };
+
+  // card buttons
+  const canGoBack = currentIndex < otherDogs.length - 1;
+
+  const canSwipe = currentIndex >= 0;
+
+  // increase current index and show card
+  const goBack = async () => {
+    if (!canGoBack) return;
+    else {
+      const newIndex = currentIndex + 1;
+      updateCurrentIndex(newIndex);
+      await childRefs[newIndex].current.restoreCard();
+    }
+  };
 
   // adds swipe to db
   async function currDogDBLikes(id) {
@@ -116,10 +133,10 @@ const HomePage = () => {
   // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
+    console.log('INDEX: ', index);
     updateCurrentIndex(index - 1);
     // start our code
 
-    console.log(currDog[0].likes);
     // if right swipe
     if (direction === 'right') {
       currDog[0].likes.push(nameToDelete);
@@ -148,11 +165,10 @@ const HomePage = () => {
   };
 
   const swipe = async (dir) => {
-    if (canSwipe && currentIndex < dogs.length) {
+    if (canSwipe && currentIndex < otherDogs.length - 1) {
       await childRefs[currentIndex].current.swipe(dir);
     } else {
-      // TODO set some message that there are no more swipes available
-      console.log('DONE!');
+      // setNoCards(true);
     }
   };
 
@@ -175,25 +191,33 @@ const HomePage = () => {
 
   return (
     <div className="tindercards cardContent">
-      <div className="tinderCards__cardContainer">
-        {otherDogs.map((dog, index) => (
-          <TinderCard
-            ref={childRefs[index]}
-            className="swipe"
-            key={dog.name}
-            preventSwipe={['up', 'down']}
-            onSwipe={(dir) => swiped(dir, dog.name, index)}
-            onCardLeftScreen={() => outOfFrame(dog.name, index)}
-          >
-            <div
-              style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-              className="swipeCard"
+      {console.log('NO CARDS: ', noCards)}
+      {noCards ? (
+        <div>
+          <h1> THIS IS THE END MY FRIENDS</h1>
+        </div>
+      ) : (
+        <div className="tinderCards__cardContainer">
+          {otherDogs.map((dog, index) => (
+            <TinderCard
+              ref={childRefs[index]}
+              className="swipe"
+              key={dog.name}
+              preventSwipe={['up', 'down']}
+              onSwipe={(dir) => swiped(dir, dog.name, index)}
+              onCardLeftScreen={() => outOfFrame(dog.name, index)}
             >
-              <h1>{dog.name}</h1>
-            </div>
-          </TinderCard>
-        ))}
-      </div>
+              <div
+                style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                className="swipeCard"
+              >
+                <h1>{dog.name}</h1>
+              </div>
+            </TinderCard>
+          ))}
+        </div>
+      )}
+
       <div className="swipeButtons">
         <IconButton className="swipeButtons__repeat" onClick={() => goBack()}>
           <ReplayIcon fontSize="large" />
@@ -216,14 +240,13 @@ const HomePage = () => {
           </IconButton>
         </Link>
       </div>
+
       {lastDirection ? (
         <h2 key={lastDirection} className="infoText">
           You swiped {lastDirection}
         </h2>
       ) : (
-        <h2 className="infoText">
-          Swipe a card or press a button to get Restore Card button visible!
-        </h2>
+        <h2 className="infoText">{}</h2>
       )}
     </div>
   );
