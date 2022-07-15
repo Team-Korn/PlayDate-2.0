@@ -147,7 +147,7 @@ function Chat() {
             <List>
               <ListItem button key="avatar">
                 <ListItemIcon>
-                  <Avatar src={currDog[0].imageUrl} />
+                  <Avatar src={currDog[0].imageUrl[0]} />
                 </ListItemIcon>
                 <ListItemText>{currDog[0].name}</ListItemText>
               </ListItem>
@@ -166,16 +166,22 @@ function Chat() {
             </Grid>
             <Divider />
             <List>
+              {arrayOfMatchedDogInfo.map((matchedDog) => (
+                <ListItem button key="avatar">
+                  <ListItemIcon>
+                    <Avatar src={matchedDog.imageUrl[0]} />
+                  </ListItemIcon>
+                  <ListItemText>{matchedDog.name}</ListItemText>
+                </ListItem>
+              ))}
+
+              {/*
+              -------- working by some static just for first object -----
               <ListItem button key="avatar">
                 <ListItemIcon>
                   <Avatar src={arrayOfMatchedDogInfo[0].imageUrl[0]} />
                 </ListItemIcon>
-                {/* {dogs.filter((dog) => (
-                <ListItemText primary="dog.name" key={dog.matches} >{dog.matches}</ListItemText>
-              ))}
-              <span ref={dummy}></span> */}
-                {/* <ListItemText secondary="online" align="right"></ListItemText> */}
-              </ListItem>
+              </ListItem> */}
               {/* <ListItem button key="Alice">
               <ListItemIcon>
                 <Avatar alt="Alice" src="https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png" />
