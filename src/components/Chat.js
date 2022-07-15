@@ -154,12 +154,15 @@ function Chat() {
             </List>
             <Divider />
             <Grid item xs={12} style={{ padding: '10px' }}>
+              {/*
+              -------- search bar unnecessary ------------
+
               <TextField
                 id="outlined-basic-email"
                 label="Search"
                 variant="outlined"
                 fullWidth
-              />
+              /> */}
             </Grid>
             <Divider />
             <List>
