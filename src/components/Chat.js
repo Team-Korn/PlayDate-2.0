@@ -54,6 +54,7 @@ function Chat() {
   /*---CHAT-SIDEBAR---*/
   /*get matches from dogs collection*/
   const [dogs, setDogs] = useState([]);
+  // const [currentDog, setCurrentDog] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -78,6 +79,8 @@ function Chat() {
     // returns array with single object of current dog
   });
   console.log('currDog:', currDog);
+  // setCurrentDog(currDog);
+  // console.log('WHAT IS currentDog', currentDog);
 
   /*---PULL INFO FOR MATCHED DOGS DB---*/
 
@@ -149,7 +152,9 @@ function Chat() {
                   src="https://material-ui.com/static/images/avatar/3.jpg"
                 />
               </ListItemIcon>
-              <ListItem primary={currDog[0].name}></ListItem>
+              <ListItemText>
+                {currDog[0] ? currDog[0].name : console.log('no dog yet')}
+              </ListItemText>
             </ListItem>
           </List>
           <Divider />
