@@ -10,6 +10,7 @@ import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 import ErrorPage from './components/ErrorPage';
+import GuestProfile from './components/GuestProfile';
 
 // ---- FOR LOGIN CHECK -----------------------------
 // import { useNavigate } from 'react-router-dom';
@@ -71,6 +72,7 @@ function App() {
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
 
+            <Route path="/friend" element={<GuestProfile />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>
