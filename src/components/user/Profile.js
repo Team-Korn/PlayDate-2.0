@@ -3,7 +3,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { app, db } from '../../config/fbConfig';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
-import Settings from './Settings';
 import './Profile.css'
 
 const Profile = () => {
