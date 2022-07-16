@@ -72,7 +72,8 @@ function App() {
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
 
-            <Route path="/friend" element={<GuestProfile />} />
+            <Route path="/profile" element={<GuestProfile />} />
+
             <Route path="*" element={<ErrorPage />} />
           </Routes>
         </BrowserRouter>

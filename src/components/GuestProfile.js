@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { Link } from 'react-router-dom';
-import { currDog, otherDogs, matched } from './HomePage';
+import React from 'react';
+import './Card.css';
 
 const GuestProfile = () => {
-  console.log('OTHER DOGS: ', otherDogs);
-  return <h1>{currDog}</h1>;
+  return (
+    <div className="Card">
+      <div className="upper-container">
+        <div className="image-container">
+          <img src=" " alt="" height="100px" width="100px" />
+        </div>
+      </div>
+      <div className="lower-container">
+        <h3>Name</h3>
+        <h4>size</h4>
+        <p> bio</p>
+      </div>
+    </div>
+  );
 };
-
-export default GuestProfile;

@@ -31,12 +31,12 @@ const HomePage = () => {
   const user = auth.currentUser;
 
   // return all dogs except current user's dog
-  export const otherDogs = dogs.filter((dog) => {
+  const otherDogs = dogs.filter((dog) => {
     return dog.ownerId !== user.uid;
   });
 
   // shows owner's dog
-  export const currDog = dogs.filter((dog) => {
+  const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
 
