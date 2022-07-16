@@ -9,6 +9,7 @@ import {
   doc,
   addDoc,
   updateDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 
@@ -17,7 +18,7 @@ function SignUpUserInfo() {
 
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
-  console.log(currentUser);
+  console.log('THIS IS currentUser', currentUser);
 
   // const [zipcode, setZipcode] = useState('');
   // const [state, setState] = useState('');
@@ -46,21 +47,34 @@ function SignUpUserInfo() {
   const currUser = users.filter((user) => {
     return user.uid === currentUser.uid;
   });
+  console.log('WHAT IS currUser', currUser);
+
+  const currentUserRefDB = doc(db, 'users', 'mwmwaeG4UOChaTiDkaAh');
+  setDoc(currentUserRefDB, { zipcodeCHECK: '11101' }, { merge: true });
+  // async function addUserInfo(zipcode) {
+  //   // const currUserDB = doc(db, 'users', currUser[0].name);
+  //   await setDoc(currUser, {
+  //     zipcode: zipcode,
+  //   });
+  // }
 
   const handleSubmit = (event) => {
-    if (currentUser) {
-      let zipcode = document.getElementById('zipcode').value;
+    event.preventDefault();
+    // const currUserDB = doc(db, 'users', currUser[0].name);
 
-      async function addUserInfo() {
-        const currUserDB = doc(db, 'users', currUser[0]);
-        await addDoc(currUserDB, {
-          zipcode: zipcode,
-        });
-      }
-      event.preventDefault();
-      addUserInfo();
-      alert('Successfully added location');
-    }
+    // console.log(currUserDB);
+
+    // if (currUser) {
+    //   let zipcode = document.getElementById('zipcode').value;
+    //   // const currUserDB = doc(db, 'users', currUser[0]);
+    //   // console.log('currUserDB: ', currUserDB[0]);
+    //   console.log(
+    //     'What is the value?',
+    //     document.getElementById('zipcode').value
+    //   );
+
+    //   addUserInfo(zipcode).then(alert('Successfully added location'));
+    // }
   };
 
   // useEffect(() => {
@@ -74,6 +88,7 @@ function SignUpUserInfo() {
         <form classname="additionalUserInfo" onSubmit={handleSubmit}>
           <div id="form-Header">Location</div>
           <input
+            id="zipcode"
             type="text"
             className="userInfo__container"
             // value={zipcode}
