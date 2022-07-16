@@ -51,9 +51,9 @@ if (!dogs[0]) {
                   <Link className='settings-button' to="/user-settings">
                     <button>Settings</button>
                   </Link>
-                  <Link className='preferences-button' to="/user-preferences">
+                  {/* <Link className='preferences-button' to="/user-preferences">
                     <button>Preferences</button>
-                  </Link>
+                  </Link> */}
               </div>
           </div>
         </div>
