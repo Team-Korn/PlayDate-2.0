@@ -3,7 +3,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { app, db } from '../../config/fbConfig';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
-import Settings from './Settings';
 import './Profile.css'
 
 const Profile = () => {
@@ -52,9 +51,9 @@ if (!dogs[0]) {
                   <Link className='settings-button' to="/user-settings">
                     <button>Settings</button>
                   </Link>
-                  <Link className='preferences-button' to="/user-preferences">
+                  {/* <Link className='preferences-button' to="/user-preferences">
                     <button>Preferences</button>
-                  </Link>
+                  </Link> */}
               </div>
           </div>
         </div>
