@@ -49,8 +49,7 @@ function SignUpUserInfo() {
   });
   console.log('WHAT IS currUser', currUser);
 
-  const currentUserRefDB = doc(db, 'users', 'mwmwaeG4UOChaTiDkaAh');
-  setDoc(currentUserRefDB, { zipcodeCHECK: '11101' }, { merge: true });
+  const currentUserRefDB = doc(db, 'users', 'EDfL3dkfYxnveivaSwGg');
   // async function addUserInfo(zipcode) {
   //   // const currUserDB = doc(db, 'users', currUser[0].name);
   //   await setDoc(currUser, {
@@ -60,12 +59,14 @@ function SignUpUserInfo() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let zipcode = document.getElementById('zipcode').value;
+    console.log('zipcode is: ', zipcode);
+    setDoc(currentUserRefDB, { zipcode: zipcode }, { merge: true });
     // const currUserDB = doc(db, 'users', currUser[0].name);
 
     // console.log(currUserDB);
 
     // if (currUser) {
-    //   let zipcode = document.getElementById('zipcode').value;
     //   // const currUserDB = doc(db, 'users', currUser[0]);
     //   // console.log('currUserDB: ', currUserDB[0]);
     //   console.log(
