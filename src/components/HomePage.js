@@ -19,6 +19,7 @@ import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
+import Accordion from 'react-bootstrap/Accordion';
 
 const HomePage = () => {
   // ------ BELOW is all of state for dogs --------
@@ -197,6 +198,15 @@ const HomePage = () => {
               >
                 <h1>{dog.name}</h1>
               </div>
+              <Accordion>
+                <Accordion.Item eventKey="0" flush="true">
+                  <Accordion.Header> Owner Info</Accordion.Header>
+                  <Accordion.Body>
+                    <h1>Hello</h1>
+                    <p>{user.email}</p>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </TinderCard>
           ))}
 

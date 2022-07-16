@@ -16,6 +16,7 @@ import GuestProfile from './components/GuestProfile';
 // import { useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './Auth';
+import NavbarNotSignedIn from './components/NavBarNotSignedIn';
 
 // -------------------------------------
 
@@ -37,6 +38,7 @@ function App() {
     return (
       <div className="firstLogIn">
         <BrowserRouter>
+          <NavbarNotSignedIn />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
