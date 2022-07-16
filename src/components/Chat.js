@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { db2, app } from '../config/fbConfig';
 import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
+import PrivateChat from './PrivateChat';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -113,23 +115,22 @@ function Chat() {
   }
 
   /*---CHAT-MESSAGES---*/
-  const messagesRef = db2.collection('messages');
-  const query = messagesRef.orderBy('createdAt').limit(50);
-  /*---listen to data with a hook---*/
-  const [messages] = useCollectionData(query, { idField: 'id' });
+  // const messagesRef = db2.collection('messages');
+  // const query = messagesRef.orderBy('createdAt').limit(50);
+  // const [messages] = useCollectionData(query, { idField: 'id' });
 
-  const [formValue, setFormValue] = useState('');
+  // const [formValue, setFormValue] = useState('');
 
-  const sendMessage = async (e) => {
-    e.preventDefault();
+  // const sendMessage = async (e) => {
+  //   e.preventDefault();
 
-    await messagesRef.add({
-      text: formValue,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    setFormValue(''); // empties the message container
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
-  };
+  //   await messagesRef.add({
+  //     text: formValue,
+  //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //   });
+  //   setFormValue(''); // empties the message container
+  //   dummy.current.scrollIntoView({ behavior: 'smooth' });
+  // };
 
   if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
@@ -167,12 +168,14 @@ function Chat() {
             <Divider />
             <List>
               {arrayOfMatchedDogInfo.map((matchedDog) => (
-                <ListItem button key="avatar">
-                  <ListItemIcon>
-                    <Avatar src={matchedDog.imageUrl[0]} />
-                  </ListItemIcon>
-                  <ListItemText>{matchedDog.name}</ListItemText>
-                </ListItem>
+                <Link to="/chat/private" >
+                  <ListItem button key="avatar" onClick={PrivateChat} >
+                    <ListItemIcon>
+                      <Avatar src={matchedDog.imageUrl[0]} />
+                    </ListItemIcon>
+                    <ListItemText>{matchedDog.name}</ListItemText>
+                  </ListItem>
+                </Link>
               ))}
 
               {/*
@@ -190,7 +193,7 @@ function Chat() {
             </ListItem> */}
             </List>
           </Grid>
-          {/*---MESSAGE CONTAINER---*/}
+          {/* ---MESSAGE CONTAINER---
           <Grid item xs={9}>
             <List className={classes.messageArea}>
               <ListItem key="1">
@@ -226,30 +229,23 @@ function Chat() {
                 </Fab>
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );
   }
 }
 
-function SendMessage(props) {
-  const { text } = props.message;
-
-  return (
-    <div>
-      <p>{text}</p>
-    </div>
-  );
-}
-
-// function SelectMatch(props) {
+// function SendMessage(props) {
+//   const { text } = props.message;
 
 //   return (
 //     <div>
-//       <p></p>
+//       <p>{text}</p>
 //     </div>
-//   )
+//   );
 // }
+
+
 
 export default Chat;

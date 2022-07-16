@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
 import Chat from './components/Chat';
+import PrivateChat from './components/PrivateChat';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/user/Profile';
@@ -58,6 +59,8 @@ function App() {
             <Route path="/home" element={<HomePage />} />
 
             <Route path="/chat" element={<Chat />} />
+
+            <Route path="/chat/private" element={<PrivateChat />} />
 
             <Route path="/" element={<Login />} />
 
