@@ -10,6 +10,23 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import { getAuth } from 'firebase/auth';
 import Card from 'react-bootstrap/Card';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import styled from 'styled-components';
+
+const StyledName = styled.h1`
+  font-family: 'Edu VIC WA NT Beginner', cursive;
+  padding-top: 10%;
+  font-size: 72px;
+`;
+
+const StyledProfilePic = styled(Image)`
+  padding-top: 4%;
+  padding: 8%;
+  width: 60%;
+  height: 60%;
+  max-width: 100%;
+`;
 
 const GuestProfile = () => {
   const [dogs, setDogs] = useState([]);
@@ -64,40 +81,88 @@ const GuestProfile = () => {
   return (
     <div>
       {currDog[0] && currUser[0] ? (
-        <Container fluid>
-          <div>
-            <Image src={currDog[0].imageUrl[0]} alt="" roundedCircle="true" />
-          </div>
-
-          {currDog[0].imageUrl.slice(1).map((pic) => (
-            <div>
-              <Image src={pic} alt="" />
-            </div>
-          ))}
-          <Row>
-            <Col>
-              <h1>{currDog[0].name}</h1>
+        <Container fluid style={{ backgroundColor: '#00A8CC' }}>
+          <Row className="justify-content-center">
+            <Col
+              md={{ span: 6, offset: 4 }}
+              sm={{ span: 3, offset: 6 }}
+              className="text-center"
+            >
+              <StyledName>{currDog[0].name}</StyledName>
             </Col>
           </Row>
 
-          {/* <Row>
-            <img scr={currDog.imageUrl} alt="" />
-            <Image scr={currDog.imageUrl[2]} alt="" fluid="true" />
-          </Row> */}
-          <Row>
-            <Stack gap={4}>
-              <div className="bg-light border">{currDog[0].size}</div>
-              <div className="bg-light border">{currDog[0].breed}</div>
-              <div className="bg-light border">Gender</div>
-            </Stack>
+          <Row className="text-center">
+            <div>
+              <Col md={{ span: 6, offset: 4 }}>
+                <StyledProfilePic
+                  src={currDog[0].imageUrl[0]}
+                  alt=""
+                  roundedCircle="true"
+                />
+              </Col>
+            </div>
           </Row>
-          <Row>
-            <Accordion>
-              <Accordion.Item eventKey="0" flush="true">
-                <Accordion.Header> Owner Info</Accordion.Header>
+          <Row className="text-center">
+            <Col>
+              <div>
+                <h3>{currDog.bio}</h3>
+              </div>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            {currDog[0].imageUrl.slice(1).map((pic) => (
+              <Col>
+                <Image
+                  src={pic}
+                  alt=""
+                  thumbnail="true"
+                  style={{
+                    paddingBottom: '3%',
+                    margin: '8%',
+                    height: '50%',
+                    width: '40%',
+                  }}
+                />
+              </Col>
+            ))}
+          </Row>
+          <Tabs
+            defaultActiveKey="dog"
+            id="profile"
+            className="mb-3"
+            fill
+            style={{ backgroundColor: 'orange' }}
+          >
+            <Tab eventKey="dog" title="About Pup">
+              <Row>
+                <h6>{currDog[0].bio}</h6>
+                <Stack gap={4}>
+                  <div>Size: {currDog[0].size} </div>
+                  <div>Breed: {currDog[0].breed}</div>
+                  <div>Gender: {currDog[0].gender}</div>
+                </Stack>
+              </Row>
+            </Tab>
+            <Tab eventKey="human" title="Human">
+              <h4>Name: {currUser[0].name}</h4>
+              <h4>Age: {currUser[0].age}</h4>
+              <h4>email: {currUser[0].email}</h4>
+            </Tab>
+          </Tabs>
+          <Row style={{ backgroundColor: 'orange' }}>
+            <Accordion style={{ backgroundColor: 'orange' }}>
+              <Accordion.Item
+                eventKey="0"
+                flush="true"
+                style={{ backgroundColor: 'orange !important' }}
+              >
+                <Accordion.Header style={{ backgroundColor: 'orange' }}>
+                  {' '}
+                  About Me
+                </Accordion.Header>
                 <Accordion.Body>
-                  <h1>Hello</h1>
-                  <p>{currUser[0].name}</p>
+                  <p>{currDog[0].bio}</p>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
