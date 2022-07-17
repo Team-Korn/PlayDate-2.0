@@ -3,14 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../Auth';
 import './SignUpUserInfo.css';
-import {
-  collection,
-  getDocs,
-  doc,
-  addDoc,
-  updateDoc,
-  setDoc,
-} from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 
 function SignUpUserInfo() {
@@ -61,6 +54,7 @@ function SignUpUserInfo() {
     event.preventDefault();
     let zipcode = document.getElementById('zipcode').value;
     console.log('zipcode is: ', zipcode);
+
     setDoc(currentUserRefDB, { zipcode: zipcode }, { merge: true });
     // const currUserDB = doc(db, 'users', currUser[0].name);
 
