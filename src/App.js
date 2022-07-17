@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, uselocalStorage } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Navbar from './components/Navbar';
@@ -30,8 +30,6 @@ function App() {
 
   // -------- FOR LOGIN CHECK -------------
   const [user] = useAuthState(auth);
-  // const [users, setUsers] = useState([]);
-  // {isAdmin !== false ? <Route path="/admin" component={AdminView} /> : ''}
 
   if (!user) {
     return (

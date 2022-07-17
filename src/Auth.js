@@ -82,8 +82,8 @@ const registerWithEmailAndPassword = async (name, email, password) => {
     });
     // -------- RETURNS CURRENT USER'S DOCUMENT ID ----------------
     console.log('document id:', createdUserObjectInDB.id);
-    console.log('THIS IS THE DOC ID!!!!!!!', createdUserObjectInDB.id);
     currentUserDocumentId = createdUserObjectInDB.id;
+    // console.log('THIS IS THE DOC ID exporting!!!!!!!', currentUserDocumentId);
   } catch (err) {
     console.error(err);
     alert(err.message);
