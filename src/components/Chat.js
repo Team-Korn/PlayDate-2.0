@@ -7,6 +7,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
+import Header from './Header';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -135,6 +136,7 @@ function Chat() {
   if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
       <div>
+        <Header />
         {/*---SIDEBAR CONTAINER---*/}
         <Grid container>
           <Grid item xs={12}>

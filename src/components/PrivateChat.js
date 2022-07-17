@@ -6,7 +6,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import Header from './Header';
-import './Chat.css';
+import './PrivateChat.css';
 
 /*---MATERIAL-UI---*/
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,9 @@ function PrivateChat() {
     const classes = useStyles();
     const dummy = useRef();
 
+
     /*---CHAT-MESSAGES---*/
+
     const messagesRef = db2.collection('messages');
     const query = messagesRef.orderBy('createdAt').limit(50);
     /*---listen to data with a hook---*/
@@ -59,6 +61,7 @@ function PrivateChat() {
 
     const sendMessage = async (e) => {
         e.preventDefault();
+
 
         await messagesRef.add({
             text: formValue,
@@ -73,7 +76,7 @@ function PrivateChat() {
             <Header />
 
             {/*---MESSAGE CONTAINER---*/}
-            <Grid item xs={9}>
+            <Grid max-width="100%" >
                 <List className={classes.messageArea}>
                     <ListItem key="1">
                         <Grid container>
@@ -116,8 +119,42 @@ function PrivateChat() {
 function SendMessage(props) {
     const { text } = props.message;
 
+    /*---Distinguish messages sent by current dog vs recieved by matched dog---*/
+    const [dogs, setDogs] = useState([]);
+    // gets dog collection
+    useEffect(() => {
+        (async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db2, 'dogs'));
+                const dogData = [];
+                querySnapshot.forEach((doc) => {
+                    dogData.push(doc.data());
+                });
+
+                setDogs(dogData);
+            } catch (err) {
+                console.log(err, 'who let the dogs out?');
+            }
+        })();
+    }, []);
+    console.log('dogs:', dogs);
+
+    // get current user uid to check for current dog
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+
+    // shows owner's dog
+    const currDog = dogs.filter((dog) => {
+        return dog.ownerId === user.uid;
+        // returns array with single object of current dog
+    });
+    console.log('currDog:', currDog);
+
+    const messageClass = currDog ? 'sent' : 'received'
+
     return (
-        <div>
+        <div className={`message ${messageClass}`}>
+            {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
             <p>{text}</p>
         </div>
     );
