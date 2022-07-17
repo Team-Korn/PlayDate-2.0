@@ -28,7 +28,7 @@
     overflow-wrap: break-word;
   } */
 
-  .sent {
+  /* .sent {
     background-color: #395dff;
     color: white;
     border-top-right-radius: 1000px;
@@ -43,7 +43,7 @@
     background-color: #FAFAFA;
     border-top-left-radius: 1000px;
     float: left;
-  }
+  } */
   
   /* .sendMsg {
     position: fixed;
@@ -65,7 +65,7 @@
   } */
   
   
-  @media (max-width: 775px) {
+  /* @media (max-width: 775px) {
     p {
       font-size: 20px;
     }
@@ -95,4 +95,4 @@
       height: 30px;
       margin-top: -7px;
     }
-  }
+  } */
