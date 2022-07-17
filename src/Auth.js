@@ -68,6 +68,7 @@ const logInWithEmailAndPassword = async (email, password) => {
 };
 
 // ------ function for registering a user with email and pass -----
+let currentUserDocumentId = '';
 
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
@@ -79,10 +80,10 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: 'local',
       email,
     });
-    // async function addCity(newCity) {
+    // -------- RETURNS CURRENT USER'S DOCUMENT ID ----------------
     console.log('document id:', createdUserObjectInDB.id);
-    console.log('id', createdUserObjectInDB);
-    console.log('This is CURRENT USER INSIDE REGISTER', user);
+    console.log('THIS IS THE DOC ID!!!!!!!', createdUserObjectInDB.id);
+    currentUserDocumentId = createdUserObjectInDB.id;
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -136,4 +137,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  currentUserDocumentId,
 };

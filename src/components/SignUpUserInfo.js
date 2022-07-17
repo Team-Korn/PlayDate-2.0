@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../Auth';
+import { auth, currentUserDocumentId } from '../Auth';
 import './SignUpUserInfo.css';
 import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
+import { connectStorageEmulator } from 'firebase/storage';
+
+const documentId = currentUserDocumentId;
 
 function SignUpUserInfo() {
-  // const navigate = useNavigate();
+  // ------ current user's document ID ------
+  console.log('IS DOC ID HERE???', documentId);
+
+  // const navigate = useNavigate(); -- not sure if necessary
 
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
@@ -31,31 +37,29 @@ function SignUpUserInfo() {
 
         setUsers(userData);
       } catch (err) {
-        console.log(err, 'who let the dogs out?');
+        console.log(err, 'what happened? where is everyone?');
       }
     })();
   }, []);
 
-  //find the current users object
+  // -------find the current users object ------
   const currUser = users.filter((user) => {
     return user.uid === currentUser.uid;
   });
-  console.log('WHAT IS currUser', currUser);
 
-  const currentUserRefDB = doc(db, 'users', 'EDfL3dkfYxnveivaSwGg');
-  // async function addUserInfo(zipcode) {
-  //   // const currUserDB = doc(db, 'users', currUser[0].name);
-  //   await setDoc(currUser, {
-  //     zipcode: zipcode,
-  //   });
-  // }
+  // ------ ABLE TO FIND PROPER USER USING DOC ID --
+  const currentUserRefDB = doc(db, 'users', documentId);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     let zipcode = document.getElementById('zipcode').value;
-    console.log('zipcode is: ', zipcode);
 
     setDoc(currentUserRefDB, { zipcode: zipcode }, { merge: true });
+
+    console.log('zipcode is: ', zipcode);
+    console.log('inside zipcode is docID correct??', documentId);
+    console.log('current user info', currUser);
+
     // const currUserDB = doc(db, 'users', currUser[0].name);
 
     // console.log(currUserDB);
