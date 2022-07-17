@@ -66,7 +66,7 @@ const NavBar = () => {
       <StyledNavHeader>
         <StyledLeftHeader>
           <Navbar.Brand>
-            <StyledLogoLink to="/home">Playdate 🐾</StyledLogoLink>
+            <StyledLogoLink to="/home">Playdate 🐾 </StyledLogoLink>
           </Navbar.Brand>
         </StyledLeftHeader>
         <StyledRightHeader>
@@ -74,25 +74,27 @@ const NavBar = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto"></Nav>
             <Nav>
-              <Nav.Item>
-                <Nav.Link eventKey={2}>
-                  <StyledLink to="/chat">Messages |</StyledLink>
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={3}>
-                  <StyledLink to="/login" onClick={logout}>
-                    Logout |
-                  </StyledLink>
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link eventKey={4}>
-                  <StyledLink to="/user" onClick={logout}>
-                    Edit Profile
-                  </StyledLink>
-                </Nav.Link>
-              </Nav.Item>
+              <StyledLinksWrapper>
+                <Nav.Item>
+                  <Nav.Link eventKey={2}>
+                    <StyledLink to="/chat">Messages </StyledLink>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey={3}>
+                    <StyledLink to="/login" onClick={logout}>
+                      Logout
+                    </StyledLink>
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey={4}>
+                    <StyledLink to="/user" onClick={logout}>
+                      Edit Profile
+                    </StyledLink>
+                  </Nav.Link>
+                </Nav.Item>
+              </StyledLinksWrapper>
             </Nav>
           </Navbar.Collapse>
         </StyledRightHeader>
