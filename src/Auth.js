@@ -73,12 +73,16 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, 'users'), {
+    const createdUserObjectInDB = await addDoc(collection(db, 'users'), {
       uid: user.uid,
       name,
       authProvider: 'local',
       email,
     });
+    // async function addCity(newCity) {
+    console.log('document id:', createdUserObjectInDB.id);
+    console.log('id', createdUserObjectInDB);
+    console.log('This is CURRENT USER INSIDE REGISTER', user);
   } catch (err) {
     console.error(err);
     alert(err.message);
