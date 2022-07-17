@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
+import Container from 'react-bootstrap/Container';
 
 const HomePage = () => {
   // ------ BELOW is all of state for dogs --------
