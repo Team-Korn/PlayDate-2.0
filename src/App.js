@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import Navbar from './components/Navbar';
+import NavBar from './components/Navbar';
 import Chat from './components/Chat';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -54,7 +54,7 @@ function App() {
     return (
       <div className="App">
         <BrowserRouter>
-          <Navbar />
+          <NavBar />
           <Routes>
             <Route path="/home" element={<HomePage />} />
 
