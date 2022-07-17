@@ -2,6 +2,10 @@ let CACHE_NAME = 'PlayDate-cache';
 const urlsToCache = [
 '/',
 '/index.html',
+'/home',
+'/chat',
+'/register',
+'/login'
 ];
 
 
