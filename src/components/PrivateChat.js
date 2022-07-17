@@ -5,6 +5,7 @@ import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
+import Header from './Header';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -22,6 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
+
 
 const useStyles = makeStyles({
     table: {
@@ -68,6 +70,8 @@ function PrivateChat() {
 
     return (
         <div>
+            <Header />
+
             {/*---MESSAGE CONTAINER---*/}
             <Grid item xs={9}>
                 <List className={classes.messageArea}>
