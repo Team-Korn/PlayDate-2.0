@@ -92,18 +92,15 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 // ---------- Forms for dog and auto-populate ----------
 
-const inputDogInfo = async (name) => {
-  // , age, breed, gender, size, bio
-  /*
-  age: age,
+const inputDogInfo = async (name, age, breed, gender, size, bio) => {
+  try {
+    await addDoc(collection(db, 'dogs'), {
+      name: name,
+      age: age,
       gender: gender,
       breed: breed,
       size: size,
       bio: bio,
-  */
-  try {
-    await addDoc(collection(db, 'dogs'), {
-      name: name,
     });
   } catch (err) {
     console.log('UH OH DOGGO', err);

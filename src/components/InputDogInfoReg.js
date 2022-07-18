@@ -14,20 +14,19 @@ function DogRegisterInfoForm() {
   //grab current user from db
   const [user, setUser] = useState({});
   // ---- set age to integer??? -----------
-  // const [age, setAge] = useState('');
+  const [age, setAge] = useState('');
   const [name, setName] = useState('');
-  // const [breed, setBreed] = useState('');
-  // const [gender, setGender] = useState('');
+  const [breed, setBreed] = useState('');
+  const [gender, setGender] = useState('');
   // const [documentId, setDocumentId] = useState('');
   // const [imageUrl, setImageUrl] = useState([]);
-  // const [size, setSize] = useState('');
-  // const [bio, setBio] = useState('');
+  const [size, setSize] = useState('');
+  const [bio, setBio] = useState('');
   // const [user, loading, error] = useAuthState(auth);
 
   const addDogDocumentAndInfo = () => {
-    inputDogInfo(name);
+    inputDogInfo(name, age, breed, gender, size, bio);
   };
-  // , age, breed, gender, size, bio
 
   useEffect(() => {
     (async () => {
