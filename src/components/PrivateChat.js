@@ -44,10 +44,14 @@ const useStyles = makeStyles({
     },
 });
 
+
 function PrivateChat() {
     const classes = useStyles();
     const dummy = useRef();
 
+    // get current user uid to check for current dog
+    const auth = getAuth(app);
+    const user = auth.currentUser;
 
     /*---CHAT-MESSAGES---*/
 
@@ -65,6 +69,7 @@ function PrivateChat() {
         await messagesRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            sentBy: user.uid
         });
         setFormValue(''); // empties the message container
         dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -115,7 +120,7 @@ function PrivateChat() {
 }
 
 function SendMessage(props) {
-    const { text } = props.message;
+    const { text, sentBy } = props.message;
 
     /*---Distinguish messages sent by current dog vs recieved by matched dog---*/
     const [dogs, setDogs] = useState([]);
@@ -148,7 +153,8 @@ function SendMessage(props) {
     });
     console.log('currDog:', currDog);
 
-    const messageClass = currDog ? 'sent' : 'received'
+
+    const messageClass = sentBy === user.uid ? 'sent' : 'received'
 
     return (
         <div className={`message ${messageClass}`}>
