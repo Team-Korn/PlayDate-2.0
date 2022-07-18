@@ -60,7 +60,7 @@ function SignUpUserInfo() {
   };
 
   return (
-    <div className="userInfo_container container-fluid bg-gray">
+    <div className="userInfo_container container-fluid bg-white">
       <div className="container">
         <form classname="additionalUserInfo" onSubmit={handleSubmit}>
           <div className="row">
