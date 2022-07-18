@@ -37,14 +37,24 @@ const GuestProfile = () => {
   const currUser = users.filter((user) => {
     return user.uid !== currentUser.uid;
   });
-  console.log('WHAT IS currUser', currUser);
 
   // shows owner's dog
   console.log('DOGS: ', dogs);
 
   const currDog = dogs.filter((dog) => {
-    return dog.ownerId === currUser[0].uid;
+    return dog.ownerId !== currUser[0].uid;
   });
+
+  const pairs = (currUser, currDog) => {
+    let res = [];
+    res = currUser.filter((user) => {
+      return !currDog.find((pup) => {
+        return pup.ownerId === user.uid;
+      });
+    });
+    return res;
+  };
+  console.log('PAIRS: ', pairs(currUser, currDog));
 
   console.log('CURR DOG:', currDog);
   //grab all users from db
@@ -92,7 +102,6 @@ const GuestProfile = () => {
               <StyledName>{currDog[0].name}</StyledName>
             </Col>
           </Row>
-
           <Row className="text-center">
             <div>
               <Col md={{ span: 6, offset: 4 }}>

@@ -54,7 +54,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (otherDogs.length > 0) setCurrentIndex(otherDogs.length - 1);
-  }, [dogs]);
+  }, [otherDogs.length]);
 
   // Tinder Card ref
   const childRefs = useMemo(
@@ -179,6 +179,7 @@ const HomePage = () => {
       } catch (err) {}
     })();
   }, []);
+  console.log('OTHER DOGS: ', otherDogs);
   return (
     <div className="tindercards cardContent homepage-wrapper container-fluid">
       {noCards ? (
@@ -199,7 +200,7 @@ const HomePage = () => {
                   onCardLeftScreen={() => outOfFrame(dog.name, index)}
                 >
                   <div
-                    style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                    style={{ backgroundImage: `url(${dog.imageUrl[0]})` }}
                     className="swipeCard"
                   ></div>
                   <Accordion>
@@ -243,13 +244,13 @@ const HomePage = () => {
             </div>
           </div>
 
-          {lastDirection ? (
+          {/* {lastDirection ? (
             <h2 key={lastDirection} className="infoText">
               You swiped {lastDirection}
             </h2>
           ) : (
             <h2 className="infoText">{}</h2>
-          )}
+          )} */}
         </div>
       )}
     </div>
