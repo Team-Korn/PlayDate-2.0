@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, currentUserDocumentId } from '../Auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../Auth';
 import './SignUpUserInfo.css';
 import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 // import { connectStorageEmulator } from 'firebase/storage';
 
 function SignUpUserInfo() {
-  // const navigate = useNavigate(); -- not sure if necessary
+  const [loading] = useAuthState(auth);
+  const navigate = useNavigate();
 
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
-  console.log('THIS IS currentUser', currentUser);
+  // console.log('THIS IS currentUser', currentUser);
 
   //grab current user from db
   const [user, setUser] = useState({});
+
   useEffect(() => {
     (async () => {
       try {
@@ -44,45 +46,50 @@ function SignUpUserInfo() {
     let state = document.getElementById('state').value;
 
     // console.log('zipcode is: ', zipcode, city, state);
-    // console.log('current user info', user);
+    console.log('current user info', user);
 
-    setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true });
+    setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true }).then(
+      (res) => {
+        console.log('updated user info', res);
+        navigate('/dog');
+      }
+    );
   };
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if ((onclick = { Submit })) navigate('/userPhoto');
-  // }, [loading, navigate]);
-
   return (
-    <div className="userInfo_container">
-      <form classname="additionalUserInfo" onSubmit={handleSubmit}>
-        <div id="form-Header">Location</div>
-        <input
-          id="zipcode"
-          type="text"
-          className="userInfo__container"
-          placeholder="Zipcode"
-        />
-        <input
-          id="city"
-          type="text"
-          className="userInfo__container"
-          placeholder="City"
-        />
-        <input
-          id="state"
-          type="text"
-          className="userInfo__container"
-          placeholder="State"
-        />
-        {/* <button className="userInfo__btn" type="submit">
-            Continue
-          </button> */}
-        <div>
-          <input type="submit" id="submit" value="Submit Changes" />
-        </div>
-      </form>
+    <div className="userInfo_container container-fluid bg-white">
+      <div className="container">
+        <form classname="additionalUserInfo" onSubmit={handleSubmit}>
+          <div className="row">
+            <div id="form-Header">Location</div>
+
+            <div className="col-12 col-md-6">
+              <input
+                required
+                id="zipcode"
+                type="text"
+                className="userInfo__container"
+                placeholder="Zipcode"
+              />
+              <input
+                required
+                id="city"
+                type="text"
+                className="userInfo__container"
+                placeholder="City"
+              />
+              <input
+                required
+                id="state"
+                type="text"
+                className="userInfo__container"
+                placeholder="State"
+              />
+              <input type="submit" id="submit" value="Submit Changes" />
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

@@ -22,14 +22,6 @@ import NavbarNotSignedIn from './components/NavBarNotSignedIn';
 // -------------------------------------
 
 function App() {
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate('/login');
-  //   } else {
-  //     return;
-  //   }
-  // }, [user, navigate]);
-
   // -------- FOR LOGIN CHECK -------------
   const [user] = useAuthState(auth);
 
@@ -53,7 +45,6 @@ function App() {
     return (
       <div className="App">
         <BrowserRouter>
-
           <NavBar />
 
           <Routes>
