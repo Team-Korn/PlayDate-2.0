@@ -18,11 +18,6 @@ function SignUpUserInfo() {
   //grab current user from db
   const [user, setUser] = useState({});
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   console.log(user.zipcode);
-  //   if (user.zipcode) navigate('/dog');
-  // }, [user, loading, navigate]);
   useEffect(() => {
     (async () => {
       try {
@@ -53,42 +48,48 @@ function SignUpUserInfo() {
     // console.log('zipcode is: ', zipcode, city, state);
     console.log('current user info', user);
 
-    setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true });
-
-    if (zipcode !== '' && city !== '' && state !== '') {
-      navigate('/dog');
-    }
+    setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true }).then(
+      (res) => {
+        console.log('updated user info', res);
+        navigate('/dog');
+      }
+    );
   };
 
   return (
-    <div className="userInfo_container">
-      <form classname="additionalUserInfo" onSubmit={handleSubmit}>
-        <div id="form-Header">Location</div>
-        <input
-          required
-          id="zipcode"
-          type="text"
-          className="userInfo__container"
-          placeholder="Zipcode"
-        />
-        <input
-          required
-          id="city"
-          type="text"
-          className="userInfo__container"
-          placeholder="City"
-        />
-        <input
-          required
-          id="state"
-          type="text"
-          className="userInfo__container"
-          placeholder="State"
-        />
-        <div>
-          <input type="submit" id="submit" value="Submit Changes" />
-        </div>
-      </form>
+    <div className="userInfo_container container-fluid bg-white">
+      <div className="container">
+        <form classname="additionalUserInfo" onSubmit={handleSubmit}>
+          <div className="row">
+            <div id="form-Header">Location</div>
+
+            <div className="col-12 col-md-6">
+              <input
+                required
+                id="zipcode"
+                type="text"
+                className="userInfo__container"
+                placeholder="Zipcode"
+              />
+              <input
+                required
+                id="city"
+                type="text"
+                className="userInfo__container"
+                placeholder="City"
+              />
+              <input
+                required
+                id="state"
+                type="text"
+                className="userInfo__container"
+                placeholder="State"
+              />
+              <input type="submit" id="submit" value="Submit Changes" />
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
