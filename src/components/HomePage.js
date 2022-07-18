@@ -20,13 +20,13 @@ import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
-import Container from 'react-bootstrap/Container';
 
 const HomePage = () => {
   // ------ BELOW is all of state for dogs --------
   const [dogs, setDogs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
+  const [users, setUsers] = useState([]);
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -166,6 +166,23 @@ const HomePage = () => {
       // setNoCards(true);
     }
   };
+  // gets users collection
+  useEffect(() => {
+    (async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'users'));
+        const userData = [];
+        querySnapshot.forEach((doc) => {
+          userData.push(doc.data());
+        });
+
+        setUsers(userData);
+      } catch (err) {
+        console.log(err, 'who let the dogs out?');
+      }
+    })();
+  }, []);
+
   // gets dog collection
   useEffect(() => {
     (async () => {

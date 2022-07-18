@@ -21,20 +21,20 @@ const NavBar = () => {
         <Nav className="ms-auto row justify-content-around">
           <Nav.Link
             as={Link}
-            to={'/user'}
-            className="col-4 d-flex  mr-2 align-items-center"
-            style={{ color: '#00a8cc' }}
-          >
-            <PetsIcon />
-          </Nav.Link>
-          <Nav.Link
-            as={Link}
             to={'/chat'}
             className="col-4 d-flex justify-content-end mr-2 align-items-center"
             style={{ color: '#00a8cc', paddingRight: '3em' }}
           >
             {' '}
             Messages
+          </Nav.Link>
+          <Nav.Link
+            as={Link}
+            to={'/user'}
+            className="col-4 d-flex  mr-2 align-items-center"
+            style={{ color: '#00a8cc' }}
+          >
+            <PetsIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}
