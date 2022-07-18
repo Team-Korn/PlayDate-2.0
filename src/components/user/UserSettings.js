@@ -68,7 +68,7 @@ if(!currUser[0]) {
             <label htmlFor="name">Name</label>
           </div>
           <div className="col-75">
-            <input id="name" type="text" name="name" defaultValue={currUser[0].name} />
+            <input id="name" type="text" name="name" defaultValue={currUser[0].name} required/>
           </div>
         </div>
         <div className="row">
@@ -76,7 +76,7 @@ if(!currUser[0]) {
             <label htmlFor="email">Email</label>
           </div>
           <div className="col-75">
-            <input id="email" type="text" name="email" defaultValue={currUser[0].email}/>
+            <input id="email" type="text" name="email" defaultValue={currUser[0].email} required/>
           </div>
         </div>
         <div className="row">
@@ -84,7 +84,7 @@ if(!currUser[0]) {
             <label htmlFor="city">City</label>
           </div>
           <div className="col-75">
-            <input id="city" type="text" name="city" defaultValue={currUser[0].city}/>
+            <input id="city" type="text" name="city" defaultValue={currUser[0].city} required/>
           </div>
         </div>
         <div className="row">
@@ -92,7 +92,7 @@ if(!currUser[0]) {
             <label htmlFor="state">State</label>
           </div>
           <div className="col-75">
-            <input id="state" type="text"  name="state" defaultValue={currUser[0].state}/>
+            <input id="state" type="text"  name="state" defaultValue={currUser[0].state} required/>
           </div>
         </div>
         <div className="row">
@@ -100,7 +100,7 @@ if(!currUser[0]) {
             <label htmlFor="zip">Zipcode</label>
           </div>
           <div className="col-75">
-          <input id="zipcode" type="text"  name="zip" defaultValue={currUser[0].zipcode}/>
+          <input id="zipcode" type="text"  name="zip" defaultValue={currUser[0].zipcode} required/>
           </div>
         </div>
         <div className="row">
