@@ -9,7 +9,7 @@ const UserSettings = () => {
   const auth = getAuth(app);
   const authUser = auth.currentUser;
 
-  //grab all users from db
+  // grab all users from db
   const [users, setUsers] = useState([]);
   useEffect(() => {
     (async () => {
@@ -27,12 +27,9 @@ const UserSettings = () => {
     })();
   }, []);
 
-  //find the current users object
   const currUser = users.filter(user => {
     return user.uid === authUser.uid
   })
-
-  // console.log("CURRENT USER DATA: ", currUser);
 
   //save data to firestore
 
@@ -71,7 +68,7 @@ if(!currUser[0]) {
             <label htmlFor="name">Name</label>
           </div>
           <div className="col-75">
-            <input id="name" type="text" name="name" placeholder={currUser[0].name}/>
+            <input id="name" type="text" name="name" defaultValue={currUser[0].name} />
           </div>
         </div>
         <div className="row">
@@ -79,7 +76,7 @@ if(!currUser[0]) {
             <label htmlFor="email">Email</label>
           </div>
           <div className="col-75">
-            <input id="email" type="text" name="email" placeholder={currUser[0].email}/>
+            <input id="email" type="text" name="email" defaultValue={currUser[0].email}/>
           </div>
         </div>
         <div className="row">
@@ -87,7 +84,7 @@ if(!currUser[0]) {
             <label htmlFor="city">City</label>
           </div>
           <div className="col-75">
-            <input id="city" type="text" name="city" placeholder={currUser[0].city}/>
+            <input id="city" type="text" name="city" defaultValue={currUser[0].city}/>
           </div>
         </div>
         <div className="row">
@@ -95,7 +92,7 @@ if(!currUser[0]) {
             <label htmlFor="state">State</label>
           </div>
           <div className="col-75">
-            <input id="state" type="text"  name="state" placeholder={currUser[0].state}/>
+            <input id="state" type="text"  name="state" defaultValue={currUser[0].state}/>
           </div>
         </div>
         <div className="row">
@@ -103,7 +100,7 @@ if(!currUser[0]) {
             <label htmlFor="zip">Zipcode</label>
           </div>
           <div className="col-75">
-          <input id="zipcode" type="text"  name="zip" placeholder={currUser[0].zipcode}/>
+          <input id="zipcode" type="text"  name="zip" defaultValue={currUser[0].zipcode}/>
           </div>
         </div>
         <div className="row">
