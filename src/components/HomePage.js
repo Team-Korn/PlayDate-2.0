@@ -19,11 +19,14 @@ import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
+import Accordion from 'react-bootstrap/Accordion';
+import Container from 'react-bootstrap/Container';
 
 const HomePage = () => {
   // ------ BELOW is all of state for dogs --------
-  // const HomePage = () => {
   const [dogs, setDogs] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [lastDirection, setLastDirection] = useState();
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -39,24 +42,17 @@ const HomePage = () => {
     return dog.ownerId === user.uid;
   });
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [lastDirection, setLastDirection] = useState();
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
   const [noCards, setNoCards] = useState(false);
 
   useEffect(() => {
-    console.log('OTHER DOGS: ', otherDogs);
-    console.log('DOGS : ', dogs);
-    console.log('CURR INDEX: ', currentIndex);
     if (currentIndex < 0) {
       setNoCards(true);
     }
   }, [currentIndex]);
 
   useEffect(() => {
-    console.log('DOGS2 :', dogs);
-    console.log('OTHER DOGS2: ', otherDogs);
     if (otherDogs.length > 0) setCurrentIndex(otherDogs.length - 1);
   }, [dogs]);
 
@@ -70,7 +66,6 @@ const HomePage = () => {
   );
 
   const updateCurrentIndex = (val) => {
-    console.log('VALUE: ', val);
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
@@ -131,12 +126,10 @@ const HomePage = () => {
       });
     }
   }
-  // --------------------------------------
 
   // set last direction and decrease current index
   const swiped = (direction, nameToDelete, index) => {
     setLastDirection(direction);
-    console.log('INDEX: ', index);
     updateCurrentIndex(index - 1);
     // start our code
 
@@ -149,15 +142,11 @@ const HomePage = () => {
       // adds currDog to swipedDog's likedBy field
       swipedRtBy(otherDogs[index].documentId);
       matched(otherDogs[index]);
-      console.log('MATCHED: ', currDog[0].matches);
-      console.log('INDEX: ', otherDogs[index]);
     } else {
       // if left swipe
       currDog[0].passed.push(nameToDelete);
       // adds swiped dog to currDog's passed field
       currDogDBPassed(otherDogs[index].name);
-      console.log('OTHER DOG:  ', otherDogs[index].size);
-      console.log('CURR DOG PASS:', currDog[0].passed);
     }
   };
 
@@ -168,13 +157,15 @@ const HomePage = () => {
   };
 
   const swipe = async (dir) => {
+    console.log('IT DOES IT SWIPE?? IN THE SWIPE');
+
     if (canSwipe && currentIndex < otherDogs.length - 1) {
+      console.log('IT SWIPES IN THE SWIPE');
       await childRefs[currentIndex].current.swipe(dir);
     } else {
       // setNoCards(true);
     }
   };
-
   // gets dog collection
   useEffect(() => {
     (async () => {
@@ -184,65 +175,72 @@ const HomePage = () => {
         querySnapshot.forEach((doc) => {
           dogData.push(doc.data());
         });
-
         setDogs(dogData);
-      } catch (err) {
-        console.log(err, 'who let the dogs out?');
-      }
+      } catch (err) {}
     })();
   }, []);
-
   return (
-    <div className="tindercards cardContent">
-      {console.log('NO CARDS: ', noCards)}
+    <div className="tindercards cardContent homepage-wrapper container-fluid">
       {noCards ? (
         <div>
           <EndOfDeck />
         </div>
       ) : (
-        <div className="tinderCards__cardContainer">
-          {otherDogs.map((dog, index) => (
-            <TinderCard
-              ref={childRefs[index]}
-              className="swipe"
-              key={dog.name}
-              preventSwipe={['up', 'down']}
-              onSwipe={(dir) => swiped(dir, dog.name, index)}
-              onCardLeftScreen={() => outOfFrame(dog.name, index)}
-            >
-              <div
-                style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-                className="swipeCard"
+        <div className="tinderCards__wrapper">
+          <div className="row">
+            <div className="tinderCards__cardContainer col-12">
+              {otherDogs.map((dog, index) => (
+                <TinderCard
+                  ref={childRefs[index]}
+                  className="swipe"
+                  key={dog.name}
+                  preventSwipe={['up', 'down']}
+                  onSwipe={(dir) => swiped(dir, dog.name, index)}
+                  onCardLeftScreen={() => outOfFrame(dog.name, index)}
+                >
+                  <div
+                    style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                    className="swipeCard"
+                  ></div>
+                  <Accordion>
+                    <Accordion.Item eventKey="0" flush="true">
+                      <Accordion.Header> Owner Info</Accordion.Header>
+                      <Accordion.Body>
+                        <h1>Hello</h1>
+                        <p>{user.email}</p>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </TinderCard>
+              ))}
+            </div>
+          </div>
+          <div className="row">
+            <div className="swipeButtons">
+              <IconButton
+                className="swipeButtons__repeat"
+                onClick={() => goBack()}
               >
-                <h1>{dog.name}</h1>
-              </div>
-            </TinderCard>
-          ))}
-
-          <div className="swipeButtons">
-            <IconButton
-              className="swipeButtons__repeat"
-              onClick={() => goBack()}
-            >
-              <ReplayIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className="swipeButtons__left"
-              onClick={() => swipe('left')}
-            >
-              <CloseIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className="swipeButtons__right"
-              onClick={() => swipe('right')}
-            >
-              <FavoriteIcon fontSize="large" />
-            </IconButton>
-            <Link to="/chat">
-              <IconButton className="swipeButtons__message">
-                <ChatIcon />
+                <ReplayIcon fontSize="large" />
               </IconButton>
-            </Link>
+              <IconButton
+                className="swipeButtons__left"
+                onClick={() => swipe('left')}
+              >
+                <CloseIcon fontSize="large" />
+              </IconButton>
+              <IconButton
+                className="swipeButtons__right"
+                onClick={() => swipe('right')}
+              >
+                <FavoriteIcon fontSize="large" />
+              </IconButton>
+              <Link to="/chat">
+                <IconButton className="swipeButtons__message">
+                  <ChatIcon />
+                </IconButton>
+              </Link>
+            </div>
           </div>
 
           {lastDirection ? (

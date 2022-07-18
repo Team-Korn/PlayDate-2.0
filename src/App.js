@@ -1,7 +1,7 @@
 import React, { useEffect, uselocalStorage } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
-import Navbar from './components/Navbar';
+import NavBar from './components/Navbar';
 import Chat from './components/Chat';
 import PrivateChat from './components/PrivateChat';
 import Login from './components/Login';
@@ -11,6 +11,7 @@ import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 import ErrorPage from './components/ErrorPage';
+import GuestProfile from './components/GuestProfile';
 
 // ---- FOR LOGIN CHECK -----------------------------
 // import { useNavigate } from 'react-router-dom';
@@ -52,7 +53,9 @@ function App() {
     return (
       <div className="App">
         <BrowserRouter>
-          {/* <Navbar /> */}
+
+          <NavBar />
+
           <Routes>
             <Route path="/home" element={<HomePage />} />
 
@@ -73,6 +76,8 @@ function App() {
             <Route path="/user-preferences" element={<Preferences />} />
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
+
+            <Route path="/profile" element={<GuestProfile />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
