@@ -4,6 +4,7 @@
   display: flex;
   width: 100%;
   justify-content: space-evenly;
+  align-content: space-around;
 }
 
 .swipeButtons .MuiIconButton-root {
@@ -20,10 +21,7 @@
   padding: 3vw !important;
   color: #ec5e6f !important;
 }
-.swipeButtons__star {
-  padding: 3vw !important;
-  color: #62b4f9 !important;
-}
+
 .swipeButtons__right {
   padding: 3vw !important;
   color: #76e2b3 !important;

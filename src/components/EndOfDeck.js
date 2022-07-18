@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PicCarousel from './PicCarousel';
 
 const StyledMessageWrapper = styled.div`
   display: flex;
@@ -75,7 +75,7 @@ const EndOfDeck = () => {
             <Styledh3>Can't fetch any more friends</Styledh3>
           </StyledMessage>
           <StyledLeftHeader>
-            <StyledLink to="/profile">
+            <StyledLink to="/user">
               <h3 style={{ marginLeft: '150%' }}>Profile</h3>
             </StyledLink>
           </StyledLeftHeader>
@@ -86,7 +86,6 @@ const EndOfDeck = () => {
               </StyledLink>
             </StyledLinksWrapper>
           </StyledRightHeader>
-          <FontAwesomeIcon icon="fa-solid fa-bone" />
         </div>
       </div>
     </div>
