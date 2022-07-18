@@ -177,72 +177,78 @@ const HomePage = () => {
     })();
   }, []);
   return (
-    <div className="tindercards cardContent">
+    <div className="tindercards cardContent homepage-wrapper container-fluid">
       {noCards ? (
         <div>
           <EndOfDeck />
         </div>
       ) : (
-        <div className="tinderCards__cardContainer">
-          {otherDogs.map((dog, index) => (
-            <TinderCard
-              ref={childRefs[index]}
-              className="swipe"
-              key={dog.name}
-              preventSwipe={['up', 'down']}
-              onSwipe={(dir) => swiped(dir, dog.name, index)}
-              onCardLeftScreen={() => outOfFrame(dog.name, index)}
-            >
-              <div
-                style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
-                className="swipeCard"
-              >
-                <h1>{dog.name}</h1>
-              </div>
-              <Accordion>
-                <Accordion.Item eventKey="0" flush="true">
-                  <Accordion.Header> Owner Info</Accordion.Header>
-                  <Accordion.Body>
-                    <h1>Hello</h1>
-                    <p>{user.email}</p>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-            </TinderCard>
-          ))}
-
-          <div className="swipeButtons">
-            <IconButton
-              className="swipeButtons__repeat"
-              onClick={() => goBack()}
-            >
-              <ReplayIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className="swipeButtons__left"
-              onClick={() => swipe('left')}
-            >
-              <CloseIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              className="swipeButtons__right"
-              onClick={() => swipe('right')}
-            >
-              <FavoriteIcon fontSize="large" />
-            </IconButton>
-            <Link to="/chat">
-              <IconButton className="swipeButtons__message">
-                <ChatIcon />
-              </IconButton>
-            </Link>
+        <div className="tinderCards__wrapper">
+          <div className="row">
+            <div className="tinderCards__cardContainer col-12">
+              {otherDogs.map((dog, index) => (
+                <TinderCard
+                  ref={childRefs[index]}
+                  className="swipe"
+                  key={dog.name}
+                  preventSwipe={['up', 'down']}
+                  onSwipe={(dir) => swiped(dir, dog.name, index)}
+                  onCardLeftScreen={() => outOfFrame(dog.name, index)}
+                >
+                  <div
+                    style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                    className="swipeCard"
+                  >
+                    <h3>{dog.name}</h3>
+                  </div>
+                  <Accordion>
+                    <Accordion.Item eventKey="0" flush="true">
+                      <Accordion.Header> Owner Info</Accordion.Header>
+                      <Accordion.Body>
+                        <h1>Hello</h1>
+                        <p>{user.email}</p>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </TinderCard>
+              ))}
+            </div>
           </div>
-          {lastDirection ? (
+          <div className="row">
+            <div className="swipeButtons col-12">
+              <IconButton
+                className="swipeButtons__repeat"
+                onClick={() => goBack()}
+              >
+                <ReplayIcon fontSize="large" />
+              </IconButton>
+              <IconButton
+                className="swipeButtons__left"
+                onClick={() => swipe('left')}
+              >
+                <CloseIcon fontSize="large" />
+              </IconButton>
+              <IconButton
+                className="swipeButtons__right"
+                onClick={() => swipe('right')}
+              >
+                <FavoriteIcon fontSize="large" />
+              </IconButton>
+              <Link to="/chat">
+                <IconButton className="swipeButtons__message">
+                  <ChatIcon />
+                </IconButton>
+              </Link>
+            </div>
+          </div>
+
+          {/* {lastDirection ? (
             <h2 key={lastDirection} className="infoText">
               You swiped {lastDirection}
             </h2>
           ) : (
             <h2 className="infoText">{}</h2>
-          )}
+          )} */}
         </div>
       )}
     </div>
