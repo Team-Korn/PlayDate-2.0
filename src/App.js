@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, uselocalStorage } from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import NavBar from './components/Navbar';
 import Chat from './components/Chat';
+import PrivateChat from './components/PrivateChat';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/user/Profile';
@@ -31,8 +32,6 @@ function App() {
 
   // -------- FOR LOGIN CHECK -------------
   const [user] = useAuthState(auth);
-  // const [users, setUsers] = useState([]);
-  // {isAdmin !== false ? <Route path="/admin" component={AdminView} /> : ''}
 
   if (!user) {
     return (
@@ -54,11 +53,15 @@ function App() {
     return (
       <div className="App">
         <BrowserRouter>
+
           <NavBar />
+
           <Routes>
             <Route path="/home" element={<HomePage />} />
 
             <Route path="/chat" element={<Chat />} />
+
+            <Route path="/chat/private" element={<PrivateChat />} />
 
             <Route path="/" element={<Login />} />
 
