@@ -7,6 +7,10 @@ const StyledButton = styled.button`
   border-radius: 16px;
 `;
 
-export default {
-  StyledButton,
-};
+const StyledName = styled.h1`
+  font-family: 'Edu VIC WA NT Beginner', cursive;
+  align-text: center
+  color: blue
+`;
+
+export { StyledButton, StyledName };

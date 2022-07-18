@@ -68,17 +68,22 @@ const logInWithEmailAndPassword = async (email, password) => {
 };
 
 // ------ function for registering a user with email and pass -----
+let currentUserDocumentId = '';
 
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-    await addDoc(collection(db, 'users'), {
+    const createdUserObjectInDB = await addDoc(collection(db, 'users'), {
       uid: user.uid,
       name,
       authProvider: 'local',
       email,
     });
+    // -------- RETURNS CURRENT USER'S DOCUMENT ID ----------------
+    console.log('document id:', createdUserObjectInDB.id);
+    currentUserDocumentId = createdUserObjectInDB.id;
+    // console.log('THIS IS THE DOC ID exporting!!!!!!!', currentUserDocumentId);
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -132,4 +137,5 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  currentUserDocumentId,
 };

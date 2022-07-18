@@ -1,111 +1,94 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../Auth';
 import './SignUpUserInfo.css';
-import {
-  collection,
-  getDocs,
-  doc,
-  addDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
+// import { connectStorageEmulator } from 'firebase/storage';
 
 function SignUpUserInfo() {
-  // const navigate = useNavigate();
+  const [loading] = useAuthState(auth);
+  const navigate = useNavigate();
 
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
-  console.log(currentUser);
+  // console.log('THIS IS currentUser', currentUser);
 
-  // const [zipcode, setZipcode] = useState('');
-  // const [state, setState] = useState('');
-  // const [city, setCity] = useState('');
-  // const [user, loading] = useAuthState(auth);
+  //grab current user from db
+  const [user, setUser] = useState({});
 
-  //grab all users from db
-  const [users, setUsers] = useState([]);
   useEffect(() => {
     (async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'users'));
         const userData = [];
+        /// exposing all USERS from db into state; BAD;
+        // Better: Set only the user that you wnat.
         querySnapshot.forEach((doc) => {
+          if (currentUser.uid === doc.data().uid) {
+            setUser({ ...doc.data(), docId: doc.id });
+          }
           userData.push(doc.data());
         });
-
-        setUsers(userData);
       } catch (err) {
-        console.log(err, 'who let the dogs out?');
+        console.log(err, 'what happened? where is everyone?');
       }
     })();
   }, []);
 
-  //find the current users object
-  const currUser = users.filter((user) => {
-    return user.uid === currentUser.uid;
-  });
-
   const handleSubmit = (event) => {
-    if (currentUser) {
-      let zipcode = document.getElementById('zipcode').value;
+    const currentUserRefDB = doc(db, 'users', user.docId);
 
-      async function addUserInfo() {
-        const currUserDB = doc(db, 'users', currUser[0]);
-        await addDoc(currUserDB, {
-          zipcode: zipcode,
-        });
+    event.preventDefault();
+    let zipcode = document.getElementById('zipcode').value;
+    let city = document.getElementById('city').value;
+    let state = document.getElementById('state').value;
+
+    // console.log('zipcode is: ', zipcode, city, state);
+    console.log('current user info', user);
+
+    setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true }).then(
+      (res) => {
+        console.log('updated user info', res);
+        navigate('/dog');
       }
-      event.preventDefault();
-      addUserInfo();
-      alert('Successfully added location');
-    }
+    );
   };
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if ((onclick = { Submit })) navigate('/userPhoto');
-  // }, [loading, navigate]);
-
   return (
-    <div className="registerUserInfo">
-      <div className="userInfo_container">
+    <div className="userInfo_container container-fluid bg-white">
+      <div className="container">
         <form classname="additionalUserInfo" onSubmit={handleSubmit}>
-          <div id="form-Header">Location</div>
-          <input
-            type="text"
-            className="userInfo__container"
-            // value={zipcode}
-            // onChange={(event) => setZipcode(event.target.value)}
-            placeholder="Zipcode"
-          />
-          {/* <button className="userInfo__btn" type="submit">
-            Continue
-          </button> */}
-          <div>
-            <input type="submit" id="submit" value="Submit Changes" />
+          <div className="row">
+            <div id="form-Header">Location</div>
+
+            <div className="col-12 col-md-6">
+              <input
+                required
+                id="zipcode"
+                type="text"
+                className="userInfo__container"
+                placeholder="Zipcode"
+              />
+              <input
+                required
+                id="city"
+                type="text"
+                className="userInfo__container"
+                placeholder="City"
+              />
+              <input
+                required
+                id="state"
+                type="text"
+                className="userInfo__container"
+                placeholder="State"
+              />
+              <input type="submit" id="submit" value="Submit Changes" />
+            </div>
           </div>
         </form>
-        {/* <input
-          type="text"
-          className="userInfo__container"
-          value={city}
-          onChange={(event) => setCity(event.target.value)}
-          placeholder="City"
-        />
-        <input
-          type="text"
-          className="userInfo__container"
-          value={state}
-          onChange={(event) => setState(event.target.value)}
-          placeholder="State"
-        />
-         */}
-
-        {/* <div>
-            Already have an account? <Link to="/">Login</Link> now.
-          </div> */}
       </div>
     </div>
   );
