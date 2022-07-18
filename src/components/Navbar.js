@@ -11,7 +11,7 @@ const NavBar = () => {
         as={Link}
         to={'/home'}
         style={{ color: '#00a8cc', fontSize: '180%', fontWeight: '300px' }}
-        className="col-5 text-center justify-content-lg-center justify-content-sm-center"
+        className="col-2 text-center justify-content-lg-center justify-content-sm-center"
       >
         PlayDate🐾
       </Navbar.Brand>
