@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useAuthState,
-  useCreateUserWithEmailAndPassword,
-} from 'react-firebase-hooks/auth';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, currentUserDocumentId } from '../Auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../Auth';
 import './SignUpUserInfo.css';
 import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
