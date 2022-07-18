@@ -35,12 +35,13 @@ const GuestProfile = () => {
   const currentUser = auth.currentUser;
 
   const currUser = users.filter((user) => {
-    return user.uid === currentUser.uid;
+    return user.uid !== currentUser.uid;
   });
   console.log('WHAT IS currUser', currUser);
 
   // shows owner's dog
   console.log('DOGS: ', dogs);
+
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === currUser[0].uid;
   });

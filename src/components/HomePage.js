@@ -157,7 +157,10 @@ const HomePage = () => {
   };
 
   const swipe = async (dir) => {
+    console.log('IT DOES IT SWIPE?? IN THE SWIPE');
+
     if (canSwipe && currentIndex < otherDogs.length - 1) {
+      console.log('IT SWIPES IN THE SWIPE');
       await childRefs[currentIndex].current.swipe(dir);
     } else {
       // setNoCards(true);
@@ -198,9 +201,7 @@ const HomePage = () => {
                   <div
                     style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
                     className="swipeCard"
-                  >
-                    <h3>{dog.name}</h3>
-                  </div>
+                  ></div>
                   <Accordion>
                     <Accordion.Item eventKey="0" flush="true">
                       <Accordion.Header> Owner Info</Accordion.Header>
@@ -215,7 +216,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className="row">
-            <div className="swipeButtons col-12">
+            <div className="swipeButtons">
               <IconButton
                 className="swipeButtons__repeat"
                 onClick={() => goBack()}
@@ -242,13 +243,13 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* {lastDirection ? (
+          {lastDirection ? (
             <h2 key={lastDirection} className="infoText">
               You swiped {lastDirection}
             </h2>
           ) : (
             <h2 className="infoText">{}</h2>
-          )} */}
+          )}
         </div>
       )}
     </div>
