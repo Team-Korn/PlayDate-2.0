@@ -20,6 +20,7 @@ import {
   getFirestore,
   where,
   addDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { provider, app, store } from './config/fbConfig';
 import { getStorage } from 'firebase/storage';
@@ -68,7 +69,7 @@ const logInWithEmailAndPassword = async (email, password) => {
 };
 
 // ------ function for registering a user with email and pass -----
-let currentUserDocumentId = '';
+// let currentUserDocumentId = '';
 
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
@@ -80,9 +81,9 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       authProvider: 'local',
       email,
     });
-    // -------- RETURNS CURRENT USER'S DOCUMENT ID ----------------
-    console.log('document id:', createdUserObjectInDB.id);
-    currentUserDocumentId = createdUserObjectInDB.id;
+    // // -------- RETURNS CURRENT USER'S DOCUMENT ID ----------------
+    // console.log('document id:', createdUserObjectInDB.id);
+    // currentUserDocumentId = createdUserObjectInDB.id;
     // console.log('THIS IS THE DOC ID exporting!!!!!!!', currentUserDocumentId);
   } catch (err) {
     console.error(err);
@@ -90,25 +91,47 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   }
 };
 
-// --------- Additional User Info -----------------------
-
-// const additionalUserInfo = async (city, state, zipcode) => {
-//   try {
-//     const res = await createUserWithEmailAndPassword(auth, email, password);
-//     const user = res.user;
-//     await addDoc(collection(db, 'users'), {
-//       city: user.uid,
-//       state,
-//       zipcode: 'local',
-//       email,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     alert(err.message);
-//   }
-// };
-
 // ---------- Forms for dog and auto-populate ----------
+
+const inputDogInfo = async (
+  name,
+  age,
+  breed,
+  gender,
+  size,
+  bio,
+  imageUrl,
+  userUID
+) => {
+  try {
+    const currentDog = await addDoc(collection(db, 'dogs'), {
+      name: name,
+      age: age,
+      gender: gender,
+      breed: breed,
+      size: size,
+      bio: bio,
+      imageUrl: [imageUrl],
+      ownerId: userUID,
+      likedBy: [],
+      likes: [],
+      matches: [],
+      passed: [],
+    });
+    const currentDogRefDB = doc(db, 'dogs', currentDog.id);
+
+    await setDoc(
+      currentDogRefDB,
+      { documentId: currentDog.id },
+      { merge: true }
+    ).then((res) => {
+      console.log('successfully added dog document and info!!', res);
+    });
+  } catch (err) {
+    console.log('UH OH DOGGO', err);
+    alert(err.message);
+  }
+};
 
 // -------- function that will send a pass reset link to an email address ------------------
 
@@ -137,5 +160,6 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
-  currentUserDocumentId,
+  inputDogInfo,
+  // currentUserDocumentId,
 };
