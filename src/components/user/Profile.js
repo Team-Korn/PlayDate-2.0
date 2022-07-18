@@ -55,9 +55,15 @@ if (!dogs[0]) {
                     <button>Preferences</button>
                   </Link> */}
               </div>
+            </div>
           </div>
         </div>
-      </div>
+        <div>
+          <button className="accordion">Section 1</button>
+            <div className="panel">
+            <p>Lorem ipsum...</p>
+            </div>
+        </div>
     </div>
     )
   }
