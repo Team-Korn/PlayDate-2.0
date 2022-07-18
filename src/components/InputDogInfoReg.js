@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../Auth';
+import { auth, inputDogInfo } from '../Auth';
 import { collection, getDocs, doc, addDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 
@@ -14,14 +14,20 @@ function DogRegisterInfoForm() {
   //grab current user from db
   const [user, setUser] = useState({});
   // ---- set age to integer??? -----------
-  const [age, setAge] = useState('');
+  // const [age, setAge] = useState('');
   const [name, setName] = useState('');
-  const [breed, setBreed] = useState('');
-  const [gender, setGender] = useState('');
-  const [documentId, setDocumentId] = useState('');
-  const [imageUrl, setImageUrl] = useState([]);
-  const [size, setSize] = useState('');
+  // const [breed, setBreed] = useState('');
+  // const [gender, setGender] = useState('');
+  // const [documentId, setDocumentId] = useState('');
+  // const [imageUrl, setImageUrl] = useState([]);
+  // const [size, setSize] = useState('');
+  // const [bio, setBio] = useState('');
   // const [user, loading, error] = useAuthState(auth);
+
+  const addDogDocumentAndInfo = () => {
+    inputDogInfo(name);
+  };
+  // , age, breed, gender, size, bio
 
   useEffect(() => {
     (async () => {
@@ -54,6 +60,10 @@ function DogRegisterInfoForm() {
           onChange={(event) => setName(event.target.value)}
           placeholder="Full Name"
         />
+
+        <button className="register__btn" onClick={addDogDocumentAndInfo}>
+          Register
+        </button>
       </div>
     </div>
   );
