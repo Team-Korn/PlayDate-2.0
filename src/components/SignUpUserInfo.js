@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../Auth';
-import './SignUpUserInfo.css';
 import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 // import { connectStorageEmulator } from 'firebase/storage';
@@ -51,7 +50,7 @@ function SignUpUserInfo() {
     setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true }).then(
       (res) => {
         console.log('updated user info', res);
-        navigate('/dog');
+        navigate('/dogregister');
       }
     );
   };

@@ -4,4 +4,9 @@ import { auth } from '../Auth';
 import { collection, getDocs, doc, addDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 
-// ------- ADD
+// ------- ADD DOG INFO AFTER REGISTERING --------
+function DogRegisterInfoForm() {
+  console.log('hello doggossss');
+}
+
+export default DogRegisterInfoForm;
