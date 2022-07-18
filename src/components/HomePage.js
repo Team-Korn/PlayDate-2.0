@@ -41,6 +41,8 @@ const HomePage = () => {
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
+  console.log('THIS IS CURRDOG', currDog[0].ownerId);
+  console.log('this is user.uid', user.uid);
 
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
@@ -199,7 +201,7 @@ const HomePage = () => {
                   onCardLeftScreen={() => outOfFrame(dog.name, index)}
                 >
                   <div
-                    style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                    style={{ backgroundImage: `url(${dog.imageUrl[0]})` }}
                     className="swipeCard"
                   ></div>
                   <Accordion>

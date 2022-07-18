@@ -12,6 +12,7 @@ import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 import ErrorPage from './components/ErrorPage';
 import GuestProfile from './components/GuestProfile';
+import DogRegister from './components/InputDogInfoReg';
 
 // ---- FOR LOGIN CHECK -----------------------------
 // import { useNavigate } from 'react-router-dom';
@@ -67,6 +68,8 @@ function App() {
             <Route path="/user-preferences" element={<Preferences />} />
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
+
+            <Route path="/dogregister" element={<DogRegister />} />
 
             <Route path="/profile" element={<GuestProfile />} />
 
