@@ -5,7 +5,6 @@ import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
-import Header from './Header';
 import './PrivateChat.css';
 
 /*---MATERIAL-UI---*/
@@ -73,7 +72,6 @@ function PrivateChat() {
 
     return (
         <div>
-            <Header />
 
             {/*---MESSAGE CONTAINER---*/}
             <Grid max-width="100%" >

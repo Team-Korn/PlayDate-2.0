@@ -7,7 +7,6 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
-import Header from './Header';
 import './Chat.css';
 
 /*---MATERIAL-UI---*/
@@ -37,8 +36,14 @@ const useStyles = makeStyles({
   headBG: {
     backgroundColor: '#e0e0e0',
   },
-  borderRight500: {
-    borderRight: '1px solid #e0e0e0',
+  borderRight: {
+    maxWidth: '100%',
+  },
+  matchList: {
+    padding: '40px',
+    borderBottom: '1px solid #e7e7ec',
+    // paddingBottom: '50px',
+    // height: '70px',
   },
   messageArea: {
     height: '70vh',
@@ -102,7 +107,6 @@ function Chat() {
   if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
       <div>
-        <Header />
 
         <Grid container>
           <Grid item xs={12}>
@@ -112,21 +116,21 @@ function Chat() {
           </Grid>
         </Grid>
         <Grid container component={Paper} className={classes.chatSection}>
-          <Grid item xs={3} className={classes.borderRight500}>
-            <List>
+          <Grid item xs={12} className={classes.borderRight}>
+            {/* <List>
               <ListItem button key="avatar">
                 <ListItemIcon>
                   <Avatar src={currDog[0].imageUrl[0]} />
                 </ListItemIcon>
                 <ListItemText>{currDog[0].name}</ListItemText>
               </ListItem>
-            </List>
+            </List> */}
 
             <Divider />
             <List>
               {arrayOfMatchedDogInfo.map((matchedDog) => (
                 <Link to="/chat/private" >
-                  <ListItem button key="avatar" onClick={PrivateChat} >
+                  <ListItem disableGutters={true} className={classes.matchList} button key="avatar" onClick={PrivateChat} >
                     <ListItemIcon>
                       <Avatar src={matchedDog.imageUrl[0]} />
                     </ListItemIcon>
