@@ -20,6 +20,7 @@ import {
   getFirestore,
   where,
   addDoc,
+  setDoc,
 } from 'firebase/firestore';
 import { provider, app, store } from './config/fbConfig';
 import { getStorage } from 'firebase/storage';
@@ -100,24 +101,31 @@ const inputDogInfo = async (
   size,
   bio,
   imageUrl,
-  userUID,
-  userDOCID
+  userUID
 ) => {
   try {
-    await addDoc(collection(db, 'dogs'), {
+    const currentDog = await addDoc(collection(db, 'dogs'), {
       name: name,
       age: age,
       gender: gender,
       breed: breed,
       size: size,
       bio: bio,
-      imageUrl: imageUrl,
+      imageUrl: [imageUrl],
       ownerId: userUID,
-      documentId: userDOCID,
       likedBy: [],
       likes: [],
       matches: [],
       passed: [],
+    });
+    const currentDogRefDB = doc(db, 'dogs', currentDog.id);
+
+    await setDoc(
+      currentDogRefDB,
+      { documentId: currentDog.id },
+      { merge: true }
+    ).then((res) => {
+      console.log('successfully added dog document and info!!', res);
     });
   } catch (err) {
     console.log('UH OH DOGGO', err);
