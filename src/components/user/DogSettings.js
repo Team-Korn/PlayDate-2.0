@@ -64,7 +64,7 @@ const DogSettings = () => {
               <label htmlFor="name">Name</label>
             </div>
             <div className="col-75">
-              <input id='name' type="text"  name="name" placeholder={currDog[0].name}/>
+              <input id='name' type="text"  name="name" defaultValue={currDog[0].name}/>
             </div>
           </div>
           <div className="row">
@@ -72,7 +72,7 @@ const DogSettings = () => {
               <label htmlFor="breed">Breed</label>
             </div>
             <div className="col-75">
-              <input id='breed' type="text" name="breed" placeholder={currDog[0].breed}/>
+              <input id='breed' type="text" name="breed" defaultValue={currDog[0].breed}/>
             </div>
           </div>
           <div className="row">
@@ -92,7 +92,7 @@ const DogSettings = () => {
               <label htmlFor="about-me">About me</label>
             </div>
             <div className="col-75">
-              <textarea id="about-me" name="subject" placeholder={currDog[0].bio} ></textarea>
+              <textarea id="about-me" name="subject" defaultValue={currDog[0].bio} ></textarea>
             </div>
           </div>
           <div className="row">
