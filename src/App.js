@@ -69,7 +69,7 @@ function App() {
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
 
-            <Route path="dogregister" element={<DogRegister />} />
+            <Route path="/dogregister" element={<DogRegister />} />
 
             <Route path="/profile" element={<GuestProfile />} />
 

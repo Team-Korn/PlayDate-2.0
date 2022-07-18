@@ -92,7 +92,17 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 // ---------- Forms for dog and auto-populate ----------
 
-const inputDogInfo = async (name, age, breed, gender, size, bio) => {
+const inputDogInfo = async (
+  name,
+  age,
+  breed,
+  gender,
+  size,
+  bio,
+  imageUrl,
+  userUID,
+  userDOCID
+) => {
   try {
     await addDoc(collection(db, 'dogs'), {
       name: name,
@@ -101,6 +111,13 @@ const inputDogInfo = async (name, age, breed, gender, size, bio) => {
       breed: breed,
       size: size,
       bio: bio,
+      imageUrl: imageUrl,
+      ownerId: userUID,
+      documentId: userDOCID,
+      likedBy: [],
+      likes: [],
+      matches: [],
+      passed: [],
     });
   } catch (err) {
     console.log('UH OH DOGGO', err);

@@ -199,7 +199,7 @@ const HomePage = () => {
                   onCardLeftScreen={() => outOfFrame(dog.name, index)}
                 >
                   <div
-                    style={{ backgroundImage: `url(${dog.imageUrl[1]})` }}
+                    style={{ backgroundImage: `url(${dog.imageUrl[0]})` }}
                     className="swipeCard"
                   ></div>
                   <Accordion>

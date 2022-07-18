@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+// import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, inputDogInfo } from '../Auth';
-import { collection, getDocs, doc, addDoc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
+import { useNavigate } from 'react-router-dom';
 
 // ------- ADD DOG INFO AFTER REGISTERING --------
 function DogRegisterInfoForm() {
@@ -18,14 +19,28 @@ function DogRegisterInfoForm() {
   const [name, setName] = useState('');
   const [breed, setBreed] = useState('');
   const [gender, setGender] = useState('');
-  // const [documentId, setDocumentId] = useState('');
-  // const [imageUrl, setImageUrl] = useState([]);
+  const [imageUrl, setImageUrl] = useState([]);
   const [size, setSize] = useState('');
   const [bio, setBio] = useState('');
   // const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate('/home');
 
   const addDogDocumentAndInfo = () => {
-    inputDogInfo(name, age, breed, gender, size, bio);
+    const userUID = user.uid;
+    const userDOCID = user.docId;
+
+    inputDogInfo(
+      name,
+      age,
+      breed,
+      gender,
+      size,
+      bio,
+      imageUrl,
+      userUID,
+      userDOCID
+    );
+    navigate('/home');
   };
 
   useEffect(() => {
@@ -46,7 +61,7 @@ function DogRegisterInfoForm() {
       }
     })();
   }, []);
-  console.log('user is: ', user);
+  // console.log('this is the user: ', user);
 
   return (
     <div className="dogInfo_container container-fluid-bg-white">
@@ -57,9 +72,50 @@ function DogRegisterInfoForm() {
           className="register__textBox"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          placeholder="Full Name"
+          placeholder="Dog's Name"
         />
-
+        <input
+          type="text"
+          className="register__textBox"
+          value={age}
+          onChange={(event) => setAge(event.target.value)}
+          placeholder="Age"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={breed}
+          onChange={(event) => setBreed(event.target.value)}
+          placeholder="Breed"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={gender}
+          onChange={(event) => setGender(event.target.value)}
+          placeholder="Gender"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={bio}
+          onChange={(event) => setBio(event.target.value)}
+          placeholder="Tell us about your dog!"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={size}
+          onChange={(event) => setSize(event.target.value)}
+          placeholder="Is your dog small, medium, large?"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={imageUrl}
+          onChange={(event) => setImageUrl(event.target.value)}
+          placeholder="Add your dog's picture's imageUrl :)"
+        />
         <button className="register__btn" onClick={addDogDocumentAndInfo}>
           Register
         </button>
