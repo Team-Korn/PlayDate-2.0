@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import {
+  useAuthState,
+  useCreateUserWithEmailAndPassword,
+} from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth, currentUserDocumentId } from '../Auth';
 import './SignUpUserInfo.css';
@@ -8,14 +11,21 @@ import { db } from '../config/fbConfig';
 // import { connectStorageEmulator } from 'firebase/storage';
 
 function SignUpUserInfo() {
-  // const navigate = useNavigate(); -- not sure if necessary
+  const [loading] = useAuthState(auth);
+  const navigate = useNavigate();
 
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
-  console.log('THIS IS currentUser', currentUser);
+  // console.log('THIS IS currentUser', currentUser);
 
   //grab current user from db
   const [user, setUser] = useState({});
+
+  // useEffect(() => {
+  //   if (loading) return;
+  //   console.log(user.zipcode);
+  //   if (user.zipcode) navigate('/dog');
+  // }, [user, loading, navigate]);
   useEffect(() => {
     (async () => {
       try {
@@ -44,41 +54,40 @@ function SignUpUserInfo() {
     let state = document.getElementById('state').value;
 
     // console.log('zipcode is: ', zipcode, city, state);
-    // console.log('current user info', user);
+    console.log('current user info', user);
 
     setDoc(currentUserRefDB, { zipcode, city, state }, { merge: true });
-  };
 
-  // useEffect(() => {
-  //   if (loading) return;
-  //   if ((onclick = { Submit })) navigate('/userPhoto');
-  // }, [loading, navigate]);
+    if (zipcode !== '' && city !== '' && state !== '') {
+      navigate('/dog');
+    }
+  };
 
   return (
     <div className="userInfo_container">
       <form classname="additionalUserInfo" onSubmit={handleSubmit}>
         <div id="form-Header">Location</div>
         <input
+          required
           id="zipcode"
           type="text"
           className="userInfo__container"
           placeholder="Zipcode"
         />
         <input
+          required
           id="city"
           type="text"
           className="userInfo__container"
           placeholder="City"
         />
         <input
+          required
           id="state"
           type="text"
           className="userInfo__container"
           placeholder="State"
         />
-        {/* <button className="userInfo__btn" type="submit">
-            Continue
-          </button> */}
         <div>
           <input type="submit" id="submit" value="Submit Changes" />
         </div>

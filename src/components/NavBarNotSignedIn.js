@@ -23,18 +23,6 @@ const StyledNavHeader = styled.div`
   align-items: center;
 `;
 
-const StyledLinksWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const StyledLink = styled(Link)`
-  color: #8fd0ff;
-  text-decoration: none;
-  &:hover {
-    color: white;
-  }
-`;
 const StyledLeftHeader = styled.div`
   display: flex;
   width: 33%;
