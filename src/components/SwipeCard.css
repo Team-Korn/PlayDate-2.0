@@ -12,14 +12,13 @@
   background-position: Top;
 }
 
-
 .tinderCards__cardContainer {
   /* border: solid 1px #ccc; */
-  height: 100vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   margin-top: 50px;
-  padding-bottom: 150px;
+  padding-bottom: 40px;
   position: relative;
   z-index: 2;
 }
@@ -63,12 +62,25 @@
 }
 
 @keyframes popup {
-  0%   { transform: scale(1,1) }
-  10%  { transform: scale(1.1,1.1) }
-  30%  { transform: scale(.9,.9) }
-  50%  { transform: scale(1,1) }
-  57%  { transform: scale(1,1) }
-  64%  { transform: scale(1,1) }
-  100% { transform: scale(1,1) }
+  0% {
+    transform: scale(1, 1);
+  }
+  10% {
+    transform: scale(1.1, 1.1);
+  }
+  30% {
+    transform: scale(0.9, 0.9);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+  57% {
+    transform: scale(1, 1);
+  }
+  64% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
 }
-
