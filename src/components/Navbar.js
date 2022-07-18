@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { logout } from '../Auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import PetsIcon from '@mui/icons-material/Pets';
 
 const NavBar = () => {
   return (
@@ -22,17 +23,25 @@ const NavBar = () => {
             as={Link}
             to={'/chat'}
             className="col-4 d-flex justify-content-end mr-2 align-items-center"
-            style={{ color: '#00a8cc' }}
+            style={{ color: '#00a8cc', paddingRight: '3em' }}
           >
             {' '}
             Messages
           </Nav.Link>
           <Nav.Link
             as={Link}
+            to={'/user'}
+            className="col-4 d-flex  mr-2 align-items-center"
+            style={{ color: '#00a8cc' }}
+          >
+            <PetsIcon />
+          </Nav.Link>
+          <Nav.Link
+            as={Link}
             to={'/'}
             onClick={logout}
             className="col-4 d-flex justify-content-end align-items-center"
-            style={{ color: '#00a8cc' }}
+            style={{ color: '#00a8cc', paddingRight: '3em' }}
           >
             {' '}
             Logout
