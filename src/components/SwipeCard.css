@@ -12,9 +12,13 @@
   background-position: Top;
 }
 
+.tinderCards {
+  height: 100vh;
+}
 .tinderCards__cardContainer {
   /* border: solid 1px #ccc; */
   height: 70vh;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   margin-top: 50px;
@@ -22,16 +26,13 @@
   position: relative;
   z-index: 2;
 }
-.swipeButtons {
-  z-index: 1;
-}
+
 .swipe {
   /* border: solid 1px #ccc; */
   position: absolute;
   top: 0;
   width: 100%;
   padding: 20px;
-  margin-bottom: 300px;
 }
 
 .accordion {
