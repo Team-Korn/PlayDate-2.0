@@ -7,7 +7,6 @@ import MessageIcon from '@material-ui/icons/Message';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import './navbar.css';
-import IconButton from '@material-ui/core/IconButton';
 
 const NavBar = () => {
   return (

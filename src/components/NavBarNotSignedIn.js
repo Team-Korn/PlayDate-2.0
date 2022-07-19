@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import './navbar.css';
 
 const StyledNavbar = styled.nav`
   display: flex;
@@ -45,16 +48,15 @@ const StyledLogoLink = styled(Link)`
 
 const NavbarNotSignedIn = () => {
   return (
-    <nav>
-      <StyledNavbar>
-        <StyledNavHeader>
-          <StyledLeftHeader>
-            <StyledLogoLink to="/home">Playdate 🐾</StyledLogoLink>
-          </StyledLeftHeader>
-          <StyledRightHeader></StyledRightHeader>
-        </StyledNavHeader>
-      </StyledNavbar>
-    </nav>
+    <Navbar expand="md" style={{ backgroundColor: '#FFB049' }}>
+      <Navbar.Brand
+        as={Link}
+        to={'/home'}
+        className=" brand-not-login  text-center justify-content-md-center justify-content-sm-center"
+      >
+        PlayDate🐾
+      </Navbar.Brand>
+    </Navbar>
   );
 };
 
