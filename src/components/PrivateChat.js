@@ -53,6 +53,33 @@ function PrivateChat() {
     const auth = getAuth(app);
     const user = auth.currentUser;
 
+    /*get matches from dogs collection*/
+    const [dogs, setDogs] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db2, 'dogs'));
+                const dogData = [];
+                querySnapshot.forEach((doc) => {
+                    dogData.push(doc.data());
+                });
+
+                setDogs(dogData);
+            } catch (err) {
+                console.log(err, 'who let the dogs out?');
+            }
+        })();
+    }, []);
+    console.log('dogs:', dogs);
+
+    // shows owner's dog
+    const currDog = dogs.filter((dog) => {
+        return dog.ownerId === user.uid;
+        // returns array with single object of current dog
+    });
+    console.log('currDog:', currDog);
+
     /*---CHAT-MESSAGES---*/
 
     const messagesRef = db2.collection('messages');
@@ -69,7 +96,8 @@ function PrivateChat() {
         await messagesRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            sentBy: user.uid
+            sentBy: user.uid,
+            photoUrl: currDog[0].imageUrl[0]
         });
         setFormValue(''); // empties the message container
         dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -120,7 +148,7 @@ function PrivateChat() {
 }
 
 function SendMessage(props) {
-    const { text, sentBy } = props.message;
+    const { text, sentBy, photoUrl } = props.message;
 
     /*---Distinguish messages sent by current dog vs recieved by matched dog---*/
     const [dogs, setDogs] = useState([]);
@@ -158,7 +186,7 @@ function SendMessage(props) {
 
     return (
         <div className={`message ${messageClass}`}>
-            {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
+            <img src={photoUrl || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
             <p>{text}</p>
         </div>
     );
