@@ -231,7 +231,7 @@ const HomePage = () => {
         </div>
       ) : (
         <div className="tinderCards__wrapper">
-          <div className="row">
+          <div className="row" style={{ backgroundColor: '#7ed7f0' }}>
             <div className="tinderCards__cardContainer col-12">
               {otherDogs.map((dog, index) => (
                 <TinderCard

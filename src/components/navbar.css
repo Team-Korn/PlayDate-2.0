@@ -1,0 +1,21 @@
+.brand {
+  color: #00a8cc !important;
+  font-size: 180%;
+  font-weight: '300px';
+  font-family: 'Dancing Script', cursive;
+  font-weight: bold !important;
+font-size: 40px;
+padding-left: 3em;
+
+}
+
+.brand-not-login{
+  color: #00a8cc !important;
+  font-size: 180%;
+  font-weight: '300px';
+  font-family: 'Dancing Script', cursive;
+  font-weight: bold !important;
+  font-size: 50px;
+flex-grow: 4;
+
+}
