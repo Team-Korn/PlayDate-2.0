@@ -7,7 +7,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
-import './Chat.css';
+
 
 /*---MATERIAL-UI---*/
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
