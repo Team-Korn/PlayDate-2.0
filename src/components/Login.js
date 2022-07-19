@@ -53,10 +53,16 @@ function Login() {
           Login with Google
         </button>
         <div>
-          <Link to="/reset">Forgot Password</Link>
+          <Link style={{ color: '#3AB4F2', fontWeight: 'bold' }} to="/reset">
+            Forgot Password?
+          </Link>
         </div>
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account?{' '}
+          <Link style={{ color: '#3AB4F2', fontWeight: 'bold' }} to="/register">
+            Register
+          </Link>{' '}
+          now.
         </div>
       </div>
     </div>
