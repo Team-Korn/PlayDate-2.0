@@ -101,7 +101,8 @@ const inputDogInfo = async (
   size,
   bio,
   imageUrl,
-  userUID
+  userUID,
+  ownerName
 ) => {
   try {
     const currentDog = await addDoc(collection(db, 'dogs'), {
@@ -113,6 +114,7 @@ const inputDogInfo = async (
       bio: bio,
       imageUrl: [imageUrl],
       ownerId: userUID,
+      ownerName: ownerName,
       likedBy: [],
       likes: [],
       matches: [],

@@ -21,11 +21,20 @@ import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
 
+const addClassToNavbar = () => {
+  // in order to achieve the sticky actions button, we need to set the dog compoent to be 100vh
+  const mynavbar = document.querySelector('nav.navbar');
+  if (mynavbar) {
+    mynavbar.classList.add('homepage-navbar');
+  }
+};
 const HomePage = () => {
+  addClassToNavbar();
   // ------ BELOW is all of state for dogs --------
   const [dogs, setDogs] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
+  const [userDB, setUserDB] = useState([]);
   const [users, setUsers] = useState([]);
 
   // get current user uid to check for current dog
@@ -41,8 +50,8 @@ const HomePage = () => {
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
-  console.log('THIS IS CURRDOG', currDog[0].ownerId);
-  console.log('this is user.uid', user.uid);
+  // console.log('THIS IS CURRDOG', currDog[0].ownerId);
+  // console.log('this is user.uid', user.uid);
 
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
@@ -173,17 +182,25 @@ const HomePage = () => {
     (async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'users'));
-        const userData = [];
-        querySnapshot.forEach((doc) => {
-          userData.push(doc.data());
-        });
+        const usersData = [];
 
-        setUsers(userData);
+        querySnapshot.forEach((doc) => {
+          // set single user
+          if (user.uid === doc.data().uid) {
+            setUserDB({ ...doc.data(), docId: doc.id });
+          }
+          // get all user for tinder dog to find owner
+
+          const { uid, name, email } = { ...doc.data() };
+          usersData.push({ uid, name, email });
+        });
+        setUsers(usersData);
       } catch (err) {
         console.log(err, 'who let the dogs out?');
       }
     })();
   }, []);
+  // console.log('THIS IS OUR STATE user', userDB);
 
   // gets dog collection
   useEffect(() => {
@@ -198,7 +215,8 @@ const HomePage = () => {
       } catch (err) {}
     })();
   }, []);
-  console.log('OTHER DOGS: ', otherDogs);
+  // console.log('OTHER DOGS: ', otherDogs);
+
   return (
     <div className="tindercards cardContent homepage-wrapper container-fluid">
       {noCards ? (
@@ -224,10 +242,22 @@ const HomePage = () => {
                   ></div>
                   <Accordion>
                     <Accordion.Item eventKey="0" flush="true">
-                      <Accordion.Header> Owner Info</Accordion.Header>
+                      <Accordion.Header>Check Me Out!</Accordion.Header>
                       <Accordion.Body>
-                        <h1>Hello</h1>
-                        <p>{user.email}</p>
+                        <h1>Hi I'm {dog.name}</h1>
+                        <h3>Here's a bit about me: </h3>
+                        {dog.bio ? (
+                          <h4> {dog.bio} </h4>
+                        ) : (
+                          <h4> I love fetch! </h4>
+                        )}
+                        <h1>This is my hooooman</h1>
+                        <h4>
+                          {users.find((user) => user.uid === dog.ownerId)
+                            ? users.find((user) => user.uid === dog.ownerId)
+                                .name
+                            : 'I have no owner'}
+                        </h4>
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
@@ -235,32 +265,31 @@ const HomePage = () => {
               ))}
             </div>
           </div>
-          <div className="row">
-            <div className="swipeButtons">
-              <IconButton
-                className="swipeButtons__repeat"
-                onClick={() => goBack()}
-              >
-                <ReplayIcon fontSize="large" />
+
+          <div className="swipeButtons">
+            {/* <IconButton
+              className="swipeButtons__repeat"
+              onClick={() => goBack()}
+            >
+              <ReplayIcon fontSize="large" />
+            </IconButton> */}
+            <IconButton
+              className="swipeButtons__left"
+              onClick={() => swipe('left')}
+            >
+              <CloseIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              className="swipeButtons__right"
+              onClick={() => swipe('right')}
+            >
+              <FavoriteIcon fontSize="large" />
+            </IconButton>
+            {/* <Link to="/chat">
+              <IconButton className="swipeButtons__message">
+                <ChatIcon />
               </IconButton>
-              <IconButton
-                className="swipeButtons__left"
-                onClick={() => swipe('left')}
-              >
-                <CloseIcon fontSize="large" />
-              </IconButton>
-              <IconButton
-                className="swipeButtons__right"
-                onClick={() => swipe('right')}
-              >
-                <FavoriteIcon fontSize="large" />
-              </IconButton>
-              <Link to="/chat">
-                <IconButton className="swipeButtons__message">
-                  <ChatIcon />
-                </IconButton>
-              </Link>
-            </div>
+            </Link> */}
           </div>
 
           {/* {lastDirection ? (

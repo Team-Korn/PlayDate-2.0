@@ -19,7 +19,7 @@ import DogRegister from './components/InputDogInfoReg';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './Auth';
 import NavbarNotSignedIn from './components/NavBarNotSignedIn';
-
+import './components/utility.css';
 // -------------------------------------
 
 function App() {
