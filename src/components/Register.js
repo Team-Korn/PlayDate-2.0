@@ -63,7 +63,11 @@ function Register() {
           Register with Google
         </button>
         <div>
-          Already have an account? <Link to="/">Login</Link> now.
+          Already have an account?{' '}
+          <Link to="/" style={{ color: '#3AB4F2', fontWeight: 'bold' }}>
+            Login
+          </Link>{' '}
+          now.
         </div>
       </div>
     </div>
