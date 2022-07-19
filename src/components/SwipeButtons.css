@@ -1,11 +1,13 @@
 .swipeButtons {
   position: sticky;
+  top: 100vh;
   bottom: 0;
   display: flex;
   /* width: 100%; */
   justify-content: space-evenly;
   align-content: space-around;
   z-index: 1;
+  padding: 40px 0px;
 }
 
 .swipeButtons .MuiIconButton-root {

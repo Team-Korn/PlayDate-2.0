@@ -35,6 +35,7 @@ const HomePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [lastDirection, setLastDirection] = useState();
   const [userDB, setUserDB] = useState([]);
+  const [users, setUsers] = useState([]);
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -181,16 +182,19 @@ const HomePage = () => {
     (async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'users'));
-        // const userData = [];
+        const usersData = [];
+
         querySnapshot.forEach((doc) => {
+          // set single user
           if (user.uid === doc.data().uid) {
             setUserDB({ ...doc.data(), docId: doc.id });
           }
+          // get all user for tinder dog to find owner
 
-          // userData.push(doc.data());
+          const { uid, name, email } = { ...doc.data() };
+          usersData.push({ uid, name, email });
         });
-
-        // setUserDB(userData);
+        setUsers(usersData);
       } catch (err) {
         console.log(err, 'who let the dogs out?');
       }
@@ -248,8 +252,12 @@ const HomePage = () => {
                           <h4> I love fetch! </h4>
                         )}
                         <h1>This is my hooooman</h1>
-                        <h4>{userDB.name}</h4>
-                        <h4>{userDB.email}</h4>
+                        <h4>
+                          {users.find((user) => user.uid === dog.ownerId)
+                            ? users.find((user) => user.uid === dog.ownerId)
+                                .name
+                            : 'I have no owner'}
+                        </h4>
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
@@ -257,32 +265,31 @@ const HomePage = () => {
               ))}
             </div>
           </div>
-          <div className="row">
-            <div className="swipeButtons">
-              {/* <IconButton
-                className="swipeButtons__repeat"
-                onClick={() => goBack()}
-              >
-                <ReplayIcon fontSize="large" />
-              </IconButton> */}
-              <IconButton
-                className="swipeButtons__left"
-                onClick={() => swipe('left')}
-              >
-                <CloseIcon fontSize="large" />
+
+          <div className="swipeButtons">
+            {/* <IconButton
+              className="swipeButtons__repeat"
+              onClick={() => goBack()}
+            >
+              <ReplayIcon fontSize="large" />
+            </IconButton> */}
+            <IconButton
+              className="swipeButtons__left"
+              onClick={() => swipe('left')}
+            >
+              <CloseIcon fontSize="large" />
+            </IconButton>
+            <IconButton
+              className="swipeButtons__right"
+              onClick={() => swipe('right')}
+            >
+              <FavoriteIcon fontSize="large" />
+            </IconButton>
+            {/* <Link to="/chat">
+              <IconButton className="swipeButtons__message">
+                <ChatIcon />
               </IconButton>
-              <IconButton
-                className="swipeButtons__right"
-                onClick={() => swipe('right')}
-              >
-                <FavoriteIcon fontSize="large" />
-              </IconButton>
-              {/* <Link to="/chat">
-                <IconButton className="swipeButtons__message">
-                  <ChatIcon />
-                </IconButton>
-              </Link> */}
-            </div>
+            </Link> */}
           </div>
 
           {/* {lastDirection ? (
