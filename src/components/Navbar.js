@@ -6,7 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import PetsIcon from '@mui/icons-material/Pets';
 import MessageIcon from '@material-ui/icons/Message';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import Col from 'react-bootstrap'
+import PersonIcon from '@material-ui/icons/Person';
 
 const NavBar = () => {
   return (
@@ -36,7 +36,7 @@ const NavBar = () => {
             className="col-4 d-flex  mr-2 align-items-center"
             style={{ color: '#00a8cc' }}
           >
-            <PetsIcon />
+            <PersonIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}

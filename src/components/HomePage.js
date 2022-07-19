@@ -218,7 +218,10 @@ const HomePage = () => {
   // console.log('OTHER DOGS: ', otherDogs);
 
   return (
-    <div className="tindercards cardContent homepage-wrapper container-fluid">
+    <div
+      style={{ backgroundColor: '#7ed7f0' }}
+      className="tindercards cardContent homepage-wrapper container-fluid"
+    >
       {noCards ? (
         <div>
           <EndOfDeck />
