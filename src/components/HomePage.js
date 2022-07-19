@@ -20,6 +20,9 @@ import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 const addClassToNavbar = () => {
   // in order to achieve the sticky actions button, we need to set the dog compoent to be 100vh
@@ -244,7 +247,22 @@ const HomePage = () => {
                     <Accordion.Item eventKey="0" flush="true">
                       <Accordion.Header>Check Me Out!</Accordion.Header>
                       <Accordion.Body>
-                        <h1>Hi I'm {dog.name}</h1>
+                        <h1>Hi! I'm {dog.name}</h1>
+                        <Row className="justify-content-center">
+                          {dog.imageUrl.slice(0).map((pic) => (
+                            <Col>
+                              <Image
+                                src={pic}
+                                alt=""
+                                thumbnail="true"
+                                style={{
+                                  height: '70%',
+                                  width: '80%',
+                                }}
+                              />
+                            </Col>
+                          ))}
+                        </Row>
                         <h3>Here's a bit about me: </h3>
                         {dog.bio ? (
                           <h4> {dog.bio} </h4>
