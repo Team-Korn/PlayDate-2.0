@@ -7,10 +7,13 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
-import './Chat.css';
 
 /*---MATERIAL-UI---*/
-import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  createTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -45,7 +48,7 @@ const useStyles = makeStyles({
     borderBottom: '1px solid #e7e7ec',
     hover: {
       color: '#0a58ca',
-    }
+    },
   },
   messageArea: {
     height: '70vh',
@@ -56,17 +59,16 @@ const useStyles = makeStyles({
 const theme = createTheme({
   typography: {
     body1: {
-      fontFamily: "var(--font-family-default-latin)",
+      fontFamily: 'var(--font-family-default-latin)',
       fontWeight: 500,
-      fontSize: "1.25rem",
-      color: "black",
-      lineHeight: "2.5",
-    }
-  }
-})
+      fontSize: '1.25rem',
+      color: 'black',
+      lineHeight: '2.5',
+    },
+  },
+});
 
 function Chat() {
-
   const classes = useStyles();
   const dummy = useRef();
 
@@ -76,7 +78,6 @@ function Chat() {
 
   /*get matches from dogs collection*/
   const [dogs, setDogs] = useState([]);
-
 
   useEffect(() => {
     (async () => {
@@ -102,7 +103,6 @@ function Chat() {
   });
   console.log('currDog:', currDog);
 
-
   /*---PULL INFO FOR MATCHED DOGS FROM STATE---*/
 
   const arrayOfMatchedDogInfo = [];
@@ -118,14 +118,16 @@ function Chat() {
     console.log('arrayOfMatchedDogInfo:', arrayOfMatchedDogInfo);
   }
 
-
   if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
       <div>
-
         <Grid container>
           <Grid item xs={12}>
-            <Typography style={{ fontFamily: "var(--font-family-default-latin)" }} variant="h5" className="header-message">
+            <Typography
+              style={{ fontFamily: 'var(--font-family-default-latin)' }}
+              variant="h5"
+              className="header-message"
+            >
               Chat
             </Typography>
           </Grid>
@@ -144,8 +146,15 @@ function Chat() {
             <Divider />
             <List>
               {arrayOfMatchedDogInfo.map((matchedDog) => (
-                <Link to="/chat/private" style={{ textDecoration: "none" }}>
-                  <ListItem disableGutters={true} className={classes.matchList} theme={theme} button key="avatar" onClick={PrivateChat} >
+                <Link to="/chat/private" style={{ textDecoration: 'none' }}>
+                  <ListItem
+                    disableGutters={true}
+                    className={classes.matchList}
+                    theme={theme}
+                    button
+                    key="avatar"
+                    onClick={PrivateChat}
+                  >
                     <ListItemIcon>
                       <Avatar src={matchedDog.imageUrl[0]} />
                     </ListItemIcon>
@@ -162,6 +171,5 @@ function Chat() {
     );
   }
 }
-
 
 export default Chat;
