@@ -11,7 +11,6 @@ import Settings from './components/user/Settings';
 import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 import ErrorPage from './components/ErrorPage';
-import GuestProfile from './components/GuestProfile';
 import DogRegister from './components/InputDogInfoReg';
 
 // ---- FOR LOGIN CHECK -----------------------------
@@ -70,8 +69,6 @@ function App() {
             <Route path="/signupuser" element={<SignUpUserInfo />} />
 
             <Route path="/dogregister" element={<DogRegister />} />
-
-            <Route path="/profile" element={<GuestProfile />} />
 
             <Route path="*" element={<ErrorPage />} />
           </Routes>
