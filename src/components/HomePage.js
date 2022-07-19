@@ -221,7 +221,10 @@ const HomePage = () => {
   // console.log('OTHER DOGS: ', otherDogs);
 
   return (
-    <div className="tindercards cardContent homepage-wrapper container-fluid">
+    <div
+      style={{ backgroundColor: '#7ed7f0' }}
+      className="tindercards cardContent homepage-wrapper container-fluid"
+    >
       {noCards ? (
         <div>
           <EndOfDeck />
@@ -249,7 +252,7 @@ const HomePage = () => {
                       <Accordion.Body>
                         <h1>Hi! I'm {dog.name}</h1>
                         <Row className="justify-content-center">
-                          {dog.imageUrl.slice(0).map((pic) => (
+                          {dog.imageUrl.slice(1).map((pic) => (
                             <Col>
                               <Image
                                 src={pic}

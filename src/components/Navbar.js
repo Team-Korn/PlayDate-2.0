@@ -4,6 +4,9 @@ import { logout } from '../Auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import PetsIcon from '@mui/icons-material/Pets';
+import MessageIcon from '@material-ui/icons/Message';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
 
 const NavBar = () => {
   return (
@@ -25,8 +28,7 @@ const NavBar = () => {
             className="col-4 d-flex justify-content-end mr-2 align-items-center"
             style={{ color: '#00a8cc', paddingRight: '3em' }}
           >
-            {' '}
-            Messages
+            <MessageIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}
@@ -34,7 +36,7 @@ const NavBar = () => {
             className="col-4 d-flex  mr-2 align-items-center"
             style={{ color: '#00a8cc' }}
           >
-            <PetsIcon />
+            <PersonIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}
@@ -43,8 +45,7 @@ const NavBar = () => {
             className="col-4 d-flex justify-content-end align-items-center"
             style={{ color: '#00a8cc', paddingRight: '3em' }}
           >
-            {' '}
-            Logout
+            <ExitToAppIcon />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>
