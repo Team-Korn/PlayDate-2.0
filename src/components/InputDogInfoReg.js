@@ -27,7 +27,18 @@ function DogRegisterInfoForm() {
 
   const addDogDocumentAndInfo = () => {
     const userUID = user.uid;
-    inputDogInfo(name, age, breed, gender, size, bio, imageUrl, userUID);
+    const ownerName = user.name;
+    inputDogInfo(
+      name,
+      age,
+      breed,
+      gender,
+      size,
+      bio,
+      imageUrl,
+      userUID,
+      ownerName
+    );
     navigate('/home');
   };
 
