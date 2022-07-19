@@ -5,7 +5,6 @@ import firebase from 'firebase/compat/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
-import Header from './Header';
 import './PrivateChat.css';
 
 /*---MATERIAL-UI---*/
@@ -45,10 +44,41 @@ const useStyles = makeStyles({
     },
 });
 
+
 function PrivateChat() {
     const classes = useStyles();
     const dummy = useRef();
 
+    // get current user uid to check for current dog
+    const auth = getAuth(app);
+    const user = auth.currentUser;
+
+    /*get matches from dogs collection*/
+    const [dogs, setDogs] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db2, 'dogs'));
+                const dogData = [];
+                querySnapshot.forEach((doc) => {
+                    dogData.push(doc.data());
+                });
+
+                setDogs(dogData);
+            } catch (err) {
+                console.log(err, 'who let the dogs out?');
+            }
+        })();
+    }, []);
+    console.log('dogs:', dogs);
+
+    // shows owner's dog
+    const currDog = dogs.filter((dog) => {
+        return dog.ownerId === user.uid;
+        // returns array with single object of current dog
+    });
+    console.log('currDog:', currDog);
 
     /*---CHAT-MESSAGES---*/
 
@@ -66,6 +96,8 @@ function PrivateChat() {
         await messagesRef.add({
             text: formValue,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            sentBy: user.uid,
+            photoUrl: currDog[0].imageUrl[0]
         });
         setFormValue(''); // empties the message container
         dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -73,7 +105,6 @@ function PrivateChat() {
 
     return (
         <div>
-            <Header />
 
             {/*---MESSAGE CONTAINER---*/}
             <Grid max-width="100%" >
@@ -117,7 +148,7 @@ function PrivateChat() {
 }
 
 function SendMessage(props) {
-    const { text } = props.message;
+    const { text, sentBy, photoUrl } = props.message;
 
     /*---Distinguish messages sent by current dog vs recieved by matched dog---*/
     const [dogs, setDogs] = useState([]);
@@ -150,11 +181,12 @@ function SendMessage(props) {
     });
     console.log('currDog:', currDog);
 
-    const messageClass = currDog ? 'sent' : 'received'
+
+    const messageClass = sentBy === user.uid ? 'sent' : 'received'
 
     return (
         <div className={`message ${messageClass}`}>
-            {/* <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} /> */}
+            <img src={photoUrl || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
             <p>{text}</p>
         </div>
     );
