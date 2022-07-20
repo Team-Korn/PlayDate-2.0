@@ -65,7 +65,7 @@ function DogRegisterInfoForm() {
   return (
     <div className="dogInfo_container container-fluid-bg-white">
       <div className="container">
-        <h1>Let's Setup Your Dog's Profile</h1>
+        <h1>Your Dog's Profile</h1>
         <input
           type="text"
           className="register__textBox"
@@ -99,21 +99,21 @@ function DogRegisterInfoForm() {
           className="register__textBox"
           value={bio}
           onChange={(event) => setBio(event.target.value)}
-          placeholder="Tell us about your dog!"
+          placeholder="Introduce yourself!"
         />
         <input
           type="text"
           className="register__textBox"
           value={size}
           onChange={(event) => setSize(event.target.value)}
-          placeholder="Is your dog small, medium, large?"
+          placeholder="All sizes welcome! Are you a small, medium, or large dog?"
         />
         <input
           type="text"
           className="register__textBox"
           value={imageUrl}
           onChange={(event) => setImageUrl(event.target.value)}
-          placeholder="Add your dog's picture's imageUrl :)"
+          placeholder="Add your picture in imageUrl formatting!"
         />
         <button className="register__btn" onClick={addDogDocumentAndInfo}>
           Register

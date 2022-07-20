@@ -95,9 +95,10 @@ const HomePage = () => {
       await childRefs[newIndex].current.restoreCard();
     }
   };
-
+  console.log('currDog outside', currDog);
   // adds swipe to db
   async function currDogDBLikes(id) {
+    console.log('currDog inside', currDog);
     const currDogDB = doc(db, 'dogs', currDog[0].documentId);
     await updateDoc(currDogDB, {
       likes: arrayUnion(id),
