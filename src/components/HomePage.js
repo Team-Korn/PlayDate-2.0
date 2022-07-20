@@ -10,19 +10,21 @@ import {
 import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
-import ReplayIcon from '@material-ui/icons/Replay';
+// import ReplayIcon from '@material-ui/icons/Replay';
 import CloseIcon from '@material-ui/icons/Close';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
-import ChatIcon from '@mui/icons-material/Chat';
+// import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const addClassToNavbar = () => {
   // in order to achieve the sticky actions button, we need to set the dog compoent to be 100vh
@@ -53,12 +55,16 @@ const HomePage = () => {
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
-  // console.log('THIS IS CURRDOG', currDog[0].ownerId);
-  // console.log('this is user.uid', user.uid);
 
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
   const [noCards, setNoCards] = useState(false);
+
+  // ---- used for modal -------
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (currentIndex < 0) {
@@ -98,7 +104,7 @@ const HomePage = () => {
       await childRefs[newIndex].current.restoreCard();
     }
   };
-  console.log('currDog outside', currDog);
+
   // adds swipe to db
   async function currDogDBLikes(id) {
     console.log('currDog inside', currDog);
@@ -139,6 +145,31 @@ const HomePage = () => {
       await updateDoc(swipeDogAddMatch, {
         matches: arrayUnion(currDog[0].name),
       });
+
+      // ----- shows pop up of matched! ------
+      return (
+        <div>
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Thanks!</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>YOU MATCHED!</Modal.Body>
+            <Modal.Footer>
+              <Button variant="outline-danger" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Link to="/chat">
+                <Button variant="outline-success">Confirm</Button>
+              </Link>
+            </Modal.Footer>
+          </Modal>
+        </div>
+      );
     }
   }
 
@@ -204,7 +235,6 @@ const HomePage = () => {
       }
     })();
   }, []);
-  // console.log('THIS IS OUR STATE user', userDB);
 
   // gets dog collection
   useEffect(() => {
@@ -219,7 +249,6 @@ const HomePage = () => {
       } catch (err) {}
     })();
   }, []);
-  // console.log('OTHER DOGS: ', otherDogs);
 
   return (
     <div
@@ -275,7 +304,7 @@ const HomePage = () => {
                           <h4> I love fetch! </h4>
                         )}
                         <h1>This is my hooman</h1>
-
+                        {/* Need to figure out how to add the user picture */}
                         {users.find((user) => user.uid === dog.ownerId) ? (
                           <Image
                             src={
@@ -285,7 +314,7 @@ const HomePage = () => {
                             alt=""
                           />
                         ) : (
-                          'I have no owner'
+                          ''
                         )}
 
                         <h4>
