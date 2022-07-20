@@ -5,6 +5,7 @@ import { auth } from '../Auth';
 import { collection, getDocs, getDoc, doc, setDoc } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 // import { connectStorageEmulator } from 'firebase/storage';
+import './signupUser.css';
 
 function SignUpUserInfo() {
   const [loading] = useAuthState(auth);
@@ -56,35 +57,48 @@ function SignUpUserInfo() {
   };
 
   return (
-    <div className="userInfo_container container-fluid bg-white">
+    <div className="userInfo_container container-fluid ">
       <div className="container">
         <form classname="additionalUserInfo" onSubmit={handleSubmit}>
           <div className="row">
-            <div id="form-Header">Location</div>
+            <div
+              style={{
+                fontSize: '1.5em',
+                fontWeight: 'bold',
+              }}
+              id="form-Header"
+            >
+              Location
+            </div>
 
             <div className="col-12 col-md-6">
               <input
                 required
                 id="zipcode"
                 type="text"
-                className="userInfo__container"
+                className="input-area userInfo__container "
                 placeholder="Zipcode"
               />
               <input
                 required
                 id="city"
                 type="text"
-                className="userInfo__container"
+                className="input-area userInfo__container "
                 placeholder="City"
               />
               <input
                 required
                 id="state"
                 type="text"
-                className="userInfo__container"
+                className="input-area userInfo__container "
                 placeholder="State"
               />
-              <input type="submit" id="submit" value="Submit Changes" />
+              <input
+                className=" md={{ span: 3, offset: 3 }}"
+                type="submit"
+                id="submit"
+                value="Submit Changes"
+              />
             </div>
           </div>
         </form>
