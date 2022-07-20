@@ -118,31 +118,32 @@ function Chat() {
     console.log('arrayOfMatchedDogInfo:', arrayOfMatchedDogInfo);
   }
 
-  if (currDog[0]) {
-    return (
-      <div>
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              style={{ fontFamily: 'var(--font-family-default-latin)' }}
-              variant="h5"
-              className="header-message"
-            >
-              Chat
-            </Typography>
+  return (
+    <div>
+      {currDog[0] && arrayOfMatchedDogInfo[0] ? (
+        <div>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography
+                style={{ fontFamily: 'var(--font-family-default-latin)' }}
+                variant="h5"
+                className="header-message"
+              >
+                Chat
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        {arrayOfMatchedDogInfo[0] ? (
+
           <Grid container component={Paper} className={classes.chatSection}>
             <Grid item xs={12} className={classes.borderRight}>
               {/* <List>
-              <ListItem button key="avatar">
-                <ListItemIcon>
-                  <Avatar src={currDog[0].imageUrl[0]} />
-                </ListItemIcon>
-                <ListItemText>{currDog[0].name}</ListItemText>
-              </ListItem>
-        </List> */}
+                <ListItem button key="avatar">
+                  <ListItemIcon>
+                    <Avatar src={currDog[0].imageUrl[0]} />
+                  </ListItemIcon>
+                  <ListItemText>{currDog[0].name}</ListItemText>
+                </ListItem>
+          </List> */}
               <Divider />
 
               <List>
@@ -168,16 +169,26 @@ function Chat() {
               </List>
             </Grid>
           </Grid>
-        ) : (
+        </div>
+      ) : (
+        <div>
+          <Typography
+            style={{ fontFamily: 'var(--font-family-default-latin)' }}
+            variant="h5"
+            className="header-message"
+          >
+            Chat
+          </Typography>
+          <Divider />
           <div>
             <Link to="/home" style={{ textDecoration: 'none' }}>
               Sorry no matches yet. Return to Home to swipe!
             </Link>
           </div>
-        )}
-      </div>
-    );
-  }
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default Chat;
