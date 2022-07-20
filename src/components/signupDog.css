@@ -1,16 +1,20 @@
-
-/* Style the container */
-.container {
+.dogInfo_container{
   background-color: #7ed7f0;
   padding: 3em;
 }
-/* Style the submit button */
-.submit__btn{
-  background-color: #FFB049 !important;
+
+.register__btn{
+  background-color: #FFB049;
   margin-top: 2em;
   width: 100%;
   font-weight: bold;
 }
+
+.register__textBox{
+  margin-top:.5em;
+  width: 100%;
+}
+
 .label{
   font-weight: bold;
 }
@@ -18,4 +22,3 @@
 h1{
   text-align: center;
 }
-
