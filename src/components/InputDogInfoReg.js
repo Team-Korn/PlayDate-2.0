@@ -19,7 +19,9 @@ function DogRegisterInfoForm() {
   const [name, setName] = useState('');
   const [breed, setBreed] = useState('');
   const [gender, setGender] = useState('');
-  const [imageUrl, setImageUrl] = useState([]);
+  const [imageUrl1, setImageUrl1] = useState([]);
+  const [imageUrl2, setImageUrl2] = useState([]);
+  const [imageUrl3, setImageUrl3] = useState([]);
   const [size, setSize] = useState('');
   const [bio, setBio] = useState('');
   // const [user, loading, error] = useAuthState(auth);
@@ -35,7 +37,9 @@ function DogRegisterInfoForm() {
       gender,
       size,
       bio,
-      imageUrl,
+      imageUrl1,
+      imageUrl2,
+      imageUrl3,
       userUID,
       ownerName
     );
@@ -99,7 +103,7 @@ function DogRegisterInfoForm() {
           className="register__textBox"
           value={bio}
           onChange={(event) => setBio(event.target.value)}
-          placeholder="Introduce yourself!"
+          placeholder="Introduce yourself! (Doggo)"
         />
         <input
           type="text"
@@ -108,12 +112,27 @@ function DogRegisterInfoForm() {
           onChange={(event) => setSize(event.target.value)}
           placeholder="All sizes welcome! Are you a small, medium, or large dog?"
         />
+        <h2>Top 3 Photos!</h2>
         <input
           type="text"
           className="register__textBox"
-          value={imageUrl}
-          onChange={(event) => setImageUrl(event.target.value)}
-          placeholder="Add your picture in imageUrl formatting!"
+          value={imageUrl1}
+          onChange={(event) => setImageUrl1(event.target.value)}
+          placeholder="Please Add your Picture in JPG formatting!"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={imageUrl2}
+          onChange={(event) => setImageUrl2(event.target.value)}
+          placeholder="Please Add your Picture in JPG formatting!"
+        />
+        <input
+          type="text"
+          className="register__textBox"
+          value={imageUrl3}
+          onChange={(event) => setImageUrl3(event.target.value)}
+          placeholder="Please Add your Picture in JPG formatting!"
         />
         <button className="register__btn" onClick={addDogDocumentAndInfo}>
           Register

@@ -100,7 +100,9 @@ const inputDogInfo = async (
   gender,
   size,
   bio,
-  imageUrl,
+  imageUrl1,
+  imageUrl2,
+  imageUrl3,
   userUID,
   ownerName
 ) => {
@@ -112,7 +114,7 @@ const inputDogInfo = async (
       breed: breed,
       size: size,
       bio: bio,
-      imageUrl: [imageUrl],
+      imageUrl: [imageUrl1, imageUrl2, imageUrl3],
       ownerId: userUID,
       ownerName: ownerName,
       likedBy: [],

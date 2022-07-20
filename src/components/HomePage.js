@@ -253,6 +253,7 @@ const HomePage = () => {
                           <h4> I love fetch! </h4>
                         )}
                         <h1>This is my hooooman</h1>
+
                         <h4>
                           {users.find((user) => user.uid === dog.ownerId)
                             ? users.find((user) => user.uid === dog.ownerId)
