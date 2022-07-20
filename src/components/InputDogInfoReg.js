@@ -9,8 +9,6 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 // ------- ADD DOG INFO AFTER REGISTERING --------
 function DogRegisterInfoForm() {
   // ----- get current users uid -------------
@@ -128,11 +126,12 @@ function DogRegisterInfoForm() {
           <Form.Label className="label">Tell us about your pup</Form.Label>
 
           <Form.Control
-            type="text"
+            as="textarea"
+            rows={3}
             onChange={(event) => setBio(event.target.value)}
           />
         </Form.Group>
-        <Form.Group controlId="formGridPic">
+        {/* <Form.Group controlId="formGridPic">
           <Form.Label className="label">Upload pictures</Form.Label>
 
           <Form.Control
@@ -140,7 +139,7 @@ function DogRegisterInfoForm() {
             multiple
             onChange={(event) => setImageUrl(event.target.value)}
           />
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group controlId="formGridPic">
           <Form.Label className="label">Upload pictures</Form.Label>
