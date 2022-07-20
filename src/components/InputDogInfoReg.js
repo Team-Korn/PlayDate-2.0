@@ -4,7 +4,11 @@ import { auth, inputDogInfo } from '../Auth';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/fbConfig';
 import { useNavigate } from 'react-router-dom';
-
+import './signupDog.css';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 // ------- ADD DOG INFO AFTER REGISTERING --------
 function DogRegisterInfoForm() {
   // ----- get current users uid -------------
@@ -63,63 +67,155 @@ function DogRegisterInfoForm() {
   // console.log('this is the user: ', user);
 
   return (
-    <div className="dogInfo_container container-fluid-bg-white">
-      <div className="container">
+    <div className="dogInfo_container container-fluid">
+      <Form>
         <h1>Let's Setup Your Dog's Profile</h1>
-        <input
-          type="text"
-          className="register__textBox"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-          placeholder="Dog's Name"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={age}
-          onChange={(event) => setAge(event.target.value)}
-          placeholder="Age"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={breed}
-          onChange={(event) => setBreed(event.target.value)}
-          placeholder="Breed"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={gender}
-          onChange={(event) => setGender(event.target.value)}
-          placeholder="Gender"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={bio}
-          onChange={(event) => setBio(event.target.value)}
-          placeholder="Tell us about your dog!"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={size}
-          onChange={(event) => setSize(event.target.value)}
-          placeholder="Is your dog small, medium, large?"
-        />
-        <input
-          type="text"
-          className="register__textBox"
-          value={imageUrl}
-          onChange={(event) => setImageUrl(event.target.value)}
-          placeholder="Add your dog's picture's imageUrl :)"
-        />
-        <button className="register__btn" onClick={addDogDocumentAndInfo}>
+        <br />
+        <Form.Group className="mb-3" controlId="formGridName">
+          <Form.Label className="label">Dog's Name</Form.Label>
+          <Form.Control
+            onChange={(event) => setAge(event.target.value)}
+            type="text"
+          />
+        </Form.Group>
+        <Row className="mb-3" align-items-center>
+          <Form.Group as={Col} controlId="formGridAge">
+            <Form.Label className="label">Dog's Age</Form.Label>
+            <Form.Control
+              onChange={(event) => setAge(event.target.value)}
+              type="text"
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridBreed">
+            <Form.Label className="label">Enter Breed</Form.Label>
+            <Form.Control
+              onChange={(event) => setBreed(event.target.value)}
+              type="text"
+            />
+          </Form.Group>
+        </Row>
+        <Row className="mb-3" align-items-center>
+          <Form.Group as={Col} controlId="formGridGender">
+            <Form.Label className="label">Enter Gender</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(event) => setGender(event.target.value)}
+            />
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="formGridSize">
+            <Form.Label className="label">Select Size</Form.Label>
+
+            <Form.Select size="lg" defaultValue="Choose...">
+              <Form.Control
+                type="text"
+                onChange={(event) => setSize(event.target.value)}
+              />
+
+              <option>Choose...</option>
+              <option>Toy</option>
+              <option>Small</option>
+              <option>Medium</option>
+              <option>Large</option>
+              <option>Giant</option>
+            </Form.Select>
+          </Form.Group>
+        </Row>
+        <Form.Group className="mb-3" controlId="formGridBio">
+          <Form.Label className="label">Tell us about your pup</Form.Label>
+
+          <Form.Control
+            as="textarea"
+            rows={3}
+            onChange={(event) => setBio(event.target.value)}
+          />
+        </Form.Group>
+        {/* <Form.Group controlId="formGridPic">
+          <Form.Label className="label">Upload pictures</Form.Label>
+
+          <Form.Control
+            type="file"
+            multiple
+            onChange={(event) => setImageUrl(event.target.value)}
+          />
+        </Form.Group> */}
+
+        <Form.Group controlId="formGridPic">
+          <Form.Label className="label">Upload pictures</Form.Label>
+
+          <Form.Control
+            placeholder="Add image URL"
+            type="text"
+            multiple
+            onChange={(event) => setImageUrl(event.target.value)}
+          />
+        </Form.Group>
+
+        <br />
+        <Button className="register__btn" onClick={addDogDocumentAndInfo}>
           Register
-        </button>
-      </div>
+        </Button>
+      </Form>
     </div>
+
+    // <div className="dogInfo_container container-fluid">
+    //   <div className="container">
+    //     <h1>Let's Setup Your Dog's Profile</h1>
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={name}
+    //       onChange={(event) => setName(event.target.value)}
+    //       placeholder="Dog's Name"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={age}
+    //       onChange={(event) => setAge(event.target.value)}
+    //       placeholder="Age"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={breed}
+    //       onChange={(event) => setBreed(event.target.value)}
+    //       placeholder="Breed"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={gender}
+    //       onChange={(event) => setGender(event.target.value)}
+    //       placeholder="Gender"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={bio}
+    //       onChange={(event) => setBio(event.target.value)}
+    //       placeholder="Tell us about your dog!"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={size}
+    //       onChange={(event) => setSize(event.target.value)}
+    //       placeholder="Is your dog small, medium, large?"
+    //     />
+    //     <input
+    //       type="text"
+    //       className="register__textBox"
+    //       value={imageUrl}
+    //       onChange={(event) => setImageUrl(event.target.value)}
+    //       placeholder="Add your dog's picture's imageUrl :)"
+    //     />
+    //     <button className="register__btn" onClick={addDogDocumentAndInfo}>
+    //       Register
+    //     </button>
+    //   </div>
+    // </div>
   );
 }
 
