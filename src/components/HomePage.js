@@ -145,31 +145,33 @@ const HomePage = () => {
       await updateDoc(swipeDogAddMatch, {
         matches: arrayUnion(currDog[0].name),
       });
-
+      alert('You matched!');
       // ----- shows pop up of matched! ------
-      return (
-        <div>
-          <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Thanks!</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>YOU MATCHED!</Modal.Body>
-            <Modal.Footer>
-              <Button variant="outline-danger" onClick={handleClose}>
-                Cancel
-              </Button>
-              <Link to="/chat">
-                <Button variant="outline-success">Confirm</Button>
-              </Link>
-            </Modal.Footer>
-          </Modal>
-        </div>
-      );
+      // const matchPopUp = () => {
+      //   return (
+      //     <div>
+      //       <Modal
+      //         show={show}
+      //         onHide={handleClose}
+      //         backdrop="static"
+      //         keyboard={false}
+      //       >
+      //         <Modal.Header closeButton>
+      //           <Modal.Title>Thanks!</Modal.Title>
+      //         </Modal.Header>
+      //         <Modal.Body>YOU MATCHED!</Modal.Body>
+      //         <Modal.Footer>
+      //           <Button variant="outline-danger" onClick={handleClose}>
+      //             Cancel
+      //           </Button>
+      //           <Link to="/chat">
+      //             <Button variant="outline-success">Confirm</Button>
+      //           </Link>
+      //         </Modal.Footer>
+      //       </Modal>
+      //     </div>
+      //   );
+      // };
     }
   }
 
@@ -312,6 +314,11 @@ const HomePage = () => {
                                 .userImageUrl
                             }
                             alt=""
+                            thumbnail="true"
+                            style={{
+                              height: '70%',
+                              width: '80%',
+                            }}
                           />
                         ) : (
                           ''

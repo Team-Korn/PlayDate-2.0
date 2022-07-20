@@ -99,7 +99,7 @@ function SignUpUserInfo() {
                 placeholder="Please Add your Picture in JPG formatting!"
               />
 
-              <input type="submit" id="submit" value="Submit Changes" />
+              <input type="submit" id="submit" value="Submit" />
             </div>
           </div>
         </form>

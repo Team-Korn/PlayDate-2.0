@@ -29,6 +29,8 @@ import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
 import { lineHeight } from '@mui/system';
 
+// preventDefault() needed for the re-render error
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
