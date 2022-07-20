@@ -1,0 +1,20 @@
+.dogInfo_container{
+  background-color: #7ed7f0;
+  padding-top: 3em;
+}
+
+.register__btn{
+  background-color: #FFB049;
+  margin-top: 2em;
+  width: 100%;
+  font-weight: bold;
+}
+
+.register__textBox{
+  margin-top:.5em;
+  width: 100%;
+}
+
+.label{
+  font-weight: bold;
+}
