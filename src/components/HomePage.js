@@ -252,7 +252,7 @@ const HomePage = () => {
                       <Accordion.Header>Check Me Out!</Accordion.Header>
                       <Accordion.Body>
                         <h1>Hi! I'm {dog.name}</h1>
-                        <Row className="justify-content-center">
+                        {/* <Row className="justify-content-center">
                           {dog.imageUrl.slice(1).map((pic) => (
                             <Col>
                               <Image
@@ -266,14 +266,29 @@ const HomePage = () => {
                               />
                             </Col>
                           ))}
+                        </Row> */}
+                        <Row className="justify-content-center">
+                          {dog.imageUrl.slice(1).map((pic) => (
+                            <Row>
+                              <Image
+                                src={pic}
+                                alt=""
+                                thumbnail="true"
+                                style={{
+                                  height: '70%',
+                                  width: '80%',
+                                }}
+                              />
+                            </Row>
+                          ))}
                         </Row>
                         <h3>Here's a bit about me: </h3>
                         {dog.bio ? (
-                          <h4> {dog.bio} </h4>
+                          <h5> {dog.bio} </h5>
                         ) : (
                           <h4> I love fetch! </h4>
                         )}
-                        <h1>This is my hooooman</h1>
+                        <h1>This is my hooman</h1>
 
                         <h4>
                           {users.find((user) => user.uid === dog.ownerId)
