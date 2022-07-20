@@ -171,7 +171,7 @@ function Chat() {
         ) : (
           <div>
             <Link to="/home" style={{ textDecoration: 'none' }}>
-              No matches yet. Return to Home to swipe!
+              Sorry no matches yet. Return to Home to swipe!
             </Link>
           </div>
         )}
