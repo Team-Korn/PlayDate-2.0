@@ -141,6 +141,18 @@ function DogRegisterInfoForm() {
             onChange={(event) => setImageUrl(event.target.value)}
           />
         </Form.Group>
+
+        <Form.Group controlId="formGridPic">
+          <Form.Label className="label">Upload pictures</Form.Label>
+
+          <Form.Control
+            placeholder="Add image URL"
+            type="text"
+            multiple
+            onChange={(event) => setImageUrl(event.target.value)}
+          />
+        </Form.Group>
+
         <br />
         <Button className="register__btn" onClick={addDogDocumentAndInfo}>
           Register
