@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { logout } from '../Auth';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import PetsIcon from '@mui/icons-material/Pets';
+import MessageIcon from '@material-ui/icons/Message';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import './navbar.css';
 
 const NavBar = () => {
   return (
@@ -11,40 +14,41 @@ const NavBar = () => {
       <Navbar.Brand
         as={Link}
         to={'/home'}
-        style={{ color: '#00a8cc', fontSize: '180%', fontWeight: '300px' }}
-        className="col-2 text-center justify-content-lg-center justify-content-sm-center"
+        className=" brand col-2 text-center justify-content-lg-center justify-content-sm-center"
       >
         PlayDate🐾
       </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" className="mr-2" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <Navbar.Toggle
+        aria-controls="basic-navbar-nav"
+        className="mr-2"
+        style={{ paddingRight: '2em' }}
+      />
+      <Navbar.Collapse id="basic-navbar-nav" style={{ paddingRight: '4em' }}>
         <Nav className="ms-auto row justify-content-around">
           <Nav.Link
             as={Link}
             to={'/chat'}
-            className="col-4 d-flex justify-content-end mr-2 align-items-center"
-            style={{ color: '#00a8cc', paddingRight: '3em' }}
+            className="col-4 d-flex align-items-center"
+            style={{ color: '#00a8cc', paddingRight: '2em' }}
           >
-            {' '}
-            Messages
+            <MessageIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}
             to={'/user'}
             className="col-4 d-flex  mr-2 align-items-center"
-            style={{ color: '#00a8cc' }}
+            style={{ color: '#00a8cc', paddingRight: '2em' }}
           >
-            <PetsIcon />
+            <PersonIcon />
           </Nav.Link>
           <Nav.Link
             as={Link}
             to={'/'}
             onClick={logout}
-            className="col-4 d-flex justify-content-end align-items-center"
-            style={{ color: '#00a8cc', paddingRight: '3em' }}
+            className="col-4 d-flex align-items-center"
+            style={{ color: '#00a8cc', paddingRight: '2em' }}
           >
-            {' '}
-            Logout
+            <ExitToAppIcon />
           </Nav.Link>
         </Nav>
       </Navbar.Collapse>

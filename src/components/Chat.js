@@ -7,11 +7,10 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
-import Header from './Header';
-import './Chat.css';
+
 
 /*---MATERIAL-UI---*/
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -25,6 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
+import { lineHeight } from '@mui/system';
 
 const useStyles = makeStyles({
   table: {
@@ -37,8 +37,15 @@ const useStyles = makeStyles({
   headBG: {
     backgroundColor: '#e0e0e0',
   },
-  borderRight500: {
-    borderRight: '1px solid #e0e0e0',
+  borderRight: {
+    maxWidth: '100%',
+  },
+  matchList: {
+    padding: '20px',
+    borderBottom: '1px solid #e7e7ec',
+    hover: {
+      color: '#0a58ca',
+    }
   },
   messageArea: {
     height: '70vh',
@@ -46,7 +53,20 @@ const useStyles = makeStyles({
   },
 });
 
+const theme = createTheme({
+  typography: {
+    body1: {
+      fontFamily: "var(--font-family-default-latin)",
+      fontWeight: 500,
+      fontSize: "1.25rem",
+      color: "black",
+      lineHeight: "2.5",
+    }
+  }
+})
+
 function Chat() {
+
   const classes = useStyles();
   const dummy = useRef();
 
@@ -102,35 +122,36 @@ function Chat() {
   if (currDog[0] && arrayOfMatchedDogInfo[0]) {
     return (
       <div>
-        <Header />
 
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="h5" className="header-message">
+            <Typography style={{ fontFamily: "var(--font-family-default-latin)" }} variant="h5" className="header-message">
               Chat
             </Typography>
           </Grid>
         </Grid>
         <Grid container component={Paper} className={classes.chatSection}>
-          <Grid item xs={3} className={classes.borderRight500}>
-            <List>
+          <Grid item xs={12} className={classes.borderRight}>
+            {/* <List>
               <ListItem button key="avatar">
                 <ListItemIcon>
                   <Avatar src={currDog[0].imageUrl[0]} />
                 </ListItemIcon>
                 <ListItemText>{currDog[0].name}</ListItemText>
               </ListItem>
-            </List>
+            </List> */}
 
             <Divider />
             <List>
               {arrayOfMatchedDogInfo.map((matchedDog) => (
-                <Link to="/chat/private" >
-                  <ListItem button key="avatar" onClick={PrivateChat} >
+                <Link to="/chat/private" style={{ textDecoration: "none" }}>
+                  <ListItem disableGutters={true} className={classes.matchList} theme={theme} button key="avatar" onClick={PrivateChat} >
                     <ListItemIcon>
                       <Avatar src={matchedDog.imageUrl[0]} />
                     </ListItemIcon>
-                    <ListItemText>{matchedDog.name}</ListItemText>
+                    <ThemeProvider theme={theme}>
+                      <ListItemText>{matchedDog.name}</ListItemText>
+                    </ThemeProvider>
                   </ListItem>
                 </Link>
               ))}

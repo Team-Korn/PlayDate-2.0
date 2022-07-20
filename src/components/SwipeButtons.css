@@ -8,6 +8,8 @@
   align-content: space-around;
   z-index: 1;
   padding: 40px 0px;
+  background-color:#7ed7f0;
+
 }
 
 .swipeButtons .MuiIconButton-root {
