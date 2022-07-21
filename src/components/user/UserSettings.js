@@ -69,7 +69,7 @@ const UserSettings = () => {
     console.log('NO USER FOUND!');
   } else {
     return (
-      <div className="container">
+      <div className="container" style={{ backgroundColor: '#7ed7f0', padding: '20px'}}>
         <Form className="settings" onSubmit={handleSubmit}>
           <h1>Edit Human Information</h1>
           <br />
