@@ -41,6 +41,7 @@ const HomePage = () => {
   const [lastDirection, setLastDirection] = useState();
   const [userDB, setUserDB] = useState([]);
   const [users, setUsers] = useState([]);
+  const [tinderDog, setTinderDog] = useState({});
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -60,11 +61,11 @@ const HomePage = () => {
   const currentIndexRef = useRef(currentIndex);
   const [noCards, setNoCards] = useState(false);
 
-  // ---- used for modal -------
-  const [show, setShow] = useState(false);
+  // // ---- used for modal -------
+  // const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (currentIndex < 0) {
@@ -280,7 +281,7 @@ const HomePage = () => {
                   ></div>
                   <Accordion>
                     <Accordion.Item eventKey="0" flush="true">
-                      <Accordion.Header>Check Me Out!</Accordion.Header>
+                      <Accordion.Header>More about me!</Accordion.Header>
                       <Accordion.Body>
                         <h1>Hi! I'm {dog.name}</h1>
 
@@ -309,10 +310,11 @@ const HomePage = () => {
                         {/* Need to figure out how to add the user picture */}
                         {users.find((user) => user.uid === dog.ownerId) ? (
                           <Image
-                            src={
-                              users.find((user) => user.uid === dog.ownerId)
-                                .userImageUrl
-                            }
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX1GLNHPpaosD-CH_nEfwDEdPlHP2WWdFJ0A&usqp=CAU"
+                            // src={
+                            //   users.find((user) => user.uid === dog.ownerId)
+                            //     .userImageUrl
+                            // }
                             alt=""
                             thumbnail="true"
                             style={{

@@ -14,7 +14,7 @@ function DogRegisterInfoForm() {
   // ----- get current users uid -------------
   const currentUser = auth.currentUser;
   // console.log('THIS IS currentUser', currentUser);
-  console.log('hello user', currentUser);
+  // console.log('hello user', currentUser);
 
   //grab current user from db
   const [user, setUser] = useState({});
@@ -23,9 +23,9 @@ function DogRegisterInfoForm() {
   const [name, setName] = useState('');
   const [breed, setBreed] = useState('');
   const [gender, setGender] = useState('');
-  const [imageUrl1, setImageUrl1] = useState([]);
-  const [imageUrl2, setImageUrl2] = useState([]);
-  const [imageUrl3, setImageUrl3] = useState([]);
+  const [imageUrl, setImageUrl] = useState([]);
+  // const [imageUrl2, setImageUrl2] = useState([]);
+  // const [imageUrl3, setImageUrl3] = useState([]);
   const [size, setSize] = useState('');
   const [bio, setBio] = useState('');
   // const [user, loading, error] = useAuthState(auth);
@@ -41,9 +41,9 @@ function DogRegisterInfoForm() {
       gender,
       size,
       bio,
-      imageUrl1,
-      imageUrl2,
-      imageUrl3,
+      imageUrl,
+      // imageUrl2,
+      // imageUrl3,
       userUID,
       ownerName
     );
@@ -71,7 +71,6 @@ function DogRegisterInfoForm() {
   // console.log('this is the user: ', user);
 
   return (
-
     // -------- JI: -------------
 
     <div className="dogInfo_container container-fluid">
@@ -137,7 +136,7 @@ function DogRegisterInfoForm() {
 export default DogRegisterInfoForm;
 
 // <div className="dogInfo_container container-fluid">
-      /* <Form>
+/* <Form>
         <h1>Let's Setup Your Dog's Profile</h1>
         <br />
         <Form.Group className="mb-3" controlId="formGridName">
@@ -208,9 +207,9 @@ export default DogRegisterInfoForm;
             multiple
             onChange={(event) => setImageUrl(event.target.value)}
           />
-        </Form.Group> */}
+        </Form.Group>
 
-        {/* <Form.Group controlId="formGridPic">
+         <Form.Group controlId="formGridPic">
           <Form.Label className="label">Upload pictures</Form.Label>
 
           <Form.Control

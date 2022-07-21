@@ -78,6 +78,7 @@ function Chat() {
   const auth = getAuth(app);
   const user = auth.currentUser;
 
+  console.log('REturning user?', user);
   /*get matches from dogs collection*/
   const [dogs, setDogs] = useState([]);
 

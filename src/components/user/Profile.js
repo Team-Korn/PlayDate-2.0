@@ -41,20 +41,19 @@ const Profile = () => {
         <div className="card">
           {/* <div className="img-avatar"></div> */}
           <div className="card-text">
-            <img
-              className="portada"
-              src={currDog[0].imageUrl[0]}
-              alt="dog-profile-pic"
-            />
+            <div>
+              <img
+                className="portada"
+                src={currDog[0].imageUrl[0]}
+                alt="dog-profile-pic"
+              />
+            </div>
             <div className="title-total">
+              <div className="title">Age: {currDog[0].age}</div>
+              <div className="title">Breed: {currDog[0].breed}</div>
               <div className="title">{currDog[0].breed}</div>
               <h2>{currDog[0].name}</h2>
-              <div className="desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </div>
+              <div className="desc">{currDog[0].bio}</div>
               <div className="button-container">
                 <Link className="settings-button" to="/userSettings">
                   <button style={{ backgroundColor: '#FFB049', margin: '2em' }}>

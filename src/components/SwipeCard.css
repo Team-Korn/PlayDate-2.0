@@ -12,18 +12,18 @@
   background-position: Top;
 }
 
-.tinderCards__wrapper {
-  height: 100vh;
-}
+/* .tinderCards__wrapper {
+  height: 80vh;
+} */
 /* dog tinder card */
 .tinderCards__cardContainer {
   /* border: solid 1px #ccc; */
-  height: 70vh;
+  height: 80vh;
   min-height: 500px;
   display: flex;
   justify-content: center;
   margin-top: 50px;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
   padding-top: 90px;
   position: relative;
   z-index: 2;
@@ -44,6 +44,7 @@
   width: 90%;
   margin: 0 auto;
   margin-top: 20px;
+  padding-top: 20px;
 }
 
 .cardContent {
