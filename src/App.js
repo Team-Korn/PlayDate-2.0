@@ -1,4 +1,4 @@
-import React, { useEffect, uselocalStorage } from 'react';
+import React from 'react';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import NavBar from './components/Navbar';
@@ -7,8 +7,6 @@ import PrivateChat from './components/PrivateChat';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/user/Profile';
-import Settings from './components/user/Settings';
-import Preferences from './components/user/Preferences';
 import SignUpUserInfo from './components/SignUpUserInfo';
 import ErrorPage from './components/ErrorPage';
 import DogRegister from './components/InputDogInfoReg';
@@ -67,8 +65,6 @@ function App() {
             <Route path="/userSettings" element={<UserSettings />} />
 
             <Route path="/dogSettings" element={<DogSettings />} />
-
-            <Route path="/user-preferences" element={<Preferences />} />
 
             <Route path="/signupuser" element={<SignUpUserInfo />} />
 

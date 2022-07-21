@@ -3,7 +3,10 @@ import { collection, getDocs } from 'firebase/firestore';
 import { app, db } from '../../config/fbConfig';
 import { getAuth } from 'firebase/auth';
 import { Link } from 'react-router-dom';
-import './Profile.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
 
 const Profile = () => {
   // get current user uid to check for current dog
@@ -37,43 +40,81 @@ const Profile = () => {
     console.log('No Dogs Here!');
   } else {
     return (
-      <div className="profile-view">
-        <div className="card">
-          {/* <div className="img-avatar"></div> */}
-          <div className="card-text">
-            <div>
-              <img
-                className="portada"
+      <div style={{ backgroundColor: '#7ed7f0', padding: '20px' }}>
+        <Container
+          className=" justify-content-md-center"
+          style={{
+            backgroundColor: 'white',
+            boxShadow: '0px 14px 80px #35375080',
+            marginTop: '3em',
+            borderRadius: '15px',
+          }}
+        >
+          <Row className="position-relative">
+            <Col className="justify-content-md-center ">
+              <Image
                 src={currDog[0].imageUrl[0]}
-                alt="dog-profile-pic"
+                style={{ width: '30%', height: '100%', marginLeft: '35%' }}
+                thumbnail
+                fluid
               />
-            </div>
-            <div className="title-total">
-              <div className="title">Age: {currDog[0].age}</div>
-              <div className="title">Breed: {currDog[0].breed}</div>
-              <div className="title">{currDog[0].breed}</div>
-              <h2>{currDog[0].name}</h2>
-              <div className="desc">{currDog[0].bio}</div>
-              <div className="button-container">
-                <Link className="settings-button" to="/userSettings">
-                  <button style={{ backgroundColor: '#FFB049', margin: '2em' }}>
-                    {' '}
-                    User Settings
-                  </button>
-                </Link>
-                <Link className="settings-button" to="/dogSettings">
-                  <button style={{ backgroundColor: '#FFB049' }}>
-                    {' '}
-                    Dog Settings
-                  </button>
-                </Link>
-                {/* <Link className='preferences-button' to="/user-preferences">
-                    <button>Preferences</button>
-                  </Link> */}
-              </div>
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+          <Row className="d-flex">
+            <Col>
+              <h1 style={{ textAlign: 'center' }}>{currDog[0].name}</h1>
+            </Col>
+          </Row>
+          <br />
+          <Row className="justify-content-md-center">
+            <Col className="d-flex justify-content-around">
+              <h5>Age: {currDog[0].age}</h5>
+            </Col>
+            <Col>
+              {' '}
+              <h5>{currDog[0].breed}</h5>
+            </Col>
+          </Row>
+          <hr />
+          <br />
+
+          <Row className="d-flex align-content-center flex-wrap justify-content-center">
+            <Col md={5} style={{ textAlign: 'center', paddingBottom: '3em' }}>
+              {currDog[0].bio}
+            </Col>
+            {/* <div className="button-container"> */}
+          </Row>
+
+          <Row className="d-flex align-content-center justify-content-center  ">
+            <Col>
+              <Link to="/userSettings">
+                <button
+                  style={{
+                    backgroundColor: '#FFB049',
+                    marginLeft: '3%',
+                    cursor: 'pointer',
+                    borderRadius: '15px',
+                  }}
+                >
+                  User Settings
+                </button>
+              </Link>
+            </Col>
+            <Col>
+              <Link to="/dogSettings">
+                <button
+                  style={{
+                    backgroundColor: '#FFB049',
+                    cursor: 'pointer',
+                    borderRadius: '15px',
+                  }}
+                >
+                  Dog Settings
+                </button>
+              </Link>
+            </Col>
+          </Row>
+        </Container>
       </div>
     );
   }
