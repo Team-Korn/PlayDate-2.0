@@ -8,9 +8,12 @@ import { getAuth } from 'firebase/auth';
 import { getDocs, collection, query, where } from 'firebase/firestore';
 import PrivateChat from './PrivateChat';
 
-
 /*---MATERIAL-UI---*/
-import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  createTheme,
+  ThemeProvider,
+} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -25,6 +28,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Fab from '@material-ui/core/Fab';
 import SendIcon from '@material-ui/icons/Send';
 import { lineHeight } from '@mui/system';
+
+// preventDefault() needed for the re-render error
 
 const useStyles = makeStyles({
   table: {
@@ -45,7 +50,7 @@ const useStyles = makeStyles({
     borderBottom: '1px solid #e7e7ec',
     hover: {
       color: '#0a58ca',
-    }
+    },
   },
   messageArea: {
     height: '70vh',
@@ -56,17 +61,16 @@ const useStyles = makeStyles({
 const theme = createTheme({
   typography: {
     body1: {
-      fontFamily: "var(--font-family-default-latin)",
+      fontFamily: 'var(--font-family-default-latin)',
       fontWeight: 500,
-      fontSize: "1.25rem",
-      color: "black",
-      lineHeight: "2.5",
-    }
-  }
-})
+      fontSize: '1.25rem',
+      color: 'black',
+      lineHeight: '2.5',
+    },
+  },
+});
 
 function Chat() {
-
   const classes = useStyles();
   const dummy = useRef();
 
@@ -74,9 +78,9 @@ function Chat() {
   const auth = getAuth(app);
   const user = auth.currentUser;
 
+  console.log('REturning user?', user);
   /*get matches from dogs collection*/
   const [dogs, setDogs] = useState([]);
-
 
   useEffect(() => {
     (async () => {
@@ -102,7 +106,6 @@ function Chat() {
   });
   console.log('currDog:', currDog);
 
-
   /*---PULL INFO FOR MATCHED DOGS FROM STATE---*/
 
   const arrayOfMatchedDogInfo = [];
@@ -118,50 +121,77 @@ function Chat() {
     console.log('arrayOfMatchedDogInfo:', arrayOfMatchedDogInfo);
   }
 
-
-  if (currDog[0] && arrayOfMatchedDogInfo[0]) {
-    return (
-      <div>
-
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography style={{ fontFamily: "var(--font-family-default-latin)" }} variant="h5" className="header-message">
-              Chat
-            </Typography>
+  return (
+    <div>
+      {currDog[0] && arrayOfMatchedDogInfo[0] ? (
+        <div>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography
+                style={{ fontFamily: 'var(--font-family-default-latin)' }}
+                variant="h5"
+                className="header-message"
+              >
+                Chat
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid container component={Paper} className={classes.chatSection}>
-          <Grid item xs={12} className={classes.borderRight}>
-            {/* <List>
-              <ListItem button key="avatar">
-                <ListItemIcon>
-                  <Avatar src={currDog[0].imageUrl[0]} />
-                </ListItemIcon>
-                <ListItemText>{currDog[0].name}</ListItemText>
-              </ListItem>
-            </List> */}
 
-            <Divider />
-            <List>
-              {arrayOfMatchedDogInfo.map((matchedDog) => (
-                <Link to="/chat/private" style={{ textDecoration: "none" }}>
-                  <ListItem disableGutters={true} className={classes.matchList} theme={theme} button key="avatar" onClick={PrivateChat} >
-                    <ListItemIcon>
-                      <Avatar src={matchedDog.imageUrl[0]} />
-                    </ListItemIcon>
-                    <ThemeProvider theme={theme}>
-                      <ListItemText>{matchedDog.name}</ListItemText>
-                    </ThemeProvider>
-                  </ListItem>
-                </Link>
-              ))}
-            </List>
+          <Grid container component={Paper} className={classes.chatSection}>
+            <Grid item xs={12} className={classes.borderRight}>
+              {/* <List>
+                <ListItem button key="avatar">
+                  <ListItemIcon>
+                    <Avatar src={currDog[0].imageUrl[0]} />
+                  </ListItemIcon>
+                  <ListItemText>{currDog[0].name}</ListItemText>
+                </ListItem>
+          </List> */}
+              <Divider />
+
+              <List>
+                {arrayOfMatchedDogInfo.map((matchedDog) => (
+                  <Link to="/chat/private" style={{ textDecoration: 'none' }}>
+                    <ListItem
+                      disableGutters={true}
+                      className={classes.matchList}
+                      theme={theme}
+                      button
+                      key="avatar"
+                      onClick={PrivateChat}
+                    >
+                      <ListItemIcon>
+                        <Avatar src={matchedDog.imageUrl[0]} />
+                      </ListItemIcon>
+                      <ThemeProvider theme={theme}>
+                        <ListItemText>{matchedDog.name}</ListItemText>
+                      </ThemeProvider>
+                    </ListItem>
+                  </Link>
+                ))}
+              </List>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    );
-  }
+        </div>
+      ) : (
+        <div>
+          <Typography
+            style={{ fontFamily: 'var(--font-family-default-latin)' }}
+            variant="h5"
+            className="header-message"
+          >
+            Chat
+          </Typography>
+          <Divider />
+          <div>
+            <Link to="/home" style={{ textDecoration: 'none' }}>
+              Sorry no matches yet. Return to Home to swipe!
+            </Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
-
 
 export default Chat;

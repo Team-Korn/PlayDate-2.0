@@ -10,19 +10,21 @@ import {
 import { db, app } from '../config/fbConfig';
 import TinderCard from 'react-tinder-card';
 import './SwipeCard.css';
-import ReplayIcon from '@material-ui/icons/Replay';
+// import ReplayIcon from '@material-ui/icons/Replay';
 import CloseIcon from '@material-ui/icons/Close';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
-import ChatIcon from '@mui/icons-material/Chat';
+// import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
 import { Link } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+// import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const addClassToNavbar = () => {
   // in order to achieve the sticky actions button, we need to set the dog compoent to be 100vh
@@ -39,6 +41,7 @@ const HomePage = () => {
   const [lastDirection, setLastDirection] = useState();
   const [userDB, setUserDB] = useState([]);
   const [users, setUsers] = useState([]);
+  const [tinderDog, setTinderDog] = useState({});
 
   // get current user uid to check for current dog
   const auth = getAuth(app);
@@ -53,12 +56,16 @@ const HomePage = () => {
   const currDog = dogs.filter((dog) => {
     return dog.ownerId === user.uid;
   });
-  // console.log('THIS IS CURRDOG', currDog[0].ownerId);
-  // console.log('this is user.uid', user.uid);
 
   // used for outOfFrame closure
   const currentIndexRef = useRef(currentIndex);
   const [noCards, setNoCards] = useState(false);
+
+  // // ---- used for modal -------
+  // const [show, setShow] = useState(false);
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (currentIndex < 0) {
@@ -101,6 +108,7 @@ const HomePage = () => {
 
   // adds swipe to db
   async function currDogDBLikes(id) {
+    console.log('currDog inside', currDog);
     const currDogDB = doc(db, 'dogs', currDog[0].documentId);
     await updateDoc(currDogDB, {
       likes: arrayUnion(id),
@@ -138,6 +146,33 @@ const HomePage = () => {
       await updateDoc(swipeDogAddMatch, {
         matches: arrayUnion(currDog[0].name),
       });
+      alert('You matched!');
+      // ----- shows pop up of matched! ------
+      // const matchPopUp = () => {
+      //   return (
+      //     <div>
+      //       <Modal
+      //         show={show}
+      //         onHide={handleClose}
+      //         backdrop="static"
+      //         keyboard={false}
+      //       >
+      //         <Modal.Header closeButton>
+      //           <Modal.Title>Thanks!</Modal.Title>
+      //         </Modal.Header>
+      //         <Modal.Body>YOU MATCHED!</Modal.Body>
+      //         <Modal.Footer>
+      //           <Button variant="outline-danger" onClick={handleClose}>
+      //             Cancel
+      //           </Button>
+      //           <Link to="/chat">
+      //             <Button variant="outline-success">Confirm</Button>
+      //           </Link>
+      //         </Modal.Footer>
+      //       </Modal>
+      //     </div>
+      //   );
+      // };
     }
   }
 
@@ -203,7 +238,6 @@ const HomePage = () => {
       }
     })();
   }, []);
-  // console.log('THIS IS OUR STATE user', userDB);
 
   // gets dog collection
   useEffect(() => {
@@ -218,7 +252,6 @@ const HomePage = () => {
       } catch (err) {}
     })();
   }, []);
-  // console.log('OTHER DOGS: ', otherDogs);
 
   return (
     <div
@@ -248,12 +281,13 @@ const HomePage = () => {
                   ></div>
                   <Accordion>
                     <Accordion.Item eventKey="0" flush="true">
-                      <Accordion.Header>Check Me Out!</Accordion.Header>
+                      <Accordion.Header>More about me!</Accordion.Header>
                       <Accordion.Body>
                         <h1>Hi! I'm {dog.name}</h1>
+
                         <Row className="justify-content-center">
                           {dog.imageUrl.slice(1).map((pic) => (
-                            <Col>
+                            <Row>
                               <Image
                                 src={pic}
                                 alt=""
@@ -263,16 +297,35 @@ const HomePage = () => {
                                   width: '80%',
                                 }}
                               />
-                            </Col>
+                            </Row>
                           ))}
                         </Row>
                         <h3>Here's a bit about me: </h3>
                         {dog.bio ? (
-                          <h4> {dog.bio} </h4>
+                          <h5> {dog.bio} </h5>
                         ) : (
                           <h4> I love fetch! </h4>
                         )}
-                        <h1>This is my hooooman</h1>
+                        <h1>This is my hooman</h1>
+                        {/* Need to figure out how to add the user picture */}
+                        {users.find((user) => user.uid === dog.ownerId) ? (
+                          <Image
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX1GLNHPpaosD-CH_nEfwDEdPlHP2WWdFJ0A&usqp=CAU"
+                            // src={
+                            //   users.find((user) => user.uid === dog.ownerId)
+                            //     .userImageUrl
+                            // }
+                            alt=""
+                            thumbnail="true"
+                            style={{
+                              height: '70%',
+                              width: '80%',
+                            }}
+                          />
+                        ) : (
+                          ''
+                        )}
+
                         <h4>
                           {users.find((user) => user.uid === dog.ownerId)
                             ? users.find((user) => user.uid === dog.ownerId)

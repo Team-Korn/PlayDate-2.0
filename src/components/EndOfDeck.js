@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const StyledMessageWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  align-text: center;
-  align-content: center;
-  justify-content: center;
-`;
+// const StyledMessageWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+//   align-text: center;
+//   align-content: center;
+//   justify-content: center;
+// `;
 
 const StyledMessage = styled.div`
   display: flex;
@@ -31,31 +31,31 @@ const Styledh3 = styled.h3`
   color: #f7eddb;
 `;
 
-const StyledLinksWrapper = styled.div`
-  display: flex;
-  gap: 10px;
-`;
+// const StyledLinksWrapper = styled.div`
+//   display: flex;
+//   gap: 10px;
+// `;
 
-const StyledLink = styled(Link)`
-  color: white;
-  text-decoration: none;
-  position: absolute;
-  bottom: 0;
-  &:hover {
-    color: #8fd0ff;
-  }
-`;
+// const StyledLink = styled(Link)`
+//   color: white;
+//   text-decoration: none;
+//   position: absolute;
+//   bottom: 0;
+//   &:hover {
+//     color: #8fd0ff;
+//   }
+// `;
 
-const StyledLeftHeader = styled.div`
-  display: flex;
-  width: 33%;
-  justify-content: flex-start;
-`;
+// const StyledLeftHeader = styled.div`
+//   display: flex;
+//   width: 33%;
+//   justify-content: flex-start;
+// `;
 
-const StyledRightHeader = styled(StyledLeftHeader)`
-  display: flex;
-  justify-content: flex-end;
-`;
+// const StyledRightHeader = styled(StyledLeftHeader)`
+//   display: flex;
+//   justify-content: flex-end;
+// `;
 
 const EndOfDeck = () => {
   return (
@@ -67,24 +67,24 @@ const EndOfDeck = () => {
           }}
           className="swipeCard"
         >
-          <StyledMessageWrapper>
+          {/* <StyledMessageWrapper>
             <Styledh1>RUH ROH!</Styledh1>
-          </StyledMessageWrapper>
+          </StyledMessageWrapper> */}
           <StyledMessage>
-            <Styledh3>Can't fetch any more friends</Styledh3>
+            <Styledh3>Done with Swipes</Styledh3>
           </StyledMessage>
-          <StyledLeftHeader>
+          {/* <StyledLeftHeader>
             <StyledLink to="/user">
               <h3 style={{ marginLeft: '150%' }}>Profile</h3>
             </StyledLink>
-          </StyledLeftHeader>
-          <StyledRightHeader>
+          </StyledLeftHeader> */}
+          {/* <StyledRightHeader>
             <StyledLinksWrapper>
               <StyledLink to="/chat">
                 <h3 style={{ marginLeft: '260%' }}>Messages</h3>
               </StyledLink>
             </StyledLinksWrapper>
-          </StyledRightHeader>
+          </StyledRightHeader> */}
         </div>
       </div>
     </div>
