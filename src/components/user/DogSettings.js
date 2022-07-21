@@ -65,7 +65,7 @@ const DogSettings = () => {
     console.log('No Dogs Here!');
   } else {
     return (
-      <div className="container">
+      <div className="container" style={{ backgroundColor: '#7ed7f0' }}>
         <Form className="settings" onSubmit={handleSubmit}>
           <h1>Edit Dog Information</h1>
           <br />
