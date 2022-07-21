@@ -24,10 +24,10 @@
   margin-bottom: 10px;
   border: none;
   color: white;
-  background-color: rgb(253, 147, 0);
+  background-color: #fb9300 !important;
 }
 .register__google {
-  background-color: #4285f4;
+  background-color: #4285f4 !important;
 }
 .register div {
   margin-top: 7px;
