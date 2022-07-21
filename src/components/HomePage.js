@@ -16,15 +16,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import IconButton from '@material-ui/core/IconButton';
 // import ChatIcon from '@mui/icons-material/Chat';
 import './SwipeButtons.css';
-import { Link } from 'react-router-dom';
+
 import { getAuth } from 'firebase/auth';
 import EndOfDeck from './EndOfDeck';
 import Accordion from 'react-bootstrap/Accordion';
 import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import MatchPopUp from './YouMatchedPopUp';
 
 const addClassToNavbar = () => {
   // in order to achieve the sticky actions button, we need to set the dog compoent to be 100vh
@@ -62,10 +61,7 @@ const HomePage = () => {
   const [noCards, setNoCards] = useState(false);
 
   // // ---- used for modal -------
-  // const [show, setShow] = useState(false);
-
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (currentIndex < 0) {
@@ -146,33 +142,10 @@ const HomePage = () => {
       await updateDoc(swipeDogAddMatch, {
         matches: arrayUnion(currDog[0].name),
       });
-      alert('You matched!');
-      // ----- shows pop up of matched! ------
-      // const matchPopUp = () => {
-      //   return (
-      //     <div>
-      //       <Modal
-      //         show={show}
-      //         onHide={handleClose}
-      //         backdrop="static"
-      //         keyboard={false}
-      //       >
-      //         <Modal.Header closeButton>
-      //           <Modal.Title>Thanks!</Modal.Title>
-      //         </Modal.Header>
-      //         <Modal.Body>YOU MATCHED!</Modal.Body>
-      //         <Modal.Footer>
-      //           <Button variant="outline-danger" onClick={handleClose}>
-      //             Cancel
-      //           </Button>
-      //           <Link to="/chat">
-      //             <Button variant="outline-success">Confirm</Button>
-      //           </Link>
-      //         </Modal.Footer>
-      //       </Modal>
-      //     </div>
-      //   );
-      // };
+      // alert('You matched!');
+      setShow(true);
+      console.log('what is the id???', id);
+      setTinderDog(id);
     }
   }
 
@@ -359,22 +332,10 @@ const HomePage = () => {
             >
               <FavoriteIcon fontSize="large" />
             </IconButton>
-            {/* <Link to="/chat">
-              <IconButton className="swipeButtons__message">
-                <ChatIcon />
-              </IconButton>
-            </Link> */}
           </div>
-
-          {/* {lastDirection ? (
-            <h2 key={lastDirection} className="infoText">
-              You swiped {lastDirection}
-            </h2>
-          ) : (
-            <h2 className="infoText">{}</h2>
-          )} */}
         </div>
       )}
+      {show && <MatchPopUp onClose={() => setShow(false)} dog={tinderDog} />}
     </div>
   );
 };

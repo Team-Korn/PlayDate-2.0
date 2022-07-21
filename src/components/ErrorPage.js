@@ -3,7 +3,7 @@ import React from 'react';
 const ErrorPage = () => {
   return (
     <div>
-      <h1>No Dogs Here!</h1>
+      <h1>Where are the dogs?</h1>
     </div>
   );
 };
