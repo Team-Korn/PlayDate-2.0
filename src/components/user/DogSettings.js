@@ -65,10 +65,15 @@ const DogSettings = () => {
     console.log('No Dogs Here!');
   } else {
     return (
-      <div className="container" style={{ backgroundColor: '#7ed7f0' }}>
+      <div
+        className="container-dog"
+        style={{ backgroundColor: '#7ed7f0', padding: '3em' }}
+      >
         <Form className="settings" onSubmit={handleSubmit}>
+          <br />
           <h1>Edit Dog Information</h1>
           <br />
+
           <Form.Group className="mb-3" controlId="formGridName">
             <Form.Label className="label">Name</Form.Label>
             <Form.Control type="text" defaultValue={currDog[0].name} required />
